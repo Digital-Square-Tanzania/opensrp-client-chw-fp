@@ -50,7 +50,7 @@ public interface FpProfileContract {
 
         void refreshProfileBottom();
 
-        void recordSbcButton(String visitState);
+        void recordFpButton(String visitState);
     }
 
     interface Interactor {

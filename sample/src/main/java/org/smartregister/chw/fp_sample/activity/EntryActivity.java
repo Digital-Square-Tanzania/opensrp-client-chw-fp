@@ -61,8 +61,8 @@ public class EntryActivity extends SecuredActivity implements View.OnClickListen
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        findViewById(R.id.sbc_activity).setOnClickListener(this);
-        findViewById(R.id.sbc_home_visit).setOnClickListener(this);
+        findViewById(R.id.fp_activity).setOnClickListener(this);
+        findViewById(R.id.fp_home_visit).setOnClickListener(this);
         findViewById(R.id.fp_profile).setOnClickListener(this);
     }
 
@@ -79,10 +79,10 @@ public class EntryActivity extends SecuredActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.sbc_activity:
+            case R.id.fp_activity:
                 startActivity(new Intent(this, FpRegisterActivity.class));
                 break;
-            case R.id.sbc_home_visit:
+            case R.id.fp_home_visit:
                 FpScreeningActivity.startMe(this, "12345", false);
                 break;
             case R.id.fp_profile:

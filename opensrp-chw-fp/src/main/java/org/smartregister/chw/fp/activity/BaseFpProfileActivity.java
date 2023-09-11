@@ -217,10 +217,10 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
         textViewUniqueID.setText(memberObject.getUniqueId());
 
         if (StringUtils.isNotBlank(memberObject.getFamilyHead()) && memberObject.getFamilyHead().equals(memberObject.getBaseEntityId())) {
-            findViewById(R.id.family_sbc_head).setVisibility(View.VISIBLE);
+            findViewById(R.id.family_fp_head).setVisibility(View.VISIBLE);
         }
         if (StringUtils.isNotBlank(memberObject.getPrimaryCareGiver()) && memberObject.getPrimaryCareGiver().equals(memberObject.getBaseEntityId())) {
-            findViewById(R.id.primary_sbc_caregiver).setVisibility(View.VISIBLE);
+            findViewById(R.id.primary_fp_caregiver).setVisibility(View.VISIBLE);
         }
     }
 

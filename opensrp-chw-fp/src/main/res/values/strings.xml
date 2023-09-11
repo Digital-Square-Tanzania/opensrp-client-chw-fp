@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">test</string>
     <string name="error_unable_to_start_form">An error occurred when starting the form</string>
     <string name="error_unable_to_save_form">An error occurred when saving the form</string>
-    <string name="fp">SBC</string>
+    <string name="fp">FP</string>
     <string name="add_member">Add Member</string>
     <string name="sort">Sort</string>
     <string name="home">Home</string>
@@ -12,7 +12,7 @@
     <string name="saving_dialog_title">Saving</string>
     <string name="interpunct" translatable="false">\u00b7</string>
     <string name="malaria_followup_visit">FOLLOWUP\nVISIT</string>
-    <string name="return_to_previous_sbc_clients_page">Return all SBC Clients</string>
+    <string name="return_to_previous_fp_clients_page">Return all FP Clients</string>
     <string name="last_visit_40_days_ago">Last visit %1$s ago</string>
     <string name="view_medical_history">View medical history</string>
     <string name="medical_history">Medical history</string>

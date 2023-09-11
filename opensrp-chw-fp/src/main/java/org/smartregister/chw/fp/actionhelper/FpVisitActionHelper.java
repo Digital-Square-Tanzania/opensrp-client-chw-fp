@@ -11,10 +11,10 @@ import java.util.Map;
 import timber.log.Timber;
 
 /**
- * Designed to set default methods for the SBC Action Helper
+ * Designed to set default methods for the FP Action Helper
  * This object must remain inert to the Home Visit action. Its designed primarily for extension by simple visit actions
  */
-public abstract class FpVisitActionHelper implements BaseFpVisitAction.SbcVisitActionHelper {
+public abstract class FpVisitActionHelper implements BaseFpVisitAction.FpVisitActionHelper {
     protected Context context;
 
     @Override

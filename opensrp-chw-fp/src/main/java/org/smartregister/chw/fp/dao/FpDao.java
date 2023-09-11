@@ -13,7 +13,7 @@ import java.util.List;
 import timber.log.Timber;
 
 public class FpDao extends AbstractDao {
-    public static void closeSbcMemberFromRegister(String baseEntityID) {
+    public static void closeFpMemberFromRegister(String baseEntityID) {
         String sql = "UPDATE " + Constants.TABLES.FP_REGISTER + " set is_closed = 1 where base_entity_id = '" + baseEntityID + "'";
         updateDB(sql);
     }

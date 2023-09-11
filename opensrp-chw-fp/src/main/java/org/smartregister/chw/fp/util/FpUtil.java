@@ -126,16 +126,16 @@ public class FpUtil {
         return R.mipmap.ic_member;
     }
 
-    public static class CloseSbcMemberFromRegister extends AsyncTask<Void, Void, Void> {
+    public static class RemoveFpMemberFromRegister extends AsyncTask<Void, Void, Void> {
         private final String baseEntityId;
 
-        public CloseSbcMemberFromRegister(String baseEntityId) {
+        public RemoveFpMemberFromRegister(String baseEntityId) {
             this.baseEntityId = baseEntityId;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            FpDao.closeSbcMemberFromRegister(baseEntityId);
+            FpDao.closeFpMemberFromRegister(baseEntityId);
             return null;
         }
 

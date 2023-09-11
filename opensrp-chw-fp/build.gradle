@@ -16,7 +16,7 @@ plugins {
     id 'maven-publish'
 }
 
-description = 'OpenSRP CHW SBC library'
+description = 'OpenSRP CHW FP library'
 
 jacoco {
     toolVersion = "0.8.0"

@@ -31,7 +31,7 @@ public class BaseFpProfilePresenter implements FpProfileContract.Presenter {
     }
 
     @Override
-    public void recordSbcButton(@Nullable String visitState) {
+    public void recordFpButton(@Nullable String visitState) {
         if (getView() == null) {
             return;
         }

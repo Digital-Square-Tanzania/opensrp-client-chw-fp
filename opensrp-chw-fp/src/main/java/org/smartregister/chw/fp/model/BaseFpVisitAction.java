@@ -34,7 +34,7 @@ public class BaseFpVisitAction {
     private String formName;
     private String jsonPayload;
     private String selectedOption;
-    private SbcVisitActionHelper sbcVisitActionHelper;
+    private FpVisitActionHelper fpVisitActionHelper;
     private final Map<String, List<VisitDetail>> details;
     private final Context context;
     private final Validator validator;
@@ -51,7 +51,7 @@ public class BaseFpVisitAction {
         this.optional = builder.optional;
         this.destinationFragment = builder.destinationFragment;
         this.formName = builder.formName;
-        this.sbcVisitActionHelper = builder.sbcVisitActionHelper;
+        this.fpVisitActionHelper = builder.fpVisitActionHelper;
         this.details = builder.details;
         this.context = builder.context;
         this.processingMode = builder.processingMode;
@@ -80,9 +80,9 @@ public class BaseFpVisitAction {
                 jsonPayload = jsonObject.toString();
             }
 
-            if (sbcVisitActionHelper != null) {
-                sbcVisitActionHelper.onJsonFormLoaded(jsonPayload, context, details);
-                String pre_processed = sbcVisitActionHelper.getPreProcessed();
+            if (fpVisitActionHelper != null) {
+                fpVisitActionHelper.onJsonFormLoaded(jsonPayload, context, details);
+                String pre_processed = fpVisitActionHelper.getPreProcessed();
                 if (StringUtils.isNotBlank(pre_processed)) {
                     JSONObject jsonObject = new JSONObject(pre_processed);
                     JsonFormUtils.populateForm(jsonObject, details);
@@ -90,12 +90,12 @@ public class BaseFpVisitAction {
                     this.jsonPayload = jsonObject.toString();
                 }
 
-                String sub_title = sbcVisitActionHelper.getPreProcessedSubTitle();
+                String sub_title = fpVisitActionHelper.getPreProcessedSubTitle();
                 if (StringUtils.isNotBlank(sub_title)) {
                     this.subTitle = sub_title;
                 }
 
-                ScheduleStatus status = sbcVisitActionHelper.getPreProcessedStatus();
+                ScheduleStatus status = fpVisitActionHelper.getPreProcessedStatus();
                 if (status != null) {
                     this.scheduleStatus = status;
                 }
@@ -236,22 +236,22 @@ public class BaseFpVisitAction {
     }
 
     private void onPayloadReceivedNotifyHelper(String jsonPayload) {
-        if (sbcVisitActionHelper == null)
+        if (fpVisitActionHelper == null)
             return;
 
-        sbcVisitActionHelper.onPayloadReceived(jsonPayload);
+        fpVisitActionHelper.onPayloadReceived(jsonPayload);
 
-        String sub_title = sbcVisitActionHelper.evaluateSubTitle();
+        String sub_title = fpVisitActionHelper.evaluateSubTitle();
         if (sub_title != null) {
             setSubTitle(sub_title);
         }
 
-        String post_process = sbcVisitActionHelper.postProcess(jsonPayload);
+        String post_process = fpVisitActionHelper.postProcess(jsonPayload);
         if (post_process != null) {
-            this.jsonPayload = sbcVisitActionHelper.postProcess(jsonPayload);
+            this.jsonPayload = fpVisitActionHelper.postProcess(jsonPayload);
         }
 
-        sbcVisitActionHelper.onPayloadReceived(this);
+        fpVisitActionHelper.onPayloadReceived(this);
     }
 
     public void setProcessedJsonPayload(String jsonPayload) {
@@ -282,12 +282,12 @@ public class BaseFpVisitAction {
         this.selectedOption = selectedOption;
     }
 
-    public SbcVisitActionHelper getSbcVisitActionHelper() {
-        return sbcVisitActionHelper;
+    public FpVisitActionHelper getFpVisitActionHelper() {
+        return fpVisitActionHelper;
     }
 
-    public void setSbcVisitActionHelper(SbcVisitActionHelper sbcVisitActionHelper) {
-        this.sbcVisitActionHelper = sbcVisitActionHelper;
+    public void setFpVisitActionHelper(FpVisitActionHelper fpVisitActionHelper) {
+        this.fpVisitActionHelper = fpVisitActionHelper;
     }
 
     /**
@@ -297,8 +297,8 @@ public class BaseFpVisitAction {
     public void evaluateStatus() {
         setActionStatus(computedStatus());
 
-        if (getSbcVisitActionHelper() != null) {
-            setActionStatus(getSbcVisitActionHelper().evaluateStatusOnPayload());
+        if (getFpVisitActionHelper() != null) {
+            setActionStatus(getFpVisitActionHelper().evaluateStatusOnPayload());
         }
     }
 
@@ -321,7 +321,7 @@ public class BaseFpVisitAction {
      */
     public enum ProcessingMode {COMBINED, SEPARATE}
 
-    public interface SbcVisitActionHelper {
+    public interface FpVisitActionHelper {
 
         /**
          * Inject values to the json form before rendering
@@ -390,7 +390,7 @@ public class BaseFpVisitAction {
         private boolean optional = true;
         private BaseHomeVisitFragment destinationFragment;
         private String formName;
-        private SbcVisitActionHelper sbcVisitActionHelper;
+        private FpVisitActionHelper fpVisitActionHelper;
         private Map<String, List<VisitDetail>> details = new HashMap<>();
         private Context context;
         private String jsonPayload;
@@ -446,8 +446,8 @@ public class BaseFpVisitAction {
             return this;
         }
 
-        public Builder withHelper(SbcVisitActionHelper sbcVisitActionHelper) {
-            this.sbcVisitActionHelper = sbcVisitActionHelper;
+        public Builder withHelper(FpVisitActionHelper fpVisitActionHelper) {
+            this.fpVisitActionHelper = fpVisitActionHelper;
             return this;
         }
 

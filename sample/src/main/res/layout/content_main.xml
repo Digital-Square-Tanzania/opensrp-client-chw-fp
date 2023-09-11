@@ -33,7 +33,7 @@
             android:textColor="@color/white" />
 
         <org.smartregister.view.customcontrols.CustomFontTextView
-            android:id="@+id/sbc_home_visit"
+            android:id="@+id/fp_home_visit"
             style="@style/CustomFontTextViewStyle.ListView.Normal.MultipleLines"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,11 +50,11 @@
             android:textColor="@color/white" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/sbc_activity"
+            android:id="@+id/fp_activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:text="SBC Activity" />
+            android:text="FP Activity" />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -120,14 +120,14 @@ public class BaseFpVisitAdapter extends RecyclerView.Adapter<BaseFpVisitAdapter.
         bindClickListener(holder.getView(), fpVisitAction);
     }
 
-    private int getCircleColor(BaseFpVisitAction sbcVisitAction) {
+    private int getCircleColor(BaseFpVisitAction fpVisitAction) {
 
         int color_res;
-        boolean valid = sbcVisitAction.isValid() && sbcVisitAction.isEnabled();
+        boolean valid = fpVisitAction.isValid() && fpVisitAction.isEnabled();
         if (!valid)
             return R.color.transparent_gray;
 
-        switch (sbcVisitAction.getActionStatus()) {
+        switch (fpVisitAction.getActionStatus()) {
             case PENDING:
                 color_res = R.color.transparent_gray;
                 break;

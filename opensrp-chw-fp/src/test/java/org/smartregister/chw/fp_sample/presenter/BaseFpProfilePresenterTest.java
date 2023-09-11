@@ -38,19 +38,19 @@ public class BaseFpProfilePresenterTest {
 
     @Test
     public void malariaTestDatePeriodIsLessThanSeven() {
-        profilePresenter.recordSbcButton("");
+        profilePresenter.recordFpButton("");
         verify(view).hideView();
     }
 
     @Test
     public void malariaTestDatePeriodGreaterThanTen() {
-        profilePresenter.recordSbcButton("OVERDUE");
+        profilePresenter.recordFpButton("OVERDUE");
         verify(view).setOverDueColor();
     }
 
     @Test
     public void malariaTestDatePeriodIsMoreThanFourteen() {
-        profilePresenter.recordSbcButton("EXPIRED");
+        profilePresenter.recordFpButton("EXPIRED");
         verify(view).hideView();
     }
 

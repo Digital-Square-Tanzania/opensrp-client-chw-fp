@@ -9,7 +9,7 @@
         android:id="@+id/menu_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/sbc_fab"
+        android:layout_above="@+id/fp_fab"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="24dp"
         android:orientation="vertical"
@@ -108,7 +108,7 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/sbc_fab"
+        android:id="@+id/fp_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

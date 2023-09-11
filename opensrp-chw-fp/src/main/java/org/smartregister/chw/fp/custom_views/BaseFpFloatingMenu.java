@@ -21,14 +21,14 @@ public class BaseFpFloatingMenu extends LinearLayout implements View.OnClickList
 
     protected void initUi() {
         inflate(getContext(), R.layout.view_fp_floating_menu, this);
-        FloatingActionButton fab = findViewById(R.id.sbc_fab);
+        FloatingActionButton fab = findViewById(R.id.fp_fab);
         if (fab != null)
             fab.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.sbc_fab) {
+        if (view.getId() == R.id.fp_fab) {
             Activity activity = (Activity) getContext();
             BaseFpCallDialogFragment.launchDialog(activity, MEMBER_OBJECT);
         }  else if (view.getId() == R.id.refer_to_facility_layout) {

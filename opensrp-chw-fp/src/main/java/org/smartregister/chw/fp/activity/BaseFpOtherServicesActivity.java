@@ -177,21 +177,21 @@ public class BaseFpOtherServicesActivity extends SecuredActivity implements Base
     }
 
     @Override
-    public void startForm(BaseFpVisitAction sbcVisitAction) {
-        current_action = sbcVisitAction.getTitle();
+    public void startForm(BaseFpVisitAction fpVisitAction) {
+        current_action = fpVisitAction.getTitle();
 
-        if (StringUtils.isNotBlank(sbcVisitAction.getJsonPayload())) {
+        if (StringUtils.isNotBlank(fpVisitAction.getJsonPayload())) {
             try {
-                JSONObject jsonObject = new JSONObject(sbcVisitAction.getJsonPayload());
+                JSONObject jsonObject = new JSONObject(fpVisitAction.getJsonPayload());
                 startFormActivity(jsonObject);
             } catch (Exception e) {
                 Timber.e(e);
                 String locationId = FpLibrary.getInstance().context().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
-                presenter().startForm(sbcVisitAction.getFormName(), memberObject.getBaseEntityId(), locationId);
+                presenter().startForm(fpVisitAction.getFormName(), memberObject.getBaseEntityId(), locationId);
             }
         } else {
             String locationId = FpLibrary.getInstance().context().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
-            presenter().startForm(sbcVisitAction.getFormName(), memberObject.getBaseEntityId(), locationId);
+            presenter().startForm(fpVisitAction.getFormName(), memberObject.getBaseEntityId(), locationId);
         }
     }
 
@@ -299,9 +299,9 @@ public class BaseFpOtherServicesActivity extends SecuredActivity implements Base
             if (resultCode == Activity.RESULT_OK) {
                 try {
                     String jsonString = data.getStringExtra(Constants.JSON_FORM_EXTRA.JSON);
-                    BaseFpVisitAction sbcVisitAction = actionList.get(current_action);
-                    if (sbcVisitAction != null) {
-                        sbcVisitAction.setJsonPayload(jsonString);
+                    BaseFpVisitAction fpVisitAction = actionList.get(current_action);
+                    if (fpVisitAction != null) {
+                        fpVisitAction.setJsonPayload(jsonString);
                     }
                 } catch (Exception e) {
                     Timber.e(e);
@@ -309,9 +309,9 @@ public class BaseFpOtherServicesActivity extends SecuredActivity implements Base
                 }
             } else {
 
-                BaseFpVisitAction pmtctHomeVisitAction = actionList.get(current_action);
-                if (pmtctHomeVisitAction != null)
-                    pmtctHomeVisitAction.evaluateStatus();
+                BaseFpVisitAction fpVisitAction = actionList.get(current_action);
+                if (fpVisitAction != null)
+                    fpVisitAction.evaluateStatus();
             }
 
         } else {

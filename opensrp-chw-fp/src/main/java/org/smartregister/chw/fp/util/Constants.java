@@ -73,11 +73,6 @@ public interface Constants {
         String FP_REGISTER = "ec_fp_register";
 
         String FP_FOLLOW_UP = "ec_fp_follow_up_visit";
-
-        String SBC_MOBILIZATION_SESSIONS = "ec_sbc_mobilization_session";
-
-        String SBC_MONTHLY_SOCIAL_MEDIA_REPORT = "ec_sbc_monthly_social_media_report";
-
     }
 
     interface ACTIVITY_PAYLOAD {

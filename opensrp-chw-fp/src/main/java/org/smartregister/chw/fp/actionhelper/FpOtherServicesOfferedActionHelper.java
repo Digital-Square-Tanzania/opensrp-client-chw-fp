@@ -20,7 +20,7 @@ import java.util.Map;
 import timber.log.Timber;
 
 /**
- * SBC Activity Action Helper
+ * FP Activity Action Helper
  */
 public class FpOtherServicesOfferedActionHelper extends FpVisitActionHelper {
     final BaseFpVisitContract.InteractorCallBack callBack;

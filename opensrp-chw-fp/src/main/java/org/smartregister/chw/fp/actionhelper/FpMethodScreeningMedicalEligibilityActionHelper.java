@@ -11,7 +11,7 @@ import org.smartregister.chw.fp.util.JsonFormUtils;
 import timber.log.Timber;
 
 /**
- * SBC Activity Action Helper
+ * FP Activity Action Helper
  */
 public class FpMethodScreeningMedicalEligibilityActionHelper extends FpVisitActionHelper {
     protected Context context;
