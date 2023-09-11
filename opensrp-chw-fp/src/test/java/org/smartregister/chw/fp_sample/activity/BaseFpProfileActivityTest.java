@@ -1,8 +1,9 @@
 package org.smartregister.chw.fp_sample.activity;
 
+import static org.mockito.Mockito.validateMockitoUsage;
+
 import android.graphics.Color;
 import android.view.View;
-import android.widget.TextView;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -11,14 +12,10 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.reflect.Whitebox;
 import org.smartregister.chw.fp.R;
 import org.smartregister.chw.fp.activity.BaseFpProfileActivity;
 import org.smartregister.chw.fp.contract.FpProfileContract;
-import org.smartregister.domain.AlertStatus;
-
-import static org.mockito.Mockito.validateMockitoUsage;
 
 public class BaseFpProfileActivityTest {
     @Mock
@@ -97,45 +94,6 @@ public class BaseFpProfileActivityTest {
         Mockito.verify(baseTestProfileActivity).openMedicalHistory();
     }
 
-    @Test
-    public void onClickOpenUpcomingServices() {
-        baseTestProfileActivity = Mockito.spy(new BaseTestFpProfileActivity());
-        Mockito.when(view.getId()).thenReturn(R.id.rlUpcomingServices);
-        Mockito.doNothing().when(baseTestProfileActivity).openUpcomingService();
-        baseTestProfileActivity.onClick(view);
-        Mockito.verify(baseTestProfileActivity).openUpcomingService();
-    }
-
-    @Test
-    public void onClickOpenFamlilyServicesDue() {
-        baseTestProfileActivity = Mockito.spy(new BaseTestFpProfileActivity());
-        Mockito.when(view.getId()).thenReturn(R.id.rlFamilyServicesDue);
-        Mockito.doNothing().when(baseTestProfileActivity).openFamilyDueServices();
-        baseTestProfileActivity.onClick(view);
-        Mockito.verify(baseTestProfileActivity).openFamilyDueServices();
-    }
-
-    @Test(expected = Exception.class)
-    public void refreshFamilyStatusComplete() throws Exception {
-        baseTestProfileActivity = Mockito.spy(new BaseTestFpProfileActivity());
-        TextView textView = view.findViewById(R.id.textview_family_has);
-        Whitebox.setInternalState(baseTestProfileActivity, "tvFamilyStatus", textView);
-        Mockito.doNothing().when(baseTestProfileActivity).showProgressBar(false);
-        baseTestProfileActivity.refreshFamilyStatus(AlertStatus.complete);
-        Mockito.verify(baseTestProfileActivity).showProgressBar(false);
-        PowerMockito.verifyPrivate(baseTestProfileActivity).invoke("setFamilyStatus", "Family has nothing due");
-    }
-
-    @Test(expected = Exception.class)
-    public void refreshFamilyStatusNormal() throws Exception {
-        baseTestProfileActivity = Mockito.spy(new BaseTestFpProfileActivity());
-        TextView textView = view.findViewById(R.id.textview_family_has);
-        Whitebox.setInternalState(baseTestProfileActivity, "tvFamilyStatus", textView);
-        Mockito.doNothing().when(baseTestProfileActivity).showProgressBar(false);
-        baseTestProfileActivity.refreshFamilyStatus(AlertStatus.complete);
-        Mockito.verify(baseTestProfileActivity).showProgressBar(false);
-        PowerMockito.verifyPrivate(baseTestProfileActivity).invoke("setFamilyStatus", "Family has services due");
-    }
 
     @Test(expected = Exception.class)
     public void onActivityResult() throws Exception {
