@@ -107,6 +107,7 @@ public class FpMemberProfileActivity extends BaseFpProfileActivity {
 
         if (formName.equalsIgnoreCase(Constants.FORMS.FP_PROVISION_OF_FP_METHOD) && jsonForm != null) {
             jsonForm.getJSONObject("global").put("fp_method_selected", memberObject.getFpMethod());
+            jsonForm.getJSONObject("global").put("sex", memberObject.getGender());
         }
 
         String currentLocationId = "Tanzania";
