@@ -83,7 +83,7 @@ public class EntryActivity extends SecuredActivity implements View.OnClickListen
                 startActivity(new Intent(this, FpRegisterActivity.class));
                 break;
             case R.id.fp_home_visit:
-                FpScreeningActivity.startMe(this, "12345", false);
+                FpFollowupMemberProfileActivity.startMe(this, "12345");
                 break;
             case R.id.fp_profile:
                 FpMemberProfileActivity.startMe(this, "12345");
