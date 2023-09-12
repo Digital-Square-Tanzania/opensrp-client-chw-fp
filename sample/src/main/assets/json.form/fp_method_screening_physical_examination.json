@@ -280,14 +280,51 @@
           },
           {
             "key": "other",
-            "text": "Others (Specify",
+            "text": "Others (Specify)",
             "openmrs_entity": "concept",
             "openmrs_entity_id": "other"
           }
         ],
         "v_required": {
           "value": "true",
-          "err": "Please choose client medical history"
+          "err": "Please choose breast condition"
+        }
+      },
+      {
+        "key": "specify_other_condition",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "specify_other_condition",
+        "type": "edit_text",
+        "hint": "Specify other",
+        "v_required": {
+          "value": "true",
+          "err": "Please specify condition"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "fp_method_screening_physical_examination_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "breast_condition_prompt",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "breast_condition_prompt",
+        "type": "toaster_notes",
+        "text": "Refer client for further management",
+        "toaster_type": "info",
+        "toaster_info_text": "",
+        "toaster_info_title": "",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "fp_method_screening_physical_examination_relevance.yml"
+            }
+          }
         }
       }
     ]
