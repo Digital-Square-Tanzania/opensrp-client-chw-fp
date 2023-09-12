@@ -73,12 +73,13 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "lnmp",
-        "type": "edit_text",
-        "edit_type": "number",
+        "type": "date_picker",
+        "expanded": false,
         "hint": "L.N.M.P.",
+        "max_date": "today",
         "v_required": {
           "value": "true",
-          "err": "Please specify"
+          "err": "Please select date"
         }
       },
       {

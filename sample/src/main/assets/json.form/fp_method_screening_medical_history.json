@@ -165,7 +165,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "fp_medical_history_relevance.yml"
+              "rules-file": "fp_method_screening_medical_history_relevance.yml"
             }
           }
         }
@@ -184,7 +184,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "fp_medical_history_relevance.yml"
+              "rules-file": "fp_method_screening_medical_history_relevance.yml"
             }
           }
         }

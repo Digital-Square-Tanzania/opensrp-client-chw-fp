@@ -1,0 +1,8 @@
+ ---
+name: step1_client_registration_number
+description: client_registration_number relevance
+priority: 1
+condition: "step1_client_used_fp_before.equalsIgnoreCase('yes')"
+actions:
+  - "isRelevant = true"
+
