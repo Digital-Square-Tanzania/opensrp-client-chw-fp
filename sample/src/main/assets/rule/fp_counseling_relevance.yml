@@ -1,0 +1,14 @@
+---
+name: step1_selected_fp_method_after_counseling_female
+description: relevance if global sex of the client is female
+priority: 1
+condition: "global_sex == 'Female'"
+actions:
+  - "isRelevant = true"
+---
+name: step1_selected_fp_method_after_counseling_male
+description: relevance if global sex of the client is male
+priority: 1
+condition: "global_sex == 'Male'"
+actions:
+  - "isRelevant = true"

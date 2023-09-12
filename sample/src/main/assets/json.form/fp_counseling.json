@@ -128,10 +128,10 @@
         }
       },
       {
-        "key": "selected_fp_method_after_counseling",
+        "key": "selected_fp_method_after_counseling_female",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "selected_fp_method_after_counseling",
+        "openmrs_entity_id": "selected_fp_method_after_counseling_female",
         "type": "native_radio",
         "label": "Selected family planning method after counseling",
         "text_color": "#000000",
@@ -212,6 +212,47 @@
         "v_required": {
           "value": "true",
           "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "fp_counseling_relevance.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "selected_fp_method_after_counseling_male",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "selected_fp_method_after_counseling_male",
+        "type": "native_radio",
+        "label": "Selected family planning method after counseling",
+        "text_color": "#000000",
+        "options": [
+          {
+            "key": "condom",
+            "text": "Condom",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "condom"
+          },
+          {
+            "key": "vasectomy",
+            "text": "Vasectomy",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "vasectomy"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Required"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "fp_counseling_relevance.yml"
+            }
+          }
         }
       }
     ]

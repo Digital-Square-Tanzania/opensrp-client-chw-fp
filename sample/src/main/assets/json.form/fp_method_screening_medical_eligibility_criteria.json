@@ -107,7 +107,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "fp_medical_eligibility_criteria_relevance.yml"
+              "rules-file": "fp_method_screening_medical_eligibility_criteria_relevance.yml"
             }
           }
         }
@@ -125,7 +125,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "fp_medical_eligibility_criteria_relevance.yml"
+              "rules-file": "fp_method_screening_medical_eligibility_criteria_relevance.yml"
             }
           }
         }
@@ -143,7 +143,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "fp_medical_eligibility_criteria_relevance.yml"
+              "rules-file": "fp_method_screening_medical_eligibility_criteria_relevance.yml"
             }
           }
         }
@@ -161,7 +161,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "fp_medical_eligibility_criteria_relevance.yml"
+              "rules-file": "fp_method_screening_medical_eligibility_criteria_relevance.yml"
             }
           }
         }
@@ -179,7 +179,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "fp_medical_eligibility_criteria_relevance.yml"
+              "rules-file": "fp_method_screening_medical_eligibility_criteria_relevance.yml"
             }
           }
         }
@@ -197,7 +197,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "fp_medical_eligibility_criteria_relevance.yml"
+              "rules-file": "fp_method_screening_medical_eligibility_criteria_relevance.yml"
             }
           }
         }
