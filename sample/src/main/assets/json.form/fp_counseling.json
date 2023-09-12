@@ -122,7 +122,7 @@
         "relevance": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "fp_provide_counseling_relevance.yml"
+              "rules-file": "fp_counseling_relevance.yml"
             }
           }
         }
