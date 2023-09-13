@@ -65,13 +65,41 @@
         "hint": "Weight (KG)",
         "edit_type": "number",
         "look_up": "true",
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the Client’s Weight (KG)"
-        },
         "v_min": {
           "value": "20",
           "err": "client weight must be equal or greater than 20kg"
+        },
+        "v_numeric": {
+          "value": "true",
+          "err": "Please enter the weight"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the Client’s Weight (KG)"
+        }
+      },
+      {
+        "key": "systolic",
+        "type": "edit_text",
+        "hint": "Systolic (Blood Pressure)",
+        "openmrs_entity_id": "systolic",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "v_numeric": {
+          "value": "true",
+          "err": "Please enter the systolic value"
+        },
+        "v_min": {
+          "value": "0",
+          "err": "Systolic value must be equal or greater than 0"
+        },
+        "v_max": {
+          "value": "320",
+          "err": "Systolic value must be equal or less than 320"
+        },
+        "v_required": {
+          "value": true,
+          "err": "Please enter the systolic value"
         }
       },
       {
@@ -94,8 +122,8 @@
           "err": "Diastolic value must be equal or less than 200"
         },
         "v_required": {
-          "value": "true",
-          "err": "Please enter the Diastolic (Blood Pressure)"
+          "value": true,
+          "err": "Please enter the diastolic value"
         },
         "constraints": [
           {
@@ -104,30 +132,6 @@
             "err": "The diastolic value must be less than the systolic value"
           }
         ]
-      },
-      {
-        "key": "systolic",
-        "type": "edit_text",
-        "hint": "Systolic (Blood Pressure)",
-        "openmrs_entity_id": "systolic",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "v_numeric": {
-          "value": "true",
-          "err": "Please enter the systolic value"
-        },
-        "v_min": {
-          "value": "0",
-          "err": "Systolic value must be equal or greater than 0"
-        },
-        "v_max": {
-          "value": "320",
-          "err": "Systolic value must be equal or less than 320"
-        },
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the Systolic (Blood Pressure)"
-        }
       },
       {
         "key": "anaemia",

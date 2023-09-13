@@ -63,6 +63,18 @@
         "type": "edit_text",
         "edit_type": "number",
         "hint": "Menarche",
+        "v_min": {
+          "value": "9",
+          "err": "Menarche age must be equal or greater than 9"
+        },
+        "v_max": {
+          "value": "16",
+          "err": "Menarche age must be equal or less than 17"
+        },
+        "v_numeric": {
+          "value": "true",
+          "err": "Please enter the menarche age"
+        },
         "v_required": {
           "value": "true",
           "err": "Please specify"
@@ -77,6 +89,7 @@
         "expanded": false,
         "hint": "L.N.M.P.",
         "max_date": "today",
+        "min_date": "today-50w",
         "v_required": {
           "value": "true",
           "err": "Please select date"
@@ -90,6 +103,18 @@
         "type": "edit_text",
         "edit_type": "number",
         "hint": "MP Duration",
+        "v_min": {
+          "value": "2",
+          "err": "MP Duration must be equal or greater than 2 days"
+        },
+        "v_max": {
+          "value": "7",
+          "err": "MP Duration must be equal or less than 7 days"
+        },
+        "v_numeric": {
+          "value": "true",
+          "err": "Please enter the MP Duration"
+        },
         "v_required": {
           "value": "true",
           "err": "Please specify"
@@ -130,6 +155,18 @@
         "type": "edit_text",
         "edit_type": "number",
         "hint": "Cycle length",
+        "v_min": {
+          "value": "23",
+          "err": "Cycle length must be equal or greater than 23 days"
+        },
+        "v_max": {
+          "value": "35",
+          "err": "Cycle length must be equal or less than 35 days"
+        },
+        "v_numeric": {
+          "value": "true",
+          "err": "Please enter the Cycle length"
+        },
         "v_required": {
           "value": "true",
           "err": "Please specify"
