@@ -108,15 +108,12 @@ public class FpFollowupMemberProfileActivity extends BaseFpProfileActivity {
         JSONObject jsonForm = FileSourceFactoryHelper.getFileSource("").getFormFromFile(getApplicationContext(), formName);
 
         if (formName.equalsIgnoreCase(Constants.FORMS.FP_PROVISION_OF_FP_METHOD) && jsonForm != null) {
-//            jsonForm.getJSONObject("global").put("fp_method_selected", memberObject.getFpMethod());
-//            jsonForm.getJSONObject("global").put("sex", memberObject.getGender());
-            jsonForm.getJSONObject("global").put("fp_method_selected", "pop");
-            jsonForm.getJSONObject("global").put("sex", "Female");
+            jsonForm.getJSONObject("global").put("fp_method_selected", memberObject.getFpMethod());
+            jsonForm.getJSONObject("global").put("sex", memberObject.getGender());
         }
 
         if (formName.equalsIgnoreCase(Constants.FORMS.FP_COUNSELING) && jsonForm != null) {
-//            jsonForm.getJSONObject("global").put("sex", memberObject.getGender());
-            jsonForm.getJSONObject("global").put("sex", "Male");
+            jsonForm.getJSONObject("global").put("sex", memberObject.getGender());
         }
 
         String currentLocationId = "Tanzania";

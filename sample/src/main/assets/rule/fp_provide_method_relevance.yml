@@ -2,7 +2,7 @@
 name: step1_pop
 description: Check if the client selected pop method relevance
 priority: 1
-condition: "global_fp_method_selected == 'pop'"
+condition: "global_fp_method_selected.equalsIgnoreCase('pop')"
 actions:
   - "isRelevant = true"
 
@@ -10,7 +10,7 @@ actions:
 name: step1_coc
 description: Check if the client selected coc method relevance
 priority: 1
-condition: "global_fp_method_selected == 'coc'"
+condition: "global_fp_method_selected.equalsIgnoreCase('coc')"
 actions:
   - "isRelevant = true"
 
@@ -18,7 +18,7 @@ actions:
 name: step1_ecp
 description: Check if the client selected ecp method relevance
 priority: 1
-condition: "global_fp_method_selected == 'ecp'"
+condition: "global_fp_method_selected.equalsIgnoreCase('ecp')"
 actions:
   - "isRelevant = true"
 
@@ -26,7 +26,7 @@ actions:
 name: step1_injection_administered
 description: Check if the client selected injection method relevance
 priority: 1
-condition: "global_fp_method_selected == 'injectable'"
+condition: "global_fp_method_selected.equalsIgnoreCase('injectable')"
 actions:
   - "isRelevant = true"
 
@@ -34,7 +34,7 @@ actions:
 name: step1_implanon_inserted
 description: Check if the client selected implanon method relevance
 priority: 1
-condition: "global_fp_method_selected == 'implanon'"
+condition: "global_fp_method_selected.equalsIgnoreCase('implanon')"
 actions:
   - "isRelevant = true"
 
@@ -42,7 +42,7 @@ actions:
 name: step1_injection_administered
 description: Check if the client selected injection method relevance
 priority: 1
-condition: "global_fp_method_selected == 'injectable'"
+condition: "global_fp_method_selected.equalsIgnoreCase('injectable')"
 actions:
   - "isRelevant = true"
 
@@ -66,7 +66,7 @@ actions:
 name: step1_jadelle_inserted
 description: Check if the client selected jadelle method relevance
 priority: 1
-condition: "global_fp_method_selected == 'jadelle'"
+condition: "global_fp_method_selected.equalsIgnoreCase('jadelle')"
 actions:
   - "isRelevant = true"
 
@@ -74,7 +74,7 @@ actions:
 name: step1_iucd_inserted
 description: Check if the client selected iucd method relevance
 priority: 1
-condition: "global_fp_method_selected == 'iucd'"
+condition: "global_fp_method_selected.equalsIgnoreCase('iucd')"
 actions:
   - "isRelevant = true"
 
@@ -82,7 +82,7 @@ actions:
 name: step1_cycle_beads_provided
 description: Check if the client selected SDM method relevance
 priority: 1
-condition: "global_fp_method_selected == 'sdm'"
+condition: "global_fp_method_selected.equalsIgnoreCase('sdm')"
 actions:
   - "isRelevant = true"
 
@@ -90,7 +90,7 @@ actions:
 name: step1_client_counseled_on_lam
 description: Check if the client selected LAM method relevance
 priority: 1
-condition: "global_fp_method_selected == 'lam'"
+condition: "global_fp_method_selected.equalsIgnoreCase('lam')"
 actions:
   - "isRelevant = true"
 
@@ -98,7 +98,7 @@ actions:
 name: step1_vasectomy
 description: Check if the client selected vasectomy method relevance
 priority: 1
-condition: "global_fp_method_selected == 'vasectomy'"
+condition: "global_fp_method_selected.equalsIgnoreCase('vasectomy')"
 actions:
   - "isRelevant = true"
 
@@ -106,7 +106,7 @@ actions:
 name: step1_btl
 description: Check if the client selected btl method relevance
 priority: 1
-condition: "global_fp_method_selected == 'btl'"
+condition: "global_fp_method_selected.equalsIgnoreCase('btl')"
 actions:
   - "isRelevant = true"
 
