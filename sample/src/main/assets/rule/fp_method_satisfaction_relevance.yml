@@ -26,3 +26,35 @@ priority: 1
 condition: "step1_reason_for_dissatisfaction.contains('other')"
 actions:
   - "isRelevant = true"
+
+---
+name: step1_jadelle_removed
+description: Check if the client removed jadelle method relevance
+priority: 1
+condition: "global_fp_method_selected.equalsIgnoreCase('jadelle')"
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_implanon_removed
+description: Check if the client removed implanon method relevance
+priority: 1
+condition: "global_fp_method_selected.equalsIgnoreCase('implanon')"
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_iud_removed
+description: Check if the client removed iud method relevance
+priority: 1
+condition: "global_fp_method_selected.equalsIgnoreCase('iud')"
+actions:
+  - "isRelevant = true"
+
+---
+name: step1_iud_removed
+description: Check if the client removed iud method relevance
+priority: 1
+condition: "global_fp_method_selected.equalsIgnoreCase('iud')"
+actions:
+  - "isRelevant = true"
