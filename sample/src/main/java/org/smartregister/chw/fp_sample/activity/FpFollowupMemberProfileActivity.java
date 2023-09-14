@@ -111,6 +111,10 @@ public class FpFollowupMemberProfileActivity extends BaseFpProfileActivity {
             jsonForm.getJSONObject("global").put("sex", memberObject.getGender());
         }
 
+        if (formName.equalsIgnoreCase(Constants.FORMS.FP_COUNSELING) && jsonForm != null) {
+            jsonForm.getJSONObject("global").put("sex", memberObject.getGender());
+        }
+
         String currentLocationId = "Tanzania";
         if (jsonForm != null) {
             jsonForm.getJSONObject("metadata").put("encounter_location", currentLocationId);
