@@ -34,6 +34,9 @@
             android:name="org.smartregister.chw.fp_sample.activity.FpScreeningActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name="org.smartregister.chw.fp_sample.activity.FpFollowupVisitProvisionOfServicesActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name="com.vijay.jsonwizard.activities.JsonWizardFormActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

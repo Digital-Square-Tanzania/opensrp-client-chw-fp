@@ -14,13 +14,13 @@ import org.smartregister.chw.fp.domain.MemberObject;
 import org.smartregister.chw.fp.presenter.BaseFpVisitPresenter;
 import org.smartregister.chw.fp.util.Constants;
 import org.smartregister.chw.fp_sample.R;
-import org.smartregister.chw.fp_sample.interactor.FpScreeningVisitInteractor;
+import org.smartregister.chw.fp_sample.interactor.FpFollowupVisitInteractor;
 
 import timber.log.Timber;
 
-public class FpFollowupVisitProvisonOfServicesActivity extends BaseFpFollowupVisitProvisionOfServicesActivity {
+public class FpFollowupVisitProvisionOfServicesActivity extends BaseFpFollowupVisitProvisionOfServicesActivity {
     public static void startMe(Activity activity, String baseEntityID, Boolean isEditMode) {
-        Intent intent = new Intent(activity, FpFollowupVisitProvisonOfServicesActivity.class);
+        Intent intent = new Intent(activity, FpFollowupVisitProvisionOfServicesActivity.class);
         intent.putExtra(Constants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID, baseEntityID);
         intent.putExtra(Constants.ACTIVITY_PAYLOAD.EDIT_MODE, isEditMode);
         activity.startActivityForResult(intent, Constants.REQUEST_CODE_GET_JSON);
@@ -32,7 +32,7 @@ public class FpFollowupVisitProvisonOfServicesActivity extends BaseFpFollowupVis
     }
 
     protected void registerPresenter() {
-        presenter = new BaseFpVisitPresenter(memberObject, this, new FpScreeningVisitInteractor());
+        presenter = new BaseFpVisitPresenter(memberObject, this, new FpFollowupVisitInteractor());
     }
 
     @Override

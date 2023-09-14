@@ -14,7 +14,7 @@ import org.smartregister.chw.fp.domain.MemberObject;
 import org.smartregister.chw.fp.presenter.BaseFpVisitPresenter;
 import org.smartregister.chw.fp.util.Constants;
 import org.smartregister.chw.fp_sample.R;
-import org.smartregister.chw.fp_sample.interactor.FpScreeningVisitInteractor;
+import org.smartregister.chw.fp_sample.interactor.FpOtherServicesVisitInteractor;
 
 import timber.log.Timber;
 
@@ -32,7 +32,7 @@ public class FpOtherServicesActivity extends BaseFpOtherServicesActivity {
     }
 
     protected void registerPresenter() {
-        presenter = new BaseFpVisitPresenter(memberObject, this, new FpScreeningVisitInteractor());
+        presenter = new BaseFpVisitPresenter(memberObject, this, new FpOtherServicesVisitInteractor());
     }
 
     @Override
