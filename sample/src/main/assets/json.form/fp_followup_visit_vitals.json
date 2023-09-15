@@ -75,6 +75,30 @@
         }
       },
       {
+        "key": "systolic",
+        "type": "edit_text",
+        "hint": "Systolic (Blood Pressure)",
+        "openmrs_entity_id": "systolic",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "v_numeric": {
+          "value": "true",
+          "err": "Please enter the systolic value"
+        },
+        "v_min": {
+          "value": "0",
+          "err": "Systolic value must be equal or greater than 0"
+        },
+        "v_max": {
+          "value": "320",
+          "err": "Systolic value must be equal or less than 320"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the Systolic (Blood Pressure)"
+        }
+      },
+      {
         "key": "diastolic",
         "type": "edit_text",
         "hint": "Diastolic (Blood Pressure)",
@@ -106,37 +130,13 @@
         ]
       },
       {
-        "key": "systolic",
-        "type": "edit_text",
-        "hint": "Systolic (Blood Pressure)",
-        "openmrs_entity_id": "systolic",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "v_numeric": {
-          "value": "true",
-          "err": "Please enter the systolic value"
-        },
-        "v_min": {
-          "value": "0",
-          "err": "Systolic value must be equal or greater than 0"
-        },
-        "v_max": {
-          "value": "320",
-          "err": "Systolic value must be equal or less than 320"
-        },
-        "v_required": {
-          "value": "true",
-          "err": "Please enter the Systolic (Blood Pressure)"
-        }
-      },
-      {
         "key": "last_normal_menstruation_period",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
         "openmrs_entity_id": "last_normal_menstruation_period",
         "type": "date_picker",
-        "min_date": "today",
-        "max_date": "today-5y",
+        "min_date": "today-5y",
+        "max_date": "today",
         "expanded": false,
         "hint": "Last Normal Menstrual Period (LNMP) ",
         "v_required": {

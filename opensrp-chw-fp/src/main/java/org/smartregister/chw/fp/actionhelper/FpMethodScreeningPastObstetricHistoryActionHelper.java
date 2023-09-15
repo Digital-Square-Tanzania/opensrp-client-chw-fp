@@ -1,12 +1,18 @@
 package org.smartregister.chw.fp.actionhelper;
 
+import static com.vijay.jsonwizard.constants.JsonFormConstants.FIELDS;
+import static com.vijay.jsonwizard.constants.JsonFormConstants.STEP1;
+import static org.smartregister.util.JsonFormUtils.VALUE;
+
 import android.content.Context;
 
-import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.smartregister.chw.fp.domain.MemberObject;
 import org.smartregister.chw.fp.model.BaseFpVisitAction;
-import org.smartregister.chw.fp.util.JsonFormUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -18,7 +24,7 @@ public class FpMethodScreeningPastObstetricHistoryActionHelper extends FpVisitAc
 
     protected MemberObject memberObject;
 
-    protected String yearOfDelivery;
+    private Boolean isFormComplete;
 
     public FpMethodScreeningPastObstetricHistoryActionHelper(Context context, MemberObject memberObject) {
         this.context = context;
@@ -39,7 +45,23 @@ public class FpMethodScreeningPastObstetricHistoryActionHelper extends FpVisitAc
     public void onPayloadReceived(String jsonPayload) {
         try {
             JSONObject jsonObject = new JSONObject(jsonPayload);
-            yearOfDelivery = JsonFormUtils.getValue(jsonObject, "year_of_delivery");
+            JSONArray fields = jsonObject.getJSONObject(STEP1).getJSONArray(FIELDS);
+
+            List<Boolean> expansionPanelsFilled = new ArrayList<Boolean>();
+            for (int i = 0; i < fields.length(); i++) {
+                JSONObject field = fields.getJSONObject(i);
+                if (field.has(VALUE) && field.getJSONArray(VALUE).length() > 0) {
+                    expansionPanelsFilled.add(true);
+                }
+            }
+            if (expansionPanelsFilled.size() == fields.length()) {
+                isFormComplete = true;
+            } else if (expansionPanelsFilled.size() > 0 && expansionPanelsFilled.size() < fields.length()) {
+                isFormComplete = false;
+            } else if (expansionPanelsFilled.size() == 0) {
+                isFormComplete = null;
+            }
+
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -52,10 +74,8 @@ public class FpMethodScreeningPastObstetricHistoryActionHelper extends FpVisitAc
 
     @Override
     public BaseFpVisitAction.Status evaluateStatusOnPayload() {
-        if (StringUtils.isNotBlank(yearOfDelivery)) {
-            return BaseFpVisitAction.Status.COMPLETED;
-        } else {
-            return BaseFpVisitAction.Status.PENDING;
-        }
+        if (isFormComplete == null) return BaseFpVisitAction.Status.PENDING;
+        else if (isFormComplete) return BaseFpVisitAction.Status.COMPLETED;
+        else return BaseFpVisitAction.Status.PARTIALLY_COMPLETED;
     }
 }

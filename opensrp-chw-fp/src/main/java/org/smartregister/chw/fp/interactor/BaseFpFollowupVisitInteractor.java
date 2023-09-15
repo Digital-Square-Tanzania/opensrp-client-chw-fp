@@ -14,6 +14,7 @@ import org.smartregister.chw.fp.R;
 import org.smartregister.chw.fp.actionhelper.FpFollowupVisitMethodContinuationActionHelper;
 import org.smartregister.chw.fp.actionhelper.FpFollowupVisitMethodSatisfactionActionHelper;
 import org.smartregister.chw.fp.actionhelper.FpFollowupVisitRecordPointOfServiceDeliveryActionHelper;
+import org.smartregister.chw.fp.actionhelper.FpFollowupVisitVitalsActionHelper;
 import org.smartregister.chw.fp.actionhelper.FpVisitActionHelper;
 import org.smartregister.chw.fp.contract.BaseFpVisitContract;
 import org.smartregister.chw.fp.dao.FpDao;
@@ -132,7 +133,7 @@ public class BaseFpFollowupVisitInteractor implements BaseFpVisitContract.Intera
     }
 
     protected void evaluateVitals(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
-        FpVisitActionHelper actionHelper = new FpFollowupVisitRecordPointOfServiceDeliveryActionHelper(mContext, memberObject);
+        FpVisitActionHelper actionHelper = new FpFollowupVisitVitalsActionHelper(mContext, memberObject);
         String actionName = mContext.getString(R.string.fp_vitals);
         BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.FP_FOLLOWUP_VISIT_VITALS).build();
         actionList.put(actionName, action);
