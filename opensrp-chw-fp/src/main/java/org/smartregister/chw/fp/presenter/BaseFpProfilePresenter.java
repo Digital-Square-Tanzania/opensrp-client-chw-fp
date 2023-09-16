@@ -1,31 +1,32 @@
 package org.smartregister.chw.fp.presenter;
 
 import android.content.Context;
+
 import androidx.annotation.Nullable;
 
-import org.smartregister.chw.fp.contract.FpProfileContract;
-import org.smartregister.chw.fp.domain.MemberObject;
+import org.smartregister.chw.fp.contract.BaseFpProfileContract;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 
 import java.lang.ref.WeakReference;
 
 import timber.log.Timber;
 
 
-public class BaseFpProfilePresenter implements FpProfileContract.Presenter {
-    protected WeakReference<FpProfileContract.View> view;
-    protected MemberObject memberObject;
-    protected FpProfileContract.Interactor interactor;
+public class BaseFpProfilePresenter implements BaseFpProfileContract.Presenter {
+    protected WeakReference<BaseFpProfileContract.View> view;
+    protected FpMemberObject fpMemberObject;
+    protected BaseFpProfileContract.Interactor interactor;
     protected Context context;
 
-    public BaseFpProfilePresenter(FpProfileContract.View view, FpProfileContract.Interactor interactor, MemberObject memberObject) {
+    public BaseFpProfilePresenter(BaseFpProfileContract.View view, BaseFpProfileContract.Interactor interactor, FpMemberObject fpMemberObject) {
         this.view = new WeakReference<>(view);
-        this.memberObject = memberObject;
+        this.fpMemberObject = fpMemberObject;
         this.interactor = interactor;
     }
 
     @Override
-    public void fillProfileData(MemberObject memberObject) {
-        if (memberObject != null && getView() != null) {
+    public void fillProfileData(FpMemberObject fpMemberObject) {
+        if (fpMemberObject != null && getView() != null) {
             getView().setProfileViewWithData();
         }
     }
@@ -38,7 +39,7 @@ public class BaseFpProfilePresenter implements FpProfileContract.Presenter {
 
         if (("OVERDUE").equals(visitState) || ("DUE").equals(visitState)) {
             if (("OVERDUE").equals(visitState)) {
-                getView().setOverDueColor();
+                getView().setFollowUpButtonOverdue();
             }
         } else {
             getView().hideView();
@@ -47,7 +48,7 @@ public class BaseFpProfilePresenter implements FpProfileContract.Presenter {
 
     @Override
     @Nullable
-    public FpProfileContract.View getView() {
+    public BaseFpProfileContract.View getView() {
         if (view != null && view.get() != null)
             return view.get();
 
@@ -56,7 +57,7 @@ public class BaseFpProfilePresenter implements FpProfileContract.Presenter {
 
     @Override
     public void refreshProfileBottom() {
-        interactor.refreshProfileInfo(memberObject, getView());
+        interactor.refreshProfileInfo(fpMemberObject, getView());
     }
 
     @Override

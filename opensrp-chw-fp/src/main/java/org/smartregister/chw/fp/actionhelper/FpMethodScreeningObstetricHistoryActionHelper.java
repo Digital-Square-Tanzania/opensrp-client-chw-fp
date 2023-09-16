@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
-import org.smartregister.chw.fp.domain.MemberObject;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.model.BaseFpVisitAction;
 import org.smartregister.chw.fp.util.JsonFormUtils;
 
@@ -16,7 +16,7 @@ import timber.log.Timber;
 public class FpMethodScreeningObstetricHistoryActionHelper extends FpVisitActionHelper {
     protected Context context;
 
-    protected MemberObject memberObject;
+    protected FpMemberObject fpMemberObject;
 
     protected String numberOfPregnancies;
 
@@ -32,9 +32,9 @@ public class FpMethodScreeningObstetricHistoryActionHelper extends FpVisitAction
 
     protected String isClientBreastfeeding;
 
-    public FpMethodScreeningObstetricHistoryActionHelper(Context context, MemberObject memberObject) {
+    public FpMethodScreeningObstetricHistoryActionHelper(Context context, FpMemberObject fpMemberObject) {
         this.context = context;
-        this.memberObject = memberObject;
+        this.fpMemberObject = fpMemberObject;
     }
 
     /**

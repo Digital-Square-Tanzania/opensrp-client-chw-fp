@@ -3,14 +3,14 @@ package org.smartregister.chw.fp.interactor;
 import androidx.annotation.VisibleForTesting;
 
 import org.smartregister.chw.fp.FpLibrary;
-import org.smartregister.chw.fp.contract.FpProfileContract;
-import org.smartregister.chw.fp.domain.MemberObject;
+import org.smartregister.chw.fp.contract.BaseFpProfileContract;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.domain.Visit;
 import org.smartregister.chw.fp.util.AppExecutors;
-import org.smartregister.chw.fp.util.Constants;
+import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.chw.fp.util.FpUtil;
 
-public class BaseFpProfileInteractor implements FpProfileContract.Interactor {
+public class BaseFpProfileInteractor implements BaseFpProfileContract.Interactor {
     protected AppExecutors appExecutors;
 
     @VisibleForTesting
@@ -23,15 +23,15 @@ public class BaseFpProfileInteractor implements FpProfileContract.Interactor {
     }
 
     @Override
-    public void refreshProfileInfo(MemberObject memberObject, FpProfileContract.InteractorCallBack callback) {
+    public void refreshProfileInfo(FpMemberObject fpMemberObject, BaseFpProfileContract.InteractorCallBack callback) {
         Runnable runnable = () -> appExecutors.mainThread().execute(() -> {
-            callback.refreshMedicalHistory(getVisit(Constants.EVENT_TYPE.FP_FOLLOW_UP_VISIT, memberObject) != null);
+            callback.refreshMedicalHistory(getVisit(FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT, fpMemberObject) != null);
         });
         appExecutors.diskIO().execute(runnable);
     }
 
     @Override
-    public void saveRegistration(final String jsonString, final FpProfileContract.InteractorCallBack callback) {
+    public void saveRegistration(final String jsonString, final BaseFpProfileContract.InteractorCallBack callback) {
 
         Runnable runnable = () -> {
             try {
@@ -44,9 +44,9 @@ public class BaseFpProfileInteractor implements FpProfileContract.Interactor {
         appExecutors.diskIO().execute(runnable);
     }
 
-    private Visit getVisit(String eventType, MemberObject memberObject) {
+    private Visit getVisit(String eventType, FpMemberObject fpMemberObject) {
         try {
-            return FpLibrary.getInstance().visitRepository().getLatestVisit(memberObject.getBaseEntityId(), eventType);
+            return FpLibrary.getInstance().visitRepository().getLatestVisit(fpMemberObject.getBaseEntityId(), eventType);
         } catch (Exception e) {
             return null;
         }

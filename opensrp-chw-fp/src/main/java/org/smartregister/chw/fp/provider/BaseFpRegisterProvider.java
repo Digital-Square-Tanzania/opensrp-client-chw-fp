@@ -33,7 +33,7 @@ import java.util.Set;
 
 import timber.log.Timber;
 
-public class FpRegisterProvider implements RecyclerViewProvider<FpRegisterProvider.RegisterViewHolder> {
+public class BaseFpRegisterProvider implements RecyclerViewProvider<BaseFpRegisterProvider.RegisterViewHolder> {
 
     private final LayoutInflater inflater;
 
@@ -42,7 +42,7 @@ public class FpRegisterProvider implements RecyclerViewProvider<FpRegisterProvid
     private Context context;
     private Set<org.smartregister.configurableviews.model.View> visibleColumns;
 
-    public FpRegisterProvider(Context context, View.OnClickListener paginationClickListener, View.OnClickListener onClickListener, Set visibleColumns) {
+    public BaseFpRegisterProvider(Context context, View.OnClickListener paginationClickListener, View.OnClickListener onClickListener, Set visibleColumns) {
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.paginationClickListener = paginationClickListener;

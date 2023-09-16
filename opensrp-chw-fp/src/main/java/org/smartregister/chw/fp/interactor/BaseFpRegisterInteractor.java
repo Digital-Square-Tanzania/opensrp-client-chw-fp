@@ -2,11 +2,11 @@ package org.smartregister.chw.fp.interactor;
 
 import androidx.annotation.VisibleForTesting;
 
-import org.smartregister.chw.fp.contract.FpRegisterContract;
+import org.smartregister.chw.fp.contract.BaseFpRegisterContract;
 import org.smartregister.chw.fp.util.FpUtil;
 import org.smartregister.chw.fp.util.AppExecutors;
 
-public class BaseFpRegisterInteractor implements FpRegisterContract.Interactor {
+public class BaseFpRegisterInteractor implements BaseFpRegisterContract.Interactor {
 
     private AppExecutors appExecutors;
 
@@ -20,7 +20,7 @@ public class BaseFpRegisterInteractor implements FpRegisterContract.Interactor {
     }
 
     @Override
-    public void saveRegistration(final String jsonString, final FpRegisterContract.InteractorCallBack callBack) {
+    public void saveRegistration(final String jsonString, final BaseFpRegisterContract.InteractorCallBack callBack) {
 
         Runnable runnable = () -> {
             try {

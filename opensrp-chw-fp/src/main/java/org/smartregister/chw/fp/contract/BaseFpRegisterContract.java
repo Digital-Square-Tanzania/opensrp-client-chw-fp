@@ -5,7 +5,7 @@ import com.vijay.jsonwizard.domain.Form;
 import org.json.JSONObject;
 import org.smartregister.view.contract.BaseRegisterContract;
 
-public interface FpRegisterContract {
+public interface BaseFpRegisterContract {
 
     interface View extends BaseRegisterContract.View {
         Presenter presenter();

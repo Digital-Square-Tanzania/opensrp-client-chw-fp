@@ -5,22 +5,22 @@ import android.util.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.smartregister.chw.fp.R;
-import org.smartregister.chw.fp.contract.FpRegisterContract;
+import org.smartregister.chw.fp.contract.BaseFpRegisterContract;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
 import timber.log.Timber;
 
-public class BaseFpRegisterPresenter implements FpRegisterContract.Presenter, FpRegisterContract.InteractorCallBack {
+public class BaseFpRegisterPresenter implements BaseFpRegisterContract.Presenter, BaseFpRegisterContract.InteractorCallBack {
 
     public static final String TAG = BaseFpRegisterPresenter.class.getName();
 
-    protected WeakReference<FpRegisterContract.View> viewReference;
-    private FpRegisterContract.Interactor interactor;
-    protected FpRegisterContract.Model model;
+    protected WeakReference<BaseFpRegisterContract.View> viewReference;
+    private BaseFpRegisterContract.Interactor interactor;
+    protected BaseFpRegisterContract.Model model;
 
-    public BaseFpRegisterPresenter(FpRegisterContract.View view, FpRegisterContract.Model model, FpRegisterContract.Interactor interactor) {
+    public BaseFpRegisterPresenter(BaseFpRegisterContract.View view, BaseFpRegisterContract.Model model, BaseFpRegisterContract.Interactor interactor) {
         viewReference = new WeakReference<>(view);
         this.interactor = interactor;
         this.model = model;
@@ -72,7 +72,7 @@ public class BaseFpRegisterPresenter implements FpRegisterContract.Presenter, Fp
 //        implement
     }
 
-    private FpRegisterContract.View getView() {
+    private BaseFpRegisterContract.View getView() {
         if (viewReference != null)
             return viewReference.get();
         else

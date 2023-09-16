@@ -1,6 +1,6 @@
 package org.smartregister.chw.fp.util;
 
-public interface Constants {
+public interface FamilyPlanningConstants {
 
     int REQUEST_CODE_GET_JSON = 2244;
     String ENCOUNTER_TYPE = "encounter_type";
@@ -18,6 +18,8 @@ public interface Constants {
 
     interface EVENT_TYPE {
         String FP_REGISTRATION = "FP Registration";
+
+        String UPDATE_FP_REGISTRATION = "Update FP Registration";
 
         String FP_OTHER_SERVICES= "FP Other Services";
 
@@ -70,9 +72,9 @@ public interface Constants {
     }
 
     interface TABLES {
-        String FP_REGISTER = "ec_fp_register";
+        String FP_REGISTER = "ec_family_planning";
 
-        String FP_FOLLOW_UP = "ec_fp_follow_up_visit";
+        String FP_FOLLOW_UP = "ec_family_planning_follow_up_visit";
     }
 
     interface ACTIVITY_PAYLOAD {
@@ -81,7 +83,7 @@ public interface Constants {
         String ACTION = "ACTION";
         String FP_FORM_NAME = "FP_FORM_NAME";
         String EDIT_MODE = "editMode";
-        String MEMBER_PROFILE_OBJECT = "MemberObject";
+        String MEMBER_OBJECT = "FpMemberObject";
 
     }
 
@@ -92,6 +94,70 @@ public interface Constants {
 
     interface CONFIGURATION {
         String FP_REGISTRATION_CONFIGURATION = "fp_registration";
+    }
+
+    interface DBConstants {
+        String FAMILY_MEMBER = "ec_family_member";
+
+        String FAMILY = "ec_family";
+
+        String FIRST_NAME = "first_name";
+
+        String MIDDLE_NAME = "middle_name";
+
+        String LAST_NAME = "last_name";
+
+        String BASE_ENTITY_ID = "base_entity_id";
+
+        String UNIQUE_ID = "unique_id";
+
+        String GENDER = "gender";
+
+        String DOB = "dob";
+
+        String AGE = "age";
+
+        String LAST_INTERACTED_WITH = "last_interacted_with";
+
+        String VILLAGE_TOWN = "village_town";
+
+        String DATE_REMOVED = "date_removed";
+
+        String RELATIONALID = "relationalid";
+
+        String FAMILY_HEAD = "family_head";
+
+        String PRIMARY_CARE_GIVER = "primary_caregiver";
+
+        String RELATIONAL_ID = "relational_id";
+
+        String DETAILS = "details";
+
+        String FP_METHOD_ACCEPTED = "fp_method_accepted";
+
+        String FP_FP_START_DATE = "fp_start_date";
+
+        String FP_PILL_CYCLES = "no_pillcycles";
+
+        String REASON_STOP_FP_CHW = "reason_stop_fp_chw";
+
+        String FP_POP = "POP";
+
+        String FP_COC = "COC";
+
+        String FP_FEMALE_CONDOM = "Female condom";
+
+        String FP_MALE_CONDOM = "Male condom";
+
+        String FP_INJECTABLE = "Injectable";
+
+        String FP_IUCD = "IUCD";
+
+        String FP_FEMALE_STERLIZATION = "Female sterilization";
+
+        String FP_MALE_STERLIZATION = "Male sterilization";
+
+        String FP_IMPLANON_NXT = "Implanon - NXT";
     }
 
 }

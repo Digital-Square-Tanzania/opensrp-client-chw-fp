@@ -73,4 +73,40 @@
     <string name="provide_other_services">Other Services</string>
     <string name="record_fp_followup_visit">Record FP Followup Visit</string>
 
+    <!--FP -->
+    <string name="fp_visit_day_next_due">Next Due %s </string>
+    <string name="fp_visit_day_due">%s DAYS DUE</string>
+    <string name="fp_visit_day_due_today">DUE TODAY</string>
+    <string name="fp_visit_day_overdue">%s DAYS OVERDUE</string>
+    <string name="fp_visit_day_overdue_today">OVERDUE TODAY</string>
+    <string name="fp_follow_up_visit">Fp Follow Up Visit</string>
+    <string name="fp_side_effects">Side effects</string>
+    <string name="counseling">Counseling</string>
+    <string name="resupply">Resupply %s</string>
+    <string name="next_health_facility_visit">Next health facility visit</string>
+    <string name="no_of_condoms">No. of Condoms:</string>
+    <string name="no_of_pill_cycles">No. of pill cycles:</string>
+    <string name="date_of_next_injection">Date of next injection:</string>
+    <string name="side_effects">Side-effects:</string>
+    <string name="action">Action:</string>
+
+    <!--Family planning fp start dates row-->
+    <string name="male_condom">Male Condom</string>
+    <string name="female_condom">Female Condom</string>
+    <string name="coc">COC</string>
+    <string name="pop">POP</string>
+    <string name="injectable">Injectable</string>
+    <string name="implanon">Implanon - NXT</string>
+    <string name="jadelle">Jadelle</string>
+    <string name="female_sterilization">Female Sterilization</string>
+    <string name="male_sterilization">Male Sterilization</string>
+    <string name="iucd">IUCD</string>
+    <string name="standard_day_method">Standard day method</string>
+    <string name="emergency_contraceptive">Emergency contraceptive</string>
+    <string name="not_applicable">Not applicable</string>
+    <string name="fp_insertion">insertion</string>
+    <string name="fp_started">started</string>
+    <string name="fp_on">on</string>
+    <string name="fp_followup_visit">FOLLOWUP\nVISIT</string>
+
 </resources>

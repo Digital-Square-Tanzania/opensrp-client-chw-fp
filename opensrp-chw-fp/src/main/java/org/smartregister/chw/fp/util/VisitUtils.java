@@ -1,9 +1,9 @@
 package org.smartregister.chw.fp.util;
 
 
-import static org.smartregister.chw.fp.util.Constants.EVENT_TYPE.DELETE_EVENT;
-import static org.smartregister.chw.fp.util.Constants.JSON_FORM_EXTRA.DELETE_EVENT_ID;
-import static org.smartregister.chw.fp.util.Constants.JSON_FORM_EXTRA.DELETE_FORM_SUBMISSION_ID;
+import static org.smartregister.chw.fp.util.FamilyPlanningConstants.EVENT_TYPE.DELETE_EVENT;
+import static org.smartregister.chw.fp.util.FamilyPlanningConstants.JSON_FORM_EXTRA.DELETE_EVENT_ID;
+import static org.smartregister.chw.fp.util.FamilyPlanningConstants.JSON_FORM_EXTRA.DELETE_FORM_SUBMISSION_ID;
 import static org.smartregister.chw.fp.util.JsonFormUtils.HOME_VISIT_GROUP;
 
 import android.content.Context;
@@ -45,7 +45,7 @@ public class VisitUtils {
 
         for (Visit v : visits) {
 
-            if (v.getVisitType().equalsIgnoreCase(Constants.EVENT_TYPE.FP_FOLLOW_UP_VISIT)) {
+            if (v.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT)) {
                 try {
                     visitList.add(v);
                 } catch (Exception e) {
@@ -63,7 +63,7 @@ public class VisitUtils {
 
     public static List<Visit> getVisits(String memberID, String... eventTypes) {
 
-        List<Visit> visits = (eventTypes != null && eventTypes.length > 0) ? getVisitsOnly(memberID, eventTypes[0]) : getVisitsOnly(memberID, Constants.EVENT_TYPE.FP_FOLLOW_UP_VISIT);
+        List<Visit> visits = (eventTypes != null && eventTypes.length > 0) ? getVisitsOnly(memberID, eventTypes[0]) : getVisitsOnly(memberID, FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT);
 
         return visits;
     }

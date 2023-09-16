@@ -14,7 +14,7 @@ import org.mockito.Spy;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.reflect.Whitebox;
-import org.smartregister.chw.fp.domain.MemberObject;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.fragment.BaseFpCallDialogFragment;
 
 @PrepareForTest(BaseFpCallDialogFragment.class)
@@ -29,20 +29,20 @@ public class BaseFpCallDialogFragmentTest {
     public View view;
 
     @Mock
-    public MemberObject memberObject;
+    public FpMemberObject fpMemberObject;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        Whitebox.setInternalState(BaseFpCallDialogFragment.class, "MEMBER_OBJECT", memberObject);
+        Whitebox.setInternalState(BaseFpCallDialogFragment.class, "MEMBER_OBJECT", fpMemberObject);
     }
 
     @Test(expected = Exception.class)
     public void setCallTitleFamilyHead() throws Exception {
         TextView textView = Mockito.mock(TextView.class);
 
-        Mockito.when(memberObject.getBaseEntityId()).thenReturn("123456");
-        Mockito.when(memberObject.getFamilyHead()).thenReturn("123456");
+        Mockito.when(fpMemberObject.getBaseEntityId()).thenReturn("123456");
+        Mockito.when(fpMemberObject.getFamilyHead()).thenReturn("123456");
 
         Mockito.when(viewGroup.findViewById(view.getId())).thenReturn(textView);
 
@@ -54,7 +54,7 @@ public class BaseFpCallDialogFragmentTest {
     public void setCallTitleAnc() throws Exception {
         TextView textView = Mockito.mock(TextView.class);
 
-        Mockito.when(memberObject.getAncMember()).thenReturn("0");
+        Mockito.when(fpMemberObject.getAncMember()).thenReturn("0");
 
         Mockito.when(viewGroup.findViewById(view.getId())).thenReturn(textView);
 
@@ -66,8 +66,8 @@ public class BaseFpCallDialogFragmentTest {
     public void setCallTitleCareGiver() throws Exception {
         TextView textView = Mockito.mock(TextView.class);
 
-        Mockito.when(memberObject.getBaseEntityId()).thenReturn("123456");
-        Mockito.when(memberObject.getPrimaryCareGiver()).thenReturn("123456");
+        Mockito.when(fpMemberObject.getBaseEntityId()).thenReturn("123456");
+        Mockito.when(fpMemberObject.getPrimaryCareGiver()).thenReturn("123456");
 
         Mockito.when(viewGroup.findViewById(view.getId())).thenReturn(textView);
 
@@ -79,7 +79,7 @@ public class BaseFpCallDialogFragmentTest {
     public void setCallTitlePnc() throws Exception {
         TextView textView = Mockito.mock(TextView.class);
 
-        Mockito.when(memberObject.getPncMember()).thenReturn("0");
+        Mockito.when(fpMemberObject.getPncMember()).thenReturn("0");
 
         Mockito.when(viewGroup.findViewById(view.getId())).thenReturn(textView);
 
@@ -91,8 +91,8 @@ public class BaseFpCallDialogFragmentTest {
     public void setCallTitle() throws Exception {
         TextView textView = Mockito.mock(TextView.class);
 
-        Mockito.when(memberObject.getBaseEntityId()).thenReturn("1");
-        Mockito.when(memberObject.getFamilyHead()).thenReturn("123456");
+        Mockito.when(fpMemberObject.getBaseEntityId()).thenReturn("1");
+        Mockito.when(fpMemberObject.getFamilyHead()).thenReturn("123456");
 
         Mockito.when(viewGroup.findViewById(view.getId())).thenReturn(textView);
 
@@ -102,7 +102,7 @@ public class BaseFpCallDialogFragmentTest {
 
     @Test(expected = Exception.class)
     public void initUI() throws Exception {
-        Mockito.when(memberObject.getPhoneNumber()).thenReturn("123456789");
+        Mockito.when(fpMemberObject.getPhoneNumber()).thenReturn("123456789");
         Whitebox.invokeMethod(baseTestCallDialogFragment, "initUI", viewGroup);
         PowerMockito.verifyPrivate(baseTestCallDialogFragment).invoke("setCallTitle", viewGroup, view.getId(), "message");
 

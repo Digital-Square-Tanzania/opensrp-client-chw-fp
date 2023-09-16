@@ -5,10 +5,10 @@ import android.widget.TextView;
 
 import org.smartregister.chw.fp.R;
 import org.smartregister.chw.fp.activity.BaseFpProfileActivity;
-import org.smartregister.chw.fp.contract.FpRegisterFragmentContract;
+import org.smartregister.chw.fp.contract.BaseFpRegisterFragmentContract;
 import org.smartregister.chw.fp.model.BaseFpRegisterFragmentModel;
 import org.smartregister.chw.fp.presenter.BaseFpRegisterFragmentPresenter;
-import org.smartregister.chw.fp.provider.FpRegisterProvider;
+import org.smartregister.chw.fp.provider.BaseFpRegisterProvider;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.configurableviews.model.View;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
@@ -19,14 +19,14 @@ import org.smartregister.view.fragment.BaseRegisterFragment;
 import java.util.HashMap;
 import java.util.Set;
 
-public class BaseFpRegisterFragment extends BaseRegisterFragment implements FpRegisterFragmentContract.View {
+public class BaseFpRegisterFragment extends BaseRegisterFragment implements BaseFpRegisterFragmentContract.View {
     public static final String CLICK_VIEW_NORMAL = "click_view_normal";
     public static final String FOLLOW_UP_VISIT = "follow_up_visit";
 
     @Override
     public void initializeAdapter(Set<View> visibleColumns) {
-        FpRegisterProvider fpRegisterProvider = new FpRegisterProvider(getActivity(), paginationViewHandler, registerActionHandler, visibleColumns);
-        clientAdapter = new RecyclerViewPaginatedAdapter(null, fpRegisterProvider, context().commonrepository(this.tablename));
+        BaseFpRegisterProvider baseFpRegisterProvider = new BaseFpRegisterProvider(getActivity(), paginationViewHandler, registerActionHandler, visibleColumns);
+        clientAdapter = new RecyclerViewPaginatedAdapter(null, baseFpRegisterProvider, context().commonrepository(this.tablename));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
     }
@@ -71,8 +71,8 @@ public class BaseFpRegisterFragment extends BaseRegisterFragment implements FpRe
     }
 
     @Override
-    public FpRegisterFragmentContract.Presenter presenter() {
-        return (FpRegisterFragmentContract.Presenter) presenter;
+    public BaseFpRegisterFragmentContract.Presenter presenter() {
+        return (BaseFpRegisterFragmentContract.Presenter) presenter;
     }
 
     @Override

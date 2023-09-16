@@ -3,8 +3,9 @@ package org.smartregister.chw.fp.dao;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.fp.FpLibrary;
-import org.smartregister.chw.fp.domain.MemberObject;
-import org.smartregister.chw.fp.util.Constants;
+import org.smartregister.chw.fp.domain.FpMemberObject;
+import org.smartregister.chw.fp.domain.Visit;
+import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.dao.AbstractDao;
 
@@ -14,12 +15,48 @@ import timber.log.Timber;
 
 public class FpDao extends AbstractDao {
     public static void closeFpMemberFromRegister(String baseEntityID) {
-        String sql = "UPDATE " + Constants.TABLES.FP_REGISTER + " set is_closed = 1 where base_entity_id = '" + baseEntityID + "'";
+        String sql = "UPDATE " + FamilyPlanningConstants.TABLES.FP_REGISTER + " set is_closed = 1 where base_entity_id = '" + baseEntityID + "'";
         updateDB(sql);
     }
 
+    public static Visit getLatestVisit(String baseEntityId) {
+        String sql = "select visit_id, visit_type, parent_visit_id, visit_date from visits where base_entity_id = '" +
+                baseEntityId + "' " +
+                "ORDER BY visit_date DESC LIMIT 1";
+        List<Visit> visit = AbstractDao.readData(sql, getVisitDataMap());
+        if (visit.size() == 0) {
+            return null;
+        }
+
+        return visit.get(0);
+    }
+
+    public static Visit getLatestVisit(String baseEntityId, String visitType) {
+        String sql = "select visit_id, visit_type, parent_visit_id, visit_date from visits where base_entity_id = '" +
+                baseEntityId + "' " +
+                "and visit_type = '" + visitType + "' ORDER BY visit_date DESC LIMIT 1";
+        List<Visit> visit = AbstractDao.readData(sql, getVisitDataMap());
+        if (visit.size() == 0) {
+            return null;
+        }
+
+        return visit.get(0);
+    }
+
+    private static DataMap<Visit> getVisitDataMap() {
+        return c -> {
+            Visit visit = new Visit();
+            visit.setVisitId(getCursorValue(c, "visit_id"));
+            visit.setParentVisitID(getCursorValue(c, "parent_visit_id"));
+            visit.setVisitType(getCursorValue(c, "visit_type"));
+            visit.setDate(getCursorValueAsDate(c, "visit_date"));
+
+            return visit;
+        };
+    }
+
     public static boolean isRegisteredForFp(String baseEntityID) {
-        String sql = "SELECT count(p.base_entity_id) count FROM " + Constants.TABLES.FP_REGISTER + " p " + "WHERE p.base_entity_id = '" + baseEntityID + "' AND p.is_closed = 0";
+        String sql = "SELECT count(p.base_entity_id) count FROM " + FamilyPlanningConstants.TABLES.FP_REGISTER + " p " + "WHERE p.base_entity_id = '" + baseEntityID + "' AND p.is_closed = 0";
 
         DataMap<Integer> dataMap = cursor -> getCursorIntValue(cursor, "count");
 
@@ -29,43 +66,47 @@ public class FpDao extends AbstractDao {
         return res.get(0) > 0;
     }
 
-    public static MemberObject getMember(String baseEntityID) {
-        String sql = "select m.base_entity_id , m.unique_id , m.relational_id , m.dob , m.first_name , m.middle_name , m.last_name , m.gender , m.phone_number , m.other_phone_number , f.first_name family_name ,f.primary_caregiver , f.family_head , f.village_town ,fh.first_name family_head_first_name , fh.middle_name family_head_middle_name , fh.last_name family_head_last_name, fh.phone_number family_head_phone_number ,  pcg.first_name pcg_first_name , pcg.last_name pcg_last_name , pcg.middle_name pcg_middle_name , pcg.phone_number  pcg_phone_number , mr.* from ec_family_member m inner join ec_family f on m.relational_id = f.base_entity_id inner join " + Constants.TABLES.FP_REGISTER + " mr on mr.base_entity_id = m.base_entity_id left join ec_family_member fh on fh.base_entity_id = f.family_head left join ec_family_member pcg on pcg.base_entity_id = f.primary_caregiver where m.base_entity_id ='" + baseEntityID + "' ";
+    public static FpMemberObject getMember(String baseEntityID) {
+        String sql = "select m.base_entity_id , m.unique_id , m.relational_id , m.dob , m.first_name , m.middle_name , m.last_name , m.gender , m.phone_number , m.other_phone_number , f.first_name family_name ,f.primary_caregiver , f.family_head , f.village_town ,fh.first_name family_head_first_name , fh.middle_name family_head_middle_name , fh.last_name family_head_last_name, fh.phone_number family_head_phone_number ,  pcg.first_name pcg_first_name , pcg.last_name pcg_last_name , pcg.middle_name pcg_middle_name , pcg.phone_number  pcg_phone_number , mr.* from ec_family_member m inner join ec_family f on m.relational_id = f.base_entity_id inner join " + FamilyPlanningConstants.TABLES.FP_REGISTER + " mr on mr.base_entity_id = m.base_entity_id left join ec_family_member fh on fh.base_entity_id = f.family_head left join ec_family_member pcg on pcg.base_entity_id = f.primary_caregiver where m.base_entity_id ='" + baseEntityID + "' ";
 
-        DataMap<MemberObject> dataMap = cursor -> {
-            MemberObject memberObject = new MemberObject();
+        DataMap<FpMemberObject> dataMap = cursor -> {
+            FpMemberObject fpMemberObject = new FpMemberObject();
 
-            memberObject.setFirstName(getCursorValue(cursor, "first_name", ""));
-            memberObject.setMiddleName(getCursorValue(cursor, "middle_name", ""));
-            memberObject.setLastName(getCursorValue(cursor, "last_name", ""));
-            memberObject.setAddress(getCursorValue(cursor, "village_town"));
-            memberObject.setGender(getCursorValue(cursor, "gender"));
-            memberObject.setUniqueId(getCursorValue(cursor, "unique_id", ""));
-            memberObject.setDob(getCursorValue(cursor, "dob"));
-            memberObject.setFamilyBaseEntityId(getCursorValue(cursor, "relational_id", ""));
-            memberObject.setRelationalId(getCursorValue(cursor, "relational_id", ""));
-            memberObject.setPrimaryCareGiver(getCursorValue(cursor, "primary_caregiver"));
-            memberObject.setFamilyName(getCursorValue(cursor, "family_name", ""));
-            memberObject.setPhoneNumber(getCursorValue(cursor, "phone_number", ""));
-            memberObject.setBaseEntityId(getCursorValue(cursor, "base_entity_id", ""));
-            memberObject.setFamilyHead(getCursorValue(cursor, "family_head", ""));
-            memberObject.setFamilyHeadPhoneNumber(getCursorValue(cursor, "pcg_phone_number", ""));
-            memberObject.setFamilyHeadPhoneNumber(getCursorValue(cursor, "family_head_phone_number", ""));
+            fpMemberObject.setFirstName(getCursorValue(cursor, "first_name", ""));
+            fpMemberObject.setMiddleName(getCursorValue(cursor, "middle_name", ""));
+            fpMemberObject.setLastName(getCursorValue(cursor, "last_name", ""));
+            fpMemberObject.setAddress(getCursorValue(cursor, "village_town"));
+            fpMemberObject.setGender(getCursorValue(cursor, "gender"));
+            fpMemberObject.setUniqueId(getCursorValue(cursor, "unique_id", ""));
+            fpMemberObject.setDob(getCursorValue(cursor, "dob"));
+            fpMemberObject.setFamilyBaseEntityId(getCursorValue(cursor, "relational_id", ""));
+            fpMemberObject.setRelationalId(getCursorValue(cursor, "relational_id", ""));
+            fpMemberObject.setPrimaryCareGiver(getCursorValue(cursor, "primary_caregiver"));
+            fpMemberObject.setFamilyName(getCursorValue(cursor, "family_name", ""));
+            fpMemberObject.setPhoneNumber(getCursorValue(cursor, "phone_number", ""));
+            fpMemberObject.setBaseEntityId(getCursorValue(cursor, "base_entity_id", ""));
+            fpMemberObject.setFamilyHead(getCursorValue(cursor, "family_head", ""));
+            fpMemberObject.setFamilyHeadPhoneNumber(getCursorValue(cursor, "pcg_phone_number", ""));
+            fpMemberObject.setFamilyHeadPhoneNumber(getCursorValue(cursor, "family_head_phone_number", ""));
 
             String familyHeadName = getCursorValue(cursor, "family_head_first_name", "") + " " + getCursorValue(cursor, "family_head_middle_name", "");
 
             familyHeadName = (familyHeadName.trim() + " " + getCursorValue(cursor, "family_head_last_name", "")).trim();
-            memberObject.setFamilyHeadName(familyHeadName);
+            fpMemberObject.setFamilyHeadName(familyHeadName);
 
             String familyPcgName = getCursorValue(cursor, "pcg_first_name", "") + " " + getCursorValue(cursor, "pcg_middle_name", "");
 
             familyPcgName = (familyPcgName.trim() + " " + getCursorValue(cursor, "pcg_last_name", "")).trim();
-            memberObject.setPrimaryCareGiverName(familyPcgName);
+            fpMemberObject.setPrimaryCareGiverName(familyPcgName);
 
-            return memberObject;
+            fpMemberObject.setFpStartDate(getCursorValue(cursor, "fp_start_date", ""));
+            fpMemberObject.setFpMethod(getCursorValue(cursor, "fp_method_accepted", ""));
+            fpMemberObject.setFpStartDate(getCursorValue(cursor, "fp_start_date", ""));
+
+            return fpMemberObject;
         };
 
-        List<MemberObject> res = readData(sql, dataMap);
+        List<FpMemberObject> res = readData(sql, dataMap);
         if (res == null || res.size() != 1) return null;
 
         return res.get(0);

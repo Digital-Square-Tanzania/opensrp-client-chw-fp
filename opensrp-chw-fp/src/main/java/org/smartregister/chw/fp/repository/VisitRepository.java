@@ -8,7 +8,7 @@ import net.sqlcipher.database.SQLiteDatabase;
 import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.smartregister.chw.fp.domain.Visit;
-import org.smartregister.chw.fp.util.Constants;
+import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.chw.fp.util.DBConstants;
 import org.smartregister.repository.BaseRepository;
 
@@ -375,7 +375,7 @@ public class VisitRepository extends BaseRepository {
         try {
             ContentValues values = new ContentValues();
             values.put(DBConstants.KEY.VISIT_NOT_DONE, date);
-            getWritableDatabase().update(Constants.TABLES.FP_REGISTER, values, DBConstants.KEY.BASE_ENTITY_ID + " = ?", new String[]{baseID});
+            getWritableDatabase().update(FamilyPlanningConstants.TABLES.FP_REGISTER, values, DBConstants.KEY.BASE_ENTITY_ID + " = ?", new String[]{baseID});
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -389,7 +389,7 @@ public class VisitRepository extends BaseRepository {
                 return null;
             }
 
-            cursor = database.query(Constants.TABLES.FP_REGISTER, new String[]{dateColumn}, BASE_ENTITY_ID + " = ? " + COLLATE_NOCASE, new String[]{baseEntityID}, null, null, null);
+            cursor = database.query(FamilyPlanningConstants.TABLES.FP_REGISTER, new String[]{dateColumn}, BASE_ENTITY_ID + " = ? " + COLLATE_NOCASE, new String[]{baseEntityID}, null, null, null);
 
             if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst()) {
                 String date = cursor.getString(cursor.getColumnIndex(dateColumn));

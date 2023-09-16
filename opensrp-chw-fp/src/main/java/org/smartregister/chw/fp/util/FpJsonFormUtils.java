@@ -27,8 +27,8 @@ public class FpJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
     public static JSONArray malariaFormFields(JSONObject jsonForm) {
         try {
-            JSONArray fieldsOne = fields(jsonForm, Constants.STEP_ONE);
-            JSONArray fieldsTwo = fields(jsonForm, Constants.STEP_TWO);
+            JSONArray fieldsOne = fields(jsonForm, FamilyPlanningConstants.STEP_ONE);
+            JSONArray fieldsTwo = fields(jsonForm, FamilyPlanningConstants.STEP_TWO);
             if (fieldsTwo != null) {
                 for (int i = 0; i < fieldsTwo.length(); i++) {
                     fieldsOne.put(fieldsTwo.get(i));
@@ -70,14 +70,14 @@ public class FpJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         JSONObject jsonForm = registrationFormParams.getMiddle();
         JSONArray fields = registrationFormParams.getRight();
         String entityId = getString(jsonForm, ENTITY_ID);
-        String encounter_type = jsonForm.optString(Constants.JSON_FORM_EXTRA.ENCOUNTER_TYPE);
+        String encounter_type = jsonForm.optString(FamilyPlanningConstants.JSON_FORM_EXTRA.ENCOUNTER_TYPE);
 
-        if (Constants.EVENT_TYPE.FP_REGISTRATION.equals(encounter_type)) {
-            encounter_type = Constants.TABLES.FP_REGISTER;
-        } else if (Constants.EVENT_TYPE.FP_FOLLOW_UP_VISIT.equals(encounter_type)) {
-            encounter_type = Constants.TABLES.FP_FOLLOW_UP;
+        if (FamilyPlanningConstants.EVENT_TYPE.FP_REGISTRATION.equals(encounter_type)) {
+            encounter_type = FamilyPlanningConstants.TABLES.FP_REGISTER;
+        } else if (FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT.equals(encounter_type)) {
+            encounter_type = FamilyPlanningConstants.TABLES.FP_FOLLOW_UP;
         }
-        return org.smartregister.util.JsonFormUtils.createEvent(fields, getJSONObject(jsonForm, METADATA), formTag(allSharedPreferences), entityId, getString(jsonForm, Constants.ENCOUNTER_TYPE), encounter_type);
+        return org.smartregister.util.JsonFormUtils.createEvent(fields, getJSONObject(jsonForm, METADATA), formTag(allSharedPreferences), entityId, getString(jsonForm, FamilyPlanningConstants.ENCOUNTER_TYPE), encounter_type);
     }
 
     protected static FormTag formTag(AllSharedPreferences allSharedPreferences) {

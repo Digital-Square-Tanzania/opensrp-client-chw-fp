@@ -15,13 +15,13 @@ import org.smartregister.chw.fp.actionhelper.FpOtherServicesOfferedActionHelper;
 import org.smartregister.chw.fp.actionhelper.FpVisitActionHelper;
 import org.smartregister.chw.fp.contract.BaseFpVisitContract;
 import org.smartregister.chw.fp.dao.FpDao;
-import org.smartregister.chw.fp.domain.MemberObject;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.domain.Visit;
 import org.smartregister.chw.fp.domain.VisitDetail;
 import org.smartregister.chw.fp.model.BaseFpVisitAction;
 import org.smartregister.chw.fp.repository.VisitRepository;
 import org.smartregister.chw.fp.util.AppExecutors;
-import org.smartregister.chw.fp.util.Constants;
+import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.chw.fp.util.JsonFormUtils;
 import org.smartregister.chw.fp.util.NCUtils;
 import org.smartregister.chw.fp.util.VisitUtils;
@@ -60,10 +60,10 @@ public class BaseFpOtherServicesVisitInteractor implements BaseFpVisitContract.I
 
     @Override
     public void reloadMemberDetails(String memberID, BaseFpVisitContract.InteractorCallBack callBack) {
-        MemberObject memberObject = getMemberClient(memberID);
-        if (memberObject != null) {
+        FpMemberObject fpMemberObject = getMemberClient(memberID);
+        if (fpMemberObject != null) {
             final Runnable runnable = () -> {
-                appExecutors.mainThread().execute(() -> callBack.onMemberDetailsReloaded(memberObject));
+                appExecutors.mainThread().execute(() -> callBack.onMemberDetailsReloaded(fpMemberObject));
             };
             appExecutors.diskIO().execute(runnable);
         }
@@ -73,10 +73,10 @@ public class BaseFpOtherServicesVisitInteractor implements BaseFpVisitContract.I
      * Override this method and return actual member object for the provided user
      *
      * @param memberID unique identifier for the user
-     * @return MemberObject wrapper for the user's data
+     * @return FpMemberObject wrapper for the user's data
      */
     @Override
-    public MemberObject getMemberClient(String memberID) {
+    public FpMemberObject getMemberClient(String memberID) {
         return FpDao.getMember(memberID);
     }
 
@@ -86,10 +86,10 @@ public class BaseFpOtherServicesVisitInteractor implements BaseFpVisitContract.I
     }
 
     @Override
-    public void calculateActions(final BaseFpVisitContract.View view, MemberObject memberObject, final BaseFpVisitContract.InteractorCallBack callBack) {
+    public void calculateActions(final BaseFpVisitContract.View view, FpMemberObject fpMemberObject, final BaseFpVisitContract.InteractorCallBack callBack) {
         mContext = view.getContext();
         if (view.getEditMode()) {
-            Visit lastVisit = fpLibrary.visitRepository().getLatestVisit(memberObject.getBaseEntityId(), Constants.EVENT_TYPE.FP_OTHER_SERVICES);
+            Visit lastVisit = fpLibrary.visitRepository().getLatestVisit(fpMemberObject.getBaseEntityId(), FamilyPlanningConstants.EVENT_TYPE.FP_OTHER_SERVICES);
 
             if (lastVisit != null) {
                 details = VisitUtils.getVisitGroups(fpLibrary.visitDetailsRepository().getVisits(lastVisit.getVisitId()));
@@ -98,7 +98,7 @@ public class BaseFpOtherServicesVisitInteractor implements BaseFpVisitContract.I
 
         final Runnable runnable = () -> {
             try {
-                evaluateOtherServices(memberObject, details, callBack);
+                evaluateOtherServices(fpMemberObject, details, callBack);
             } catch (BaseFpVisitAction.ValidationException e) {
                 Timber.e(e);
             }
@@ -109,10 +109,10 @@ public class BaseFpOtherServicesVisitInteractor implements BaseFpVisitContract.I
         appExecutors.diskIO().execute(runnable);
     }
 
-    protected void evaluateOtherServices(MemberObject memberObject, Map<String, List<VisitDetail>> details, BaseFpVisitContract.InteractorCallBack callBack) throws BaseFpVisitAction.ValidationException {
-        FpVisitActionHelper actionHelper = new FpOtherServicesOfferedActionHelper(mContext, memberObject, details, actionList, callBack);
+    protected void evaluateOtherServices(FpMemberObject fpMemberObject, Map<String, List<VisitDetail>> details, BaseFpVisitContract.InteractorCallBack callBack) throws BaseFpVisitAction.ValidationException {
+        FpVisitActionHelper actionHelper = new FpOtherServicesOfferedActionHelper(mContext, fpMemberObject, details, actionList, callBack);
         String actionName = mContext.getString(R.string.fp_other_services);
-        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.FP_OTHER_SERVICES_OFFERED).build();
+        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_OTHER_SERVICES_OFFERED).build();
         actionList.put(actionName, action);
     }
 
@@ -307,11 +307,11 @@ public class BaseFpOtherServicesVisitInteractor implements BaseFpVisitContract.I
     }
 
     protected String getEncounterType() {
-        return Constants.EVENT_TYPE.FP_OTHER_SERVICES;
+        return FamilyPlanningConstants.EVENT_TYPE.FP_OTHER_SERVICES;
     }
 
     protected String getTableName() {
-        return Constants.TABLES.FP_REGISTER;
+        return FamilyPlanningConstants.TABLES.FP_REGISTER;
     }
 
 }

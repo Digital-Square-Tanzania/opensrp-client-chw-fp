@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.reflect.Whitebox;
-import org.smartregister.chw.fp.contract.FpRegisterContract;
+import org.smartregister.chw.fp.contract.BaseFpRegisterContract;
 import org.smartregister.chw.fp.presenter.BaseFpRegisterPresenter;
 
 @PrepareForTest(BaseFpRegisterPresenter.class)
@@ -18,11 +18,11 @@ public class BaseFpRegisterPresenterTest {
     protected BaseFpRegisterPresenter baseFpRegisterPresenter;
 
     @Mock
-    protected FpRegisterContract.Interactor interactor;
+    protected BaseFpRegisterContract.Interactor interactor;
     @Mock
-    protected FpRegisterContract.Model model;
+    protected BaseFpRegisterContract.Model model;
     @Mock
-    protected FpRegisterContract.View baseView;
+    protected BaseFpRegisterContract.View baseView;
     private BaseFpRegisterPresenter presenter;
 
     @Before

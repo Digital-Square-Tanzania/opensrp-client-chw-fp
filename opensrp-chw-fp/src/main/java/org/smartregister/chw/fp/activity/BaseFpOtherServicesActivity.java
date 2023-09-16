@@ -26,11 +26,11 @@ import org.smartregister.chw.fp.R;
 import org.smartregister.chw.fp.adapter.BaseFpVisitAdapter;
 import org.smartregister.chw.fp.contract.BaseFpVisitContract;
 import org.smartregister.chw.fp.dao.FpDao;
-import org.smartregister.chw.fp.domain.MemberObject;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.interactor.BaseFpOtherServicesVisitInteractor;
 import org.smartregister.chw.fp.model.BaseFpVisitAction;
 import org.smartregister.chw.fp.presenter.BaseFpVisitPresenter;
-import org.smartregister.chw.fp.util.Constants;
+import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.view.activity.SecuredActivity;
 
 import java.text.MessageFormat;
@@ -44,7 +44,7 @@ public class BaseFpOtherServicesActivity extends SecuredActivity implements Base
     private static final String TAG = BaseFpOtherServicesActivity.class.getCanonicalName();
     protected Map<String, BaseFpVisitAction> actionList = new LinkedHashMap<>();
     protected BaseFpVisitContract.Presenter presenter;
-    protected MemberObject memberObject;
+    protected FpMemberObject fpMemberObject;
     protected String baseEntityID;
     protected Boolean isEditMode = false;
     protected RecyclerView.Adapter mAdapter;
@@ -57,9 +57,9 @@ public class BaseFpOtherServicesActivity extends SecuredActivity implements Base
 
     public static void startMe(Activity activity, String baseEntityID, Boolean isEditMode) {
         Intent intent = new Intent(activity, BaseFpOtherServicesActivity.class);
-        intent.putExtra(Constants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID, baseEntityID);
-        intent.putExtra(Constants.ACTIVITY_PAYLOAD.EDIT_MODE, isEditMode);
-        activity.startActivityForResult(intent, Constants.REQUEST_CODE_GET_JSON);
+        intent.putExtra(FamilyPlanningConstants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID, baseEntityID);
+        intent.putExtra(FamilyPlanningConstants.ACTIVITY_PAYLOAD.EDIT_MODE, isEditMode);
+        activity.startActivityForResult(intent, FamilyPlanningConstants.REQUEST_CODE_GET_JSON);
     }
 
     @Override
@@ -68,9 +68,9 @@ public class BaseFpOtherServicesActivity extends SecuredActivity implements Base
         setContentView(R.layout.activity_base_fp_visit);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            isEditMode = getIntent().getBooleanExtra(Constants.ACTIVITY_PAYLOAD.EDIT_MODE, false);
-            baseEntityID = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID);
-            memberObject = getMemberObject(baseEntityID);
+            isEditMode = getIntent().getBooleanExtra(FamilyPlanningConstants.ACTIVITY_PAYLOAD.EDIT_MODE, false);
+            baseEntityID = getIntent().getStringExtra(FamilyPlanningConstants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID);
+            fpMemberObject = getMemberObject(baseEntityID);
         }
 
         confirmCloseTitle = getString(R.string.confirm_form_close);
@@ -87,7 +87,7 @@ public class BaseFpOtherServicesActivity extends SecuredActivity implements Base
         }
     }
 
-    protected MemberObject getMemberObject(String baseEntityId) {
+    protected FpMemberObject getMemberObject(String baseEntityId) {
         return FpDao.getMember(baseEntityId);
     }
 
@@ -113,7 +113,7 @@ public class BaseFpOtherServicesActivity extends SecuredActivity implements Base
     }
 
     protected void registerPresenter() {
-        presenter = new BaseFpVisitPresenter(memberObject, this, new BaseFpOtherServicesVisitInteractor());
+        presenter = new BaseFpVisitPresenter(fpMemberObject, this, new BaseFpOtherServicesVisitInteractor());
     }
 
     @Override
@@ -141,10 +141,10 @@ public class BaseFpOtherServicesActivity extends SecuredActivity implements Base
     }
 
     @Override
-    public void onMemberDetailsReloaded(MemberObject memberObject) {
-        this.memberObject = memberObject;
+    public void onMemberDetailsReloaded(FpMemberObject fpMemberObject) {
+        this.fpMemberObject = fpMemberObject;
         presenter.initialize();
-        redrawHeader(memberObject);
+        redrawHeader(fpMemberObject);
     }
 
     @Override
@@ -187,24 +187,24 @@ public class BaseFpOtherServicesActivity extends SecuredActivity implements Base
             } catch (Exception e) {
                 Timber.e(e);
                 String locationId = FpLibrary.getInstance().context().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
-                presenter().startForm(fpVisitAction.getFormName(), memberObject.getBaseEntityId(), locationId);
+                presenter().startForm(fpVisitAction.getFormName(), fpMemberObject.getBaseEntityId(), locationId);
             }
         } else {
             String locationId = FpLibrary.getInstance().context().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
-            presenter().startForm(fpVisitAction.getFormName(), memberObject.getBaseEntityId(), locationId);
+            presenter().startForm(fpVisitAction.getFormName(), fpMemberObject.getBaseEntityId(), locationId);
         }
     }
 
     @Override
     public void startFormActivity(JSONObject jsonForm) {
         Intent intent = new Intent(this, JsonFormActivity.class);
-        intent.putExtra(Constants.JSON_FORM_EXTRA.JSON, jsonForm.toString());
+        intent.putExtra(FamilyPlanningConstants.JSON_FORM_EXTRA.JSON, jsonForm.toString());
 
         if (getFormConfig() != null) {
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, getFormConfig());
         }
 
-        startActivityForResult(intent, Constants.REQUEST_CODE_GET_JSON);
+        startActivityForResult(intent, FamilyPlanningConstants.REQUEST_CODE_GET_JSON);
     }
 
     @Override
@@ -217,8 +217,8 @@ public class BaseFpOtherServicesActivity extends SecuredActivity implements Base
     }
 
     @Override
-    public void redrawHeader(MemberObject memberObject) {
-        tvTitle.setText(MessageFormat.format("{0}, {1} \u00B7 {2}", memberObject.getFullName(), String.valueOf(memberObject.getAge()), getString(R.string.fp_visit)));
+    public void redrawHeader(FpMemberObject fpMemberObject) {
+        tvTitle.setText(MessageFormat.format("{0}, {1} \u00B7 {2}", fpMemberObject.getFullName(), String.valueOf(fpMemberObject.getAge()), getString(R.string.fp_visit)));
     }
 
     @Override
@@ -295,10 +295,10 @@ public class BaseFpOtherServicesActivity extends SecuredActivity implements Base
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.REQUEST_CODE_GET_JSON) {
+        if (requestCode == FamilyPlanningConstants.REQUEST_CODE_GET_JSON) {
             if (resultCode == Activity.RESULT_OK) {
                 try {
-                    String jsonString = data.getStringExtra(Constants.JSON_FORM_EXTRA.JSON);
+                    String jsonString = data.getStringExtra(FamilyPlanningConstants.JSON_FORM_EXTRA.JSON);
                     BaseFpVisitAction fpVisitAction = actionList.get(current_action);
                     if (fpVisitAction != null) {
                         fpVisitAction.setJsonPayload(jsonString);

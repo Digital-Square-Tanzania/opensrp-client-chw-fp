@@ -2,6 +2,7 @@ package org.smartregister.chw.fp.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -23,14 +24,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.smartregister.chw.fp.R;
-import org.smartregister.chw.fp.contract.FpProfileContract;
+import org.smartregister.chw.fp.contract.BaseFpProfileContract;
 import org.smartregister.chw.fp.custom_views.BaseFpFloatingMenu;
 import org.smartregister.chw.fp.dao.FpDao;
-import org.smartregister.chw.fp.domain.MemberObject;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.domain.Visit;
 import org.smartregister.chw.fp.interactor.BaseFpProfileInteractor;
 import org.smartregister.chw.fp.presenter.BaseFpProfilePresenter;
-import org.smartregister.chw.fp.util.Constants;
+import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.chw.fp.util.FpUtil;
 import org.smartregister.helper.ImageRenderHelper;
 import org.smartregister.view.activity.BaseProfileActivity;
@@ -43,9 +44,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import timber.log.Timber;
 
 
-public abstract class BaseFpProfileActivity extends BaseProfileActivity implements FpProfileContract.View, FpProfileContract.InteractorCallBack {
-    protected MemberObject memberObject;
-    protected FpProfileContract.Presenter profilePresenter;
+public abstract class BaseFpProfileActivity extends BaseProfileActivity implements BaseFpProfileContract.View, BaseFpProfileContract.InteractorCallBack {
+    protected FpMemberObject fpMemberObject;
+    protected BaseFpProfileContract.Presenter fpProfilePresenter;
     protected CircleImageView imageView;
     protected TextView textViewName;
     protected TextView textViewGender;
@@ -67,7 +68,7 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
 
     public static void startProfileActivity(Activity activity, String baseEntityId) {
         Intent intent = new Intent(activity, BaseFpProfileActivity.class);
-        intent.putExtra(Constants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID, baseEntityId);
+        intent.putExtra(FamilyPlanningConstants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID, baseEntityId);
         activity.startActivity(intent);
     }
 
@@ -76,7 +77,7 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
         setContentView(R.layout.activity_fp_profile);
         Toolbar toolbar = findViewById(R.id.collapsing_toolbar);
         setSupportActionBar(toolbar);
-        String baseEntityId = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID);
+        String baseEntityId = getIntent().getStringExtra(FamilyPlanningConstants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -114,13 +115,13 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
         textViewUndo.setOnClickListener(this);
 
         imageRenderHelper = new ImageRenderHelper(this);
-        memberObject = getMemberObject(baseEntityId);
+        fpMemberObject = getMemberObject(baseEntityId);
         initializePresenter();
-        profilePresenter.fillProfileData(memberObject);
+        fpProfilePresenter.fillProfileData(fpMemberObject);
         setupViews();
     }
 
-    protected MemberObject getMemberObject(String baseEntityId) {
+    protected FpMemberObject getMemberObject(String baseEntityId) {
         return FpDao.getMember(baseEntityId);
     }
 
@@ -132,21 +133,21 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
         if (isFirstVisit()) {
             if (lastVisit == null) {
                 textViewRecordFp.setText(R.string.record_point_of_service_delivery);
-            } else if (lastVisit.getVisitType().equalsIgnoreCase(Constants.EVENT_TYPE.FP_POINT_OF_SERVICE_DELIVERY)) {
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_POINT_OF_SERVICE_DELIVERY)) {
                 textViewRecordFp.setText(R.string.provide_fp_counseling);
-            } else if (lastVisit.getVisitType().equalsIgnoreCase(Constants.EVENT_TYPE.FP_COUNSELING)) {
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_COUNSELING)) {
                 textViewRecordFp.setText(R.string.fp_screening);
-            } else if (lastVisit.getVisitType().equalsIgnoreCase(Constants.EVENT_TYPE.FP_SCREENING)) {
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_SCREENING)) {
                 textViewRecordFp.setText(R.string.provide_fp_method);
-            } else if (lastVisit.getVisitType().equalsIgnoreCase(Constants.EVENT_TYPE.FP_PROVIDE_METHOD)) {
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_PROVIDE_METHOD)) {
                 textViewRecordFp.setText(R.string.provide_other_services);
             }
         } else {
-            if (lastVisit == null || lastVisit.getVisitType().equalsIgnoreCase(Constants.EVENT_TYPE.FP_OTHER_SERVICES)) {
+            if (lastVisit == null || lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_OTHER_SERVICES)) {
                 textViewRecordFp.setText(R.string.record_fp_followup_visit);
-            } else if (lastVisit.getVisitType().equalsIgnoreCase(Constants.EVENT_TYPE.FP_FOLLOW_UP_VISIT)) {
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT)) {
                 textViewRecordFp.setText(R.string.provide_fp_method);
-            } else if (lastVisit.getVisitType().equalsIgnoreCase(Constants.EVENT_TYPE.FP_PROVIDE_METHOD)) {
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_PROVIDE_METHOD)) {
                 textViewRecordFp.setText(R.string.provide_other_services);
             }
         }
@@ -181,21 +182,21 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
                     startProvideOtherServices();
                 }
             }
-//            this.recordFp(memberObject);
+//            this.recordFp(fpMemberObject);
         }
     }
 
     @Override
     protected void initializePresenter() {
         showProgressBar(true);
-        profilePresenter = new BaseFpProfilePresenter(this, new BaseFpProfileInteractor(), memberObject);
+        fpProfilePresenter = new BaseFpProfilePresenter(this, new BaseFpProfileInteractor(), fpMemberObject);
         fetchProfileData();
-        profilePresenter.refreshProfileBottom();
+        fpProfilePresenter.refreshProfileBottom();
     }
 
     public void initializeFloatingMenu() {
-        if (StringUtils.isNotBlank(memberObject.getPhoneNumber())) {
-            baseFpFloatingMenu = new BaseFpFloatingMenu(this, memberObject);
+        if (StringUtils.isNotBlank(fpMemberObject.getPhoneNumber())) {
+            baseFpFloatingMenu = new BaseFpFloatingMenu(this, fpMemberObject);
             baseFpFloatingMenu.setGravity(Gravity.BOTTOM | Gravity.RIGHT);
             LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
             addContentView(baseFpFloatingMenu, linearLayoutParams);
@@ -207,26 +208,43 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
         textViewRecordFp.setVisibility(View.GONE);
     }
 
+    @Override
+    public void showFollowUpVisitButton() {
+        textViewRecordFp.setVisibility(View.VISIBLE);
+    }
+
     @SuppressLint("DefaultLocale")
     @Override
     public void setProfileViewWithData() {
-        int age = new Period(new DateTime(memberObject.getAge()), new DateTime()).getYears();
-        textViewName.setText(String.format("%s %s %s, %d", memberObject.getFirstName(), memberObject.getMiddleName(), memberObject.getLastName(), age));
-        textViewGender.setText(FpUtil.getGenderTranslated(this, memberObject.getGender()));
-        textViewLocation.setText(memberObject.getAddress());
-        textViewUniqueID.setText(memberObject.getUniqueId());
+        int age = new Period(new DateTime(fpMemberObject.getAge()), new DateTime()).getYears();
+        textViewName.setText(String.format("%s %s %s, %d", fpMemberObject.getFirstName(), fpMemberObject.getMiddleName(), fpMemberObject.getLastName(), age));
+        textViewGender.setText(FpUtil.getGenderTranslated(this, fpMemberObject.getGender()));
+        textViewLocation.setText(fpMemberObject.getAddress());
+        textViewUniqueID.setText(fpMemberObject.getUniqueId());
 
-        if (StringUtils.isNotBlank(memberObject.getFamilyHead()) && memberObject.getFamilyHead().equals(memberObject.getBaseEntityId())) {
+        if (StringUtils.isNotBlank(fpMemberObject.getFamilyHead()) && fpMemberObject.getFamilyHead().equals(fpMemberObject.getBaseEntityId())) {
             findViewById(R.id.family_fp_head).setVisibility(View.VISIBLE);
         }
-        if (StringUtils.isNotBlank(memberObject.getPrimaryCareGiver()) && memberObject.getPrimaryCareGiver().equals(memberObject.getBaseEntityId())) {
+        if (StringUtils.isNotBlank(fpMemberObject.getPrimaryCareGiver()) && fpMemberObject.getPrimaryCareGiver().equals(fpMemberObject.getBaseEntityId())) {
             findViewById(R.id.primary_fp_caregiver).setVisibility(View.VISIBLE);
         }
     }
 
     @Override
-    public void setOverDueColor() {
+    public void setFollowUpButtonDue() {
+        showFollowUpVisitButton();
+        textViewRecordFp.setBackground(getResources().getDrawable(R.drawable.record_btn_selector));
+    }
+
+    @Override
+    public void setFollowUpButtonOverdue() {
+        showFollowUpVisitButton();
         textViewRecordFp.setBackground(getResources().getDrawable(R.drawable.record_btn_selector_overdue));
+    }
+
+    @Override
+    public void hideFollowUpVisitButton() {
+        textViewRecordFp.setVisibility(View.GONE);
     }
 
     @Override
@@ -262,7 +280,7 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
     }
 
     @Override
-    public void recordFp(MemberObject memberObject) {
+    public void recordFp(FpMemberObject fpMemberObject) {
         //implement
     }
 
@@ -279,8 +297,13 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
-            profilePresenter.saveForm(data.getStringExtra(Constants.JSON_FORM_EXTRA.JSON));
+        if (requestCode == FamilyPlanningConstants.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
+            fpProfilePresenter.saveForm(data.getStringExtra(FamilyPlanningConstants.JSON_FORM_EXTRA.JSON));
         }
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 }

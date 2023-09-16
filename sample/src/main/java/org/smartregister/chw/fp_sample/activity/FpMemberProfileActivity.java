@@ -1,6 +1,6 @@
 package org.smartregister.chw.fp_sample.activity;
 
-import static org.smartregister.chw.fp.util.Constants.ENCOUNTER_TYPE;
+import static org.smartregister.chw.fp.util.FamilyPlanningConstants.ENCOUNTER_TYPE;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,9 +13,9 @@ import com.vijay.jsonwizard.factory.FileSourceFactoryHelper;
 
 import org.json.JSONObject;
 import org.smartregister.chw.fp.activity.BaseFpProfileActivity;
-import org.smartregister.chw.fp.domain.MemberObject;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.domain.Visit;
-import org.smartregister.chw.fp.util.Constants;
+import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.chw.fp.util.JsonFormUtils;
 
 import timber.log.Timber;
@@ -26,8 +26,8 @@ public class FpMemberProfileActivity extends BaseFpProfileActivity {
 
     public static void startMe(Activity activity, String baseEntityID) {
         Intent intent = new Intent(activity, FpMemberProfileActivity.class);
-        intent.putExtra(Constants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID, baseEntityID);
-        activity.startActivityForResult(intent, Constants.REQUEST_CODE_GET_JSON);
+        intent.putExtra(FamilyPlanningConstants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID, baseEntityID);
+        activity.startActivityForResult(intent, FamilyPlanningConstants.REQUEST_CODE_GET_JSON);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class FpMemberProfileActivity extends BaseFpProfileActivity {
     }
 
     @Override
-    public void recordFp(MemberObject memberObject) {
-        FpScreeningActivity.startMe(this, memberObject.getBaseEntityId(), false);
+    public void recordFp(FpMemberObject fpMemberObject) {
+        FpScreeningActivity.startMe(this, fpMemberObject.getBaseEntityId(), false);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class FpMemberProfileActivity extends BaseFpProfileActivity {
     @Override
     public void startPointOfServiceDeliveryForm() {
         try {
-            startForm(Constants.FORMS.FP_POINT_OF_SERVICE_DELIVERY);
+            startForm(FamilyPlanningConstants.FORMS.FP_POINT_OF_SERVICE_DELIVERY);
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -67,7 +67,7 @@ public class FpMemberProfileActivity extends BaseFpProfileActivity {
     @Override
     public void startFpCounselingForm() {
         try {
-            startForm(Constants.FORMS.FP_COUNSELING);
+            startForm(FamilyPlanningConstants.FORMS.FP_COUNSELING);
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -75,13 +75,13 @@ public class FpMemberProfileActivity extends BaseFpProfileActivity {
 
     @Override
     public void startFpScreeningForm() {
-        FpScreeningActivity.startMe(this, memberObject.getBaseEntityId(), false);
+        FpScreeningActivity.startMe(this, fpMemberObject.getBaseEntityId(), false);
     }
 
     @Override
     public void startProvideFpMethod() {
         try {
-            startForm(Constants.FORMS.FP_PROVISION_OF_FP_METHOD);
+            startForm(FamilyPlanningConstants.FORMS.FP_PROVISION_OF_FP_METHOD);
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -89,7 +89,7 @@ public class FpMemberProfileActivity extends BaseFpProfileActivity {
 
     @Override
     public void startProvideOtherServices() {
-        FpOtherServicesActivity.startMe(this, memberObject.getBaseEntityId(), false);
+        FpOtherServicesActivity.startMe(this, fpMemberObject.getBaseEntityId(), false);
     }
 
     @Override
@@ -98,16 +98,16 @@ public class FpMemberProfileActivity extends BaseFpProfileActivity {
     }
 
     @Override
-    protected MemberObject getMemberObject(String baseEntityId) {
+    protected FpMemberObject getMemberObject(String baseEntityId) {
         return EntryActivity.getSampleMember();
     }
 
     private void startForm(String formName) throws Exception {
         JSONObject jsonForm = FileSourceFactoryHelper.getFileSource("").getFormFromFile(getApplicationContext(), formName);
 
-        if (formName.equalsIgnoreCase(Constants.FORMS.FP_PROVISION_OF_FP_METHOD) && jsonForm != null) {
-            jsonForm.getJSONObject("global").put("fp_method_selected", memberObject.getFpMethod());
-            jsonForm.getJSONObject("global").put("sex", memberObject.getGender());
+        if (formName.equalsIgnoreCase(FamilyPlanningConstants.FORMS.FP_PROVISION_OF_FP_METHOD) && jsonForm != null) {
+            jsonForm.getJSONObject("global").put("fp_method_selected", fpMemberObject.getFpMethod());
+            jsonForm.getJSONObject("global").put("sex", fpMemberObject.getGender());
         }
 
         String currentLocationId = "Tanzania";
@@ -124,7 +124,7 @@ public class FpMemberProfileActivity extends BaseFpProfileActivity {
             form.setHideSaveLabel(true);
 
             intent.putExtra("form", form);
-            startActivityForResult(intent, Constants.REQUEST_CODE_GET_JSON);
+            startActivityForResult(intent, FamilyPlanningConstants.REQUEST_CODE_GET_JSON);
 
         }
 
@@ -134,17 +134,17 @@ public class FpMemberProfileActivity extends BaseFpProfileActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == Constants.REQUEST_CODE_GET_JSON && resultCode == Activity.RESULT_OK) {
+        if (requestCode == FamilyPlanningConstants.REQUEST_CODE_GET_JSON && resultCode == Activity.RESULT_OK) {
             try {
-                String jsonString = data.getStringExtra(Constants.JSON_FORM_EXTRA.JSON);
+                String jsonString = data.getStringExtra(FamilyPlanningConstants.JSON_FORM_EXTRA.JSON);
                 JSONObject form = new JSONObject(jsonString);
                 String encounterType = form.getString(ENCOUNTER_TYPE);
                 if (lastVisit == null)
                     lastVisit = new Visit();
                 lastVisit.setVisitType(encounterType);
 
-                if (encounterType.equalsIgnoreCase(Constants.EVENT_TYPE.FP_COUNSELING)) {
-                    memberObject.setFpMethod(JsonFormUtils.getValue(form, "selected_fp_method_after_counseling"));
+                if (encounterType.equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_COUNSELING)) {
+                    fpMemberObject.setFpMethod(JsonFormUtils.getValue(form, "selected_fp_method_after_counseling"));
                     EntryActivity.getSampleMember().setFpMethod(JsonFormUtils.getValue(form, "selected_fp_method_after_counseling"));
                 }
             } catch (Exception e) {

@@ -16,14 +16,14 @@ import org.json.JSONObject;
 import org.smartregister.AllConstants;
 import org.smartregister.Context;
 import org.smartregister.chw.fp.R;
-import org.smartregister.chw.fp.contract.FpRegisterContract;
+import org.smartregister.chw.fp.contract.BaseFpRegisterContract;
 import org.smartregister.chw.fp.interactor.BaseFpRegisterInteractor;
 import org.smartregister.chw.fp.model.BaseFpRegisterModel;
 import org.smartregister.chw.fp.util.FpUtil;
 import org.smartregister.chw.fp.fragment.BaseFpRegisterFragment;
 import org.smartregister.chw.fp.listener.FpBottomNavigationListener;
 import org.smartregister.chw.fp.presenter.BaseFpRegisterPresenter;
-import org.smartregister.chw.fp.util.Constants;
+import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.chw.fp.util.DBConstants;
 import org.smartregister.chw.fp.util.FpJsonFormUtils;
 import org.smartregister.helper.BottomNavigationHelper;
@@ -39,7 +39,7 @@ import java.util.List;
 
 import timber.log.Timber;
 
-public class BaseFpRegisterActivity extends BaseRegisterActivity implements FpRegisterContract.View {
+public class BaseFpRegisterActivity extends BaseRegisterActivity implements BaseFpRegisterContract.View {
 
     protected String BASE_ENTITY_ID;
     protected String FAMILY_BASE_ENTITY_ID;
@@ -49,10 +49,10 @@ public class BaseFpRegisterActivity extends BaseRegisterActivity implements FpRe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BASE_ENTITY_ID = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID);
-        FAMILY_BASE_ENTITY_ID = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.FAMILY_BASE_ENTITY_ID);
-        ACTION = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.ACTION);
-        FORM_NAME = getIntent().getStringExtra(Constants.ACTIVITY_PAYLOAD.FP_FORM_NAME);
+        BASE_ENTITY_ID = getIntent().getStringExtra(FamilyPlanningConstants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID);
+        FAMILY_BASE_ENTITY_ID = getIntent().getStringExtra(FamilyPlanningConstants.ACTIVITY_PAYLOAD.FAMILY_BASE_ENTITY_ID);
+        ACTION = getIntent().getStringExtra(FamilyPlanningConstants.ACTIVITY_PAYLOAD.ACTION);
+        FORM_NAME = getIntent().getStringExtra(FamilyPlanningConstants.ACTIVITY_PAYLOAD.FP_FORM_NAME);
         onStartActivityWithAction();
     }
 
@@ -86,12 +86,12 @@ public class BaseFpRegisterActivity extends BaseRegisterActivity implements FpRe
     @Override
     public void startFormActivity(JSONObject jsonForm) {
         Intent intent = new Intent(this, BaseFpRegisterActivity.class);
-        intent.putExtra(Constants.JSON_FORM_EXTRA.JSON, jsonForm.toString());
+        intent.putExtra(FamilyPlanningConstants.JSON_FORM_EXTRA.JSON, jsonForm.toString());
 
         if (getFormConfig() != null) {
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, getFormConfig());
         }
-        startActivityForResult(intent, Constants.REQUEST_CODE_GET_JSON);
+        startActivityForResult(intent, FamilyPlanningConstants.REQUEST_CODE_GET_JSON);
     }
 
     @Override
@@ -101,15 +101,15 @@ public class BaseFpRegisterActivity extends BaseRegisterActivity implements FpRe
 
     @Override
     protected void onActivityResultExtended(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
-            presenter().saveForm(data.getStringExtra(Constants.JSON_FORM_EXTRA.JSON));
+        if (requestCode == FamilyPlanningConstants.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
+            presenter().saveForm(data.getStringExtra(FamilyPlanningConstants.JSON_FORM_EXTRA.JSON));
             finish();
         }
     }
 
     @Override
     public List<String> getViewIdentifiers() {
-        return Arrays.asList(Constants.CONFIGURATION.FP_REGISTRATION_CONFIGURATION);
+        return Arrays.asList(FamilyPlanningConstants.CONFIGURATION.FP_REGISTRATION_CONFIGURATION);
     }
 
     /**
@@ -154,18 +154,18 @@ public class BaseFpRegisterActivity extends BaseRegisterActivity implements FpRe
     }
 
     @Override
-    public FpRegisterContract.Presenter presenter() {
-        return (FpRegisterContract.Presenter) presenter;
+    public BaseFpRegisterContract.Presenter presenter() {
+        return (BaseFpRegisterContract.Presenter) presenter;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK && requestCode == Constants.REQUEST_CODE_GET_JSON) {
+        if (resultCode == Activity.RESULT_OK && requestCode == FamilyPlanningConstants.REQUEST_CODE_GET_JSON) {
 
             try {
-                String jsonString = data.getStringExtra(Constants.JSON_FORM_EXTRA.JSON);
+                String jsonString = data.getStringExtra(FamilyPlanningConstants.JSON_FORM_EXTRA.JSON);
                 JSONObject form = new JSONObject(jsonString);
-                JSONArray fieldsOne = FpJsonFormUtils.fields(form, Constants.STEP_ONE);
+                JSONArray fieldsOne = FpJsonFormUtils.fields(form, FamilyPlanningConstants.STEP_ONE);
                 updateFormField(fieldsOne, DBConstants.KEY.RELATIONAL_ID, FAMILY_BASE_ENTITY_ID);
                 presenter().saveForm(form.toString());
             } catch (JSONException e) {

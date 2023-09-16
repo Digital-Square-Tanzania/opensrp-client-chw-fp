@@ -5,8 +5,8 @@ import android.content.Context;
 import com.vijay.jsonwizard.domain.Form;
 
 import org.json.JSONObject;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.model.BaseFpVisitAction;
-import org.smartregister.chw.fp.domain.MemberObject;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,7 +25,7 @@ public interface BaseFpVisitContract {
 
         void startFragment(BaseFpVisitAction pmtctHomeVisitAction);
 
-        void redrawHeader(MemberObject memberObject);
+        void redrawHeader(FpMemberObject fpMemberObject);
 
         void redrawVisitUI();
 
@@ -53,7 +53,7 @@ public interface BaseFpVisitContract {
 
         Boolean getEditMode();
 
-        void onMemberDetailsReloaded(MemberObject memberObject);
+        void onMemberDetailsReloaded(FpMemberObject fpMemberObject);
     }
 
     interface VisitView {
@@ -99,18 +99,18 @@ public interface BaseFpVisitContract {
 
         void reloadMemberDetails(String memberID, InteractorCallBack callBack);
 
-        MemberObject getMemberClient(String memberID);
+        FpMemberObject getMemberClient(String memberID);
 
         void saveRegistration(String jsonString, boolean isEditMode, final InteractorCallBack callBack);
 
-        void calculateActions(View view, MemberObject memberObject, InteractorCallBack callBack);
+        void calculateActions(View view, FpMemberObject fpMemberObject, InteractorCallBack callBack);
 
         void submitVisit(boolean editMode, String memberID, Map<String, BaseFpVisitAction> map, InteractorCallBack callBack);
     }
 
     interface InteractorCallBack {
 
-        void onMemberDetailsReloaded(MemberObject memberObject);
+        void onMemberDetailsReloaded(FpMemberObject fpMemberObject);
 
         void onRegistrationSaved(boolean isEdit);
 

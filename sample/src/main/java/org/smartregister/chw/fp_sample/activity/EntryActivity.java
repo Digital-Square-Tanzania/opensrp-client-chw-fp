@@ -8,7 +8,7 @@ import android.view.View;
 import androidx.appcompat.widget.Toolbar;
 
 import org.smartregister.chw.fp.contract.BaseFpVisitContract;
-import org.smartregister.chw.fp.domain.MemberObject;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.util.DBConstants;
 import org.smartregister.chw.fp_sample.R;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
@@ -20,9 +20,9 @@ import java.util.Map;
 import timber.log.Timber;
 
 public class EntryActivity extends SecuredActivity implements View.OnClickListener, BaseFpVisitContract.VisitView {
-    private static MemberObject memberObject;
+    private static FpMemberObject fpMemberObject;
 
-    public static MemberObject getSampleMember() {
+    public static FpMemberObject getSampleMember() {
         Map<String, String> details = new HashMap<>();
         details.put(DBConstants.KEY.FIRST_NAME, "Glory");
         details.put(DBConstants.KEY.LAST_NAME, "Juma");
@@ -38,19 +38,19 @@ public class EntryActivity extends SecuredActivity implements View.OnClickListen
         CommonPersonObjectClient commonPersonObject = new CommonPersonObjectClient("", details, "Yo");
         commonPersonObject.setColumnmaps(details);
 
-        if (memberObject == null) {
-            memberObject = new MemberObject();
-            memberObject.setFirstName("Glory");
-            memberObject.setLastName("Juma");
-            memberObject.setMiddleName("Ali");
-            memberObject.setGender("Female");
-            memberObject.setDob("1982-01-18T03:00:00.000+03:00");
-            memberObject.setUniqueId("3503504");
-            memberObject.setBaseEntityId("3503504");
-            memberObject.setFamilyBaseEntityId("3503504");
+        if (fpMemberObject == null) {
+            fpMemberObject = new FpMemberObject();
+            fpMemberObject.setFirstName("Glory");
+            fpMemberObject.setLastName("Juma");
+            fpMemberObject.setMiddleName("Ali");
+            fpMemberObject.setGender("Female");
+            fpMemberObject.setDob("1982-01-18T03:00:00.000+03:00");
+            fpMemberObject.setUniqueId("3503504");
+            fpMemberObject.setBaseEntityId("3503504");
+            fpMemberObject.setFamilyBaseEntityId("3503504");
         }
 
-        return memberObject;
+        return fpMemberObject;
     }
 
     @Override

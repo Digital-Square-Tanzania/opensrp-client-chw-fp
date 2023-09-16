@@ -1,9 +1,9 @@
 package org.smartregister.chw.fp.presenter;
 
 import org.apache.commons.lang3.StringUtils;
-import org.smartregister.chw.fp.util.Constants;
+import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.chw.fp.util.DBConstants;
-import org.smartregister.chw.fp.contract.FpRegisterFragmentContract;
+import org.smartregister.chw.fp.contract.BaseFpRegisterFragmentContract;
 import org.smartregister.configurableviews.model.RegisterConfiguration;
 import org.smartregister.configurableviews.model.View;
 import org.smartregister.configurableviews.model.ViewConfiguration;
@@ -14,18 +14,18 @@ import java.util.TreeSet;
 
 import static org.apache.commons.lang3.StringUtils.trim;
 
-public class BaseFpRegisterFragmentPresenter implements FpRegisterFragmentContract.Presenter {
+public class BaseFpRegisterFragmentPresenter implements BaseFpRegisterFragmentContract.Presenter {
 
-    protected WeakReference<FpRegisterFragmentContract.View> viewReference;
+    protected WeakReference<BaseFpRegisterFragmentContract.View> viewReference;
 
-    protected FpRegisterFragmentContract.Model model;
+    protected BaseFpRegisterFragmentContract.Model model;
 
     protected RegisterConfiguration config;
 
     protected Set<View> visibleColumns = new TreeSet<>();
     protected String viewConfigurationIdentifier;
 
-    public BaseFpRegisterFragmentPresenter(FpRegisterFragmentContract.View view, FpRegisterFragmentContract.Model model, String viewConfigurationIdentifier) {
+    public BaseFpRegisterFragmentPresenter(BaseFpRegisterFragmentContract.View view, BaseFpRegisterFragmentContract.Model model, String viewConfigurationIdentifier) {
         this.viewReference = new WeakReference<>(view);
         this.model = model;
         this.viewConfigurationIdentifier = viewConfigurationIdentifier;
@@ -76,7 +76,7 @@ public class BaseFpRegisterFragmentPresenter implements FpRegisterFragmentContra
         }
     }
 
-    protected FpRegisterFragmentContract.View getView() {
+    protected BaseFpRegisterFragmentContract.View getView() {
         if (viewReference != null)
             return viewReference.get();
         else
@@ -97,7 +97,7 @@ public class BaseFpRegisterFragmentPresenter implements FpRegisterFragmentContra
 
     @Override
     public String getMainTable() {
-        return Constants.TABLES.FP_REGISTER;
+        return FamilyPlanningConstants.TABLES.FP_REGISTER;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package org.smartregister.chw.fp.util;
 
-import static org.smartregister.chw.fp.util.Constants.ENCOUNTER_TYPE;
+import static org.smartregister.chw.fp.util.FamilyPlanningConstants.ENCOUNTER_TYPE;
 
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 

@@ -3,8 +3,8 @@ package org.smartregister.chw.fp_sample.presenter;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.smartregister.chw.fp.contract.FpProfileContract;
-import org.smartregister.chw.fp.domain.MemberObject;
+import org.smartregister.chw.fp.contract.BaseFpProfileContract;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.presenter.BaseFpProfilePresenter;
 
 import static org.mockito.Mockito.never;
@@ -13,20 +13,20 @@ import static org.mockito.Mockito.verify;
 public class BaseFpProfilePresenterTest {
 
     @Mock
-    private FpProfileContract.View view = Mockito.mock(FpProfileContract.View.class);
+    private BaseFpProfileContract.View view = Mockito.mock(BaseFpProfileContract.View.class);
 
     @Mock
-    private FpProfileContract.Interactor interactor = Mockito.mock(FpProfileContract.Interactor.class);
+    private BaseFpProfileContract.Interactor interactor = Mockito.mock(BaseFpProfileContract.Interactor.class);
 
     @Mock
-    private MemberObject memberObject = new MemberObject();
+    private FpMemberObject fpMemberObject = new FpMemberObject();
 
-    private BaseFpProfilePresenter profilePresenter = new BaseFpProfilePresenter(view, interactor, memberObject);
+    private BaseFpProfilePresenter profilePresenter = new BaseFpProfilePresenter(view, interactor, fpMemberObject);
 
 
     @Test
     public void fillProfileDataCallsSetProfileViewWithDataWhenPassedMemberObject() {
-        profilePresenter.fillProfileData(memberObject);
+        profilePresenter.fillProfileData(fpMemberObject);
         verify(view).setProfileViewWithData();
     }
 
@@ -57,7 +57,7 @@ public class BaseFpProfilePresenterTest {
     @Test
     public void refreshProfileBottom() {
         profilePresenter.refreshProfileBottom();
-        verify(interactor).refreshProfileInfo(memberObject, profilePresenter.getView());
+        verify(interactor).refreshProfileInfo(fpMemberObject, profilePresenter.getView());
     }
 
     @Test

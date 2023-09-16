@@ -7,13 +7,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import org.smartregister.chw.fp.R;
-import org.smartregister.chw.fp.domain.MemberObject;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.fragment.BaseFpCallDialogFragment;
 
 public class BaseFpFloatingMenu extends LinearLayout implements View.OnClickListener {
-    private MemberObject MEMBER_OBJECT;
+    private FpMemberObject MEMBER_OBJECT;
 
-    public BaseFpFloatingMenu(Context context, MemberObject MEMBER_OBJECT) {
+    public BaseFpFloatingMenu(Context context, FpMemberObject MEMBER_OBJECT) {
         super(context);
         initUi();
         this.MEMBER_OBJECT = MEMBER_OBJECT;

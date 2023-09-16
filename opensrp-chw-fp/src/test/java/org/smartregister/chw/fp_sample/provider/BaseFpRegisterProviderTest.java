@@ -14,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.internal.stubbing.answers.DoesNothing;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.reflect.Whitebox;
-import org.smartregister.chw.fp.provider.FpRegisterProvider;
+import org.smartregister.chw.fp.provider.BaseFpRegisterProvider;
 import org.smartregister.chw.fp.util.DBConstants;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.chw.R;
@@ -24,15 +24,15 @@ import java.util.Map;
 
 import static org.mockito.Mockito.validateMockitoUsage;
 
-public class FpRegisterProviderTest {
+public class BaseFpRegisterProviderTest {
     @Mock
     public CommonPersonObjectClient commonPersonObjectClient;
     @Mock
     public View.OnClickListener listener;
     @Mock
-    public FpRegisterProvider.RegisterViewHolder viewHolder;
+    public BaseFpRegisterProvider.RegisterViewHolder viewHolder;
     @Mock
-    private FpRegisterProvider testRegisterProvider;
+    private BaseFpRegisterProvider testRegisterProvider;
 
     @Before
     public void setUp() {
@@ -78,7 +78,7 @@ public class FpRegisterProviderTest {
     public void isAncClosed() throws Exception {
         Resources resources = Mockito.mock(Resources.class);
         Activity activity = Mockito.mock(Activity.class);
-        FpRegisterProvider provider = Mockito.spy(new FpRegisterProvider(activity, listener, listener, null));
+        BaseFpRegisterProvider provider = Mockito.spy(new BaseFpRegisterProvider(activity, listener, listener, null));
         Map<String, String> map = new HashMap<>();
         map.put("is_anc_closed", "0");
         Mockito.when(activity.getResources()).thenReturn(resources);
@@ -90,7 +90,7 @@ public class FpRegisterProviderTest {
     public void isPncClosed() throws Exception {
         Resources resources = Mockito.mock(Resources.class);
         Activity activity = Mockito.mock(Activity.class);
-        FpRegisterProvider provider = Mockito.spy(new FpRegisterProvider(activity, listener, listener, null));
+        BaseFpRegisterProvider provider = Mockito.spy(new BaseFpRegisterProvider(activity, listener, listener, null));
         Map<String, String> map = new HashMap<>();
         map.put("is_pnc_closed", "0");
         Mockito.when(activity.getResources()).thenReturn(resources);
@@ -102,7 +102,7 @@ public class FpRegisterProviderTest {
     public void updateMemberGender() throws Exception {
         Activity activity = Mockito.mock(Activity.class);
         Resources resources = Mockito.mock(Resources.class);
-        FpRegisterProvider provider = new FpRegisterProvider(activity, listener, listener, null);
+        BaseFpRegisterProvider provider = new BaseFpRegisterProvider(activity, listener, listener, null);
         Map<String, String> map = new HashMap<>();
         map.put(DBConstants.KEY.GENDER, "Male");
 

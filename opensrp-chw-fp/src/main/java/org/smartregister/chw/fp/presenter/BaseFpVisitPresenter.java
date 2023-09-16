@@ -2,9 +2,9 @@ package org.smartregister.chw.fp.presenter;
 
 import org.json.JSONObject;
 import org.smartregister.chw.fp.R;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.model.BaseFpVisitAction;
 import org.smartregister.chw.fp.contract.BaseFpVisitContract;
-import org.smartregister.chw.fp.domain.MemberObject;
 import org.smartregister.chw.fp.util.JsonFormUtils;
 import org.smartregister.util.FormUtils;
 
@@ -17,12 +17,12 @@ public class BaseFpVisitPresenter implements BaseFpVisitContract.Presenter, Base
 
     protected WeakReference<BaseFpVisitContract.View> view;
     protected BaseFpVisitContract.Interactor interactor;
-    protected MemberObject memberObject;
+    protected FpMemberObject fpMemberObject;
 
-    public BaseFpVisitPresenter(MemberObject memberObject, BaseFpVisitContract.View view, BaseFpVisitContract.Interactor interactor) {
+    public BaseFpVisitPresenter(FpMemberObject fpMemberObject, BaseFpVisitContract.View view, BaseFpVisitContract.Interactor interactor) {
         this.view = new WeakReference<>(view);
         this.interactor = interactor;
-        this.memberObject = memberObject;
+        this.fpMemberObject = fpMemberObject;
     }
 
     @Override
@@ -46,15 +46,15 @@ public class BaseFpVisitPresenter implements BaseFpVisitContract.Presenter, Base
     @Override
     public void initialize() {
         view.get().displayProgressBar(true);
-        view.get().redrawHeader(memberObject);
-        interactor.calculateActions(view.get(), memberObject, this);
+        view.get().redrawHeader(fpMemberObject);
+        interactor.calculateActions(view.get(), fpMemberObject, this);
     }
 
     @Override
     public void submitVisit() {
         if (view.get() != null) {
             view.get().displayProgressBar(true);
-            interactor.submitVisit(view.get().getEditMode(), memberObject.getBaseEntityId(), view.get().getPmtctHomeVisitActions(), this);
+            interactor.submitVisit(view.get().getEditMode(), fpMemberObject.getBaseEntityId(), view.get().getPmtctHomeVisitActions(), this);
         }
     }
 
@@ -65,11 +65,11 @@ public class BaseFpVisitPresenter implements BaseFpVisitContract.Presenter, Base
     }
 
     @Override
-    public void onMemberDetailsReloaded(MemberObject memberObject) {
+    public void onMemberDetailsReloaded(FpMemberObject fpMemberObject) {
         if (view.get() != null) {
-            this.memberObject = memberObject;
+            this.fpMemberObject = fpMemberObject;
             view.get().displayProgressBar(false);
-            view.get().onMemberDetailsReloaded(memberObject);
+            view.get().onMemberDetailsReloaded(fpMemberObject);
         }
     }
 

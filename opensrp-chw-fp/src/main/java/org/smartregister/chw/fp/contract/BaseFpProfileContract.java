@@ -1,19 +1,20 @@
 package org.smartregister.chw.fp.contract;
 
+import android.content.Context;
+
 import org.jetbrains.annotations.Nullable;
-import org.smartregister.chw.fp.domain.MemberObject;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.domain.Visit;
 
-public interface FpProfileContract {
+public interface BaseFpProfileContract {
     interface View extends InteractorCallBack {
+        Context getContext();
 
         void setProfileViewWithData();
 
-        void setOverDueColor();
-
         void openMedicalHistory();
 
-        void recordFp(MemberObject memberObject);
+        void recordFp(FpMemberObject fpMemberObject);
 
         void showProgressBar(boolean status);
 
@@ -37,11 +38,19 @@ public interface FpProfileContract {
 
         void startFpFollowupVisit();
 
+        void setFollowUpButtonOverdue();
+
+        void setFollowUpButtonDue();
+
+        void hideFollowUpVisitButton();
+
+        void showFollowUpVisitButton();
+
     }
 
     interface Presenter {
 
-        void fillProfileData(@Nullable MemberObject memberObject);
+        void fillProfileData(@Nullable FpMemberObject fpMemberObject);
 
         void saveForm(String jsonString);
 
@@ -55,9 +64,9 @@ public interface FpProfileContract {
 
     interface Interactor {
 
-        void refreshProfileInfo(MemberObject memberObject, InteractorCallBack callback);
+        void refreshProfileInfo(FpMemberObject fpMemberObject, InteractorCallBack callback);
 
-        void saveRegistration(String jsonString, final FpProfileContract.InteractorCallBack callBack);
+        void saveRegistration(String jsonString, final BaseFpProfileContract.InteractorCallBack callBack);
     }
 
 

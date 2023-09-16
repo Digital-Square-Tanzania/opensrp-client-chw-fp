@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 import timber.log.Timber;
 
-public class MemberObject implements Serializable {
+public class FpMemberObject implements Serializable {
 
     private String familyHeadName;
 
@@ -52,8 +52,12 @@ public class MemberObject implements Serializable {
 
     private String fpMethod;
 
+    private String fpStartDate;
 
-    public MemberObject() {
+    private String fpRegistrationDate;
+
+
+    public FpMemberObject() {
     }
 
     public String getFirstName() {
@@ -237,5 +241,22 @@ public class MemberObject implements Serializable {
 
     public void setFpMethod(String fpMethod) {
         this.fpMethod = fpMethod;
+    }
+
+
+    public String getFpStartDate() {
+        return fpStartDate;
+    }
+
+    public void setFpStartDate(String fpStartDate) {
+        this.fpStartDate = fpStartDate;
+    }
+
+    public String getFpRegistrationDate() {
+        return fpRegistrationDate;
+    }
+
+    public void setFpRegistrationDate(String fpRegistrationDate) {
+        this.fpRegistrationDate = fpRegistrationDate;
     }
 }

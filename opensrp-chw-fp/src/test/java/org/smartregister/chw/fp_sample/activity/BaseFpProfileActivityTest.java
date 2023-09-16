@@ -15,14 +15,14 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.reflect.Whitebox;
 import org.smartregister.chw.fp.R;
 import org.smartregister.chw.fp.activity.BaseFpProfileActivity;
-import org.smartregister.chw.fp.contract.FpProfileContract;
+import org.smartregister.chw.fp.contract.BaseFpProfileContract;
 
 public class BaseFpProfileActivityTest {
     @Mock
     public BaseFpProfileActivity baseTestProfileActivity;
 
     @Mock
-    public FpProfileContract.Presenter profilePresenter;
+    public BaseFpProfileContract.Presenter profilePresenter;
 
     @Mock
     public View view;

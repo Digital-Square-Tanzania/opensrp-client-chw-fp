@@ -6,7 +6,7 @@ import org.smartregister.view.contract.BaseRegisterFragmentContract;
 
 import java.util.Set;
 
-public interface FpRegisterFragmentContract {
+public interface BaseFpRegisterFragmentContract {
 
     interface View extends BaseRegisterFragmentContract.View {
 

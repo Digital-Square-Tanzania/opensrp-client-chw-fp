@@ -21,13 +21,13 @@ import org.smartregister.chw.fp.actionhelper.FpMethodScreeningVaginalExamination
 import org.smartregister.chw.fp.actionhelper.FpVisitActionHelper;
 import org.smartregister.chw.fp.contract.BaseFpVisitContract;
 import org.smartregister.chw.fp.dao.FpDao;
-import org.smartregister.chw.fp.domain.MemberObject;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.domain.Visit;
 import org.smartregister.chw.fp.domain.VisitDetail;
 import org.smartregister.chw.fp.model.BaseFpVisitAction;
 import org.smartregister.chw.fp.repository.VisitRepository;
 import org.smartregister.chw.fp.util.AppExecutors;
-import org.smartregister.chw.fp.util.Constants;
+import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.chw.fp.util.JsonFormUtils;
 import org.smartregister.chw.fp.util.NCUtils;
 import org.smartregister.chw.fp.util.VisitUtils;
@@ -69,10 +69,10 @@ public class BaseFpScreeningVisitInteractor implements BaseFpVisitContract.Inter
 
     @Override
     public void reloadMemberDetails(String memberID, BaseFpVisitContract.InteractorCallBack callBack) {
-        MemberObject memberObject = getMemberClient(memberID);
-        if (memberObject != null) {
+        FpMemberObject fpMemberObject = getMemberClient(memberID);
+        if (fpMemberObject != null) {
             final Runnable runnable = () -> {
-                appExecutors.mainThread().execute(() -> callBack.onMemberDetailsReloaded(memberObject));
+                appExecutors.mainThread().execute(() -> callBack.onMemberDetailsReloaded(fpMemberObject));
             };
             appExecutors.diskIO().execute(runnable);
         }
@@ -82,10 +82,10 @@ public class BaseFpScreeningVisitInteractor implements BaseFpVisitContract.Inter
      * Override this method and return actual member object for the provided user
      *
      * @param memberID unique identifier for the user
-     * @return MemberObject wrapper for the user's data
+     * @return FpMemberObject wrapper for the user's data
      */
     @Override
-    public MemberObject getMemberClient(String memberID) {
+    public FpMemberObject getMemberClient(String memberID) {
         return FpDao.getMember(memberID);
     }
 
@@ -95,10 +95,10 @@ public class BaseFpScreeningVisitInteractor implements BaseFpVisitContract.Inter
     }
 
     @Override
-    public void calculateActions(final BaseFpVisitContract.View view, MemberObject memberObject, final BaseFpVisitContract.InteractorCallBack callBack) {
+    public void calculateActions(final BaseFpVisitContract.View view, FpMemberObject fpMemberObject, final BaseFpVisitContract.InteractorCallBack callBack) {
         mContext = view.getContext();
         if (view.getEditMode()) {
-            Visit lastVisit = fpLibrary.visitRepository().getLatestVisit(memberObject.getBaseEntityId(), Constants.EVENT_TYPE.FP_SCREENING);
+            Visit lastVisit = fpLibrary.visitRepository().getLatestVisit(fpMemberObject.getBaseEntityId(), FamilyPlanningConstants.EVENT_TYPE.FP_SCREENING);
 
             if (lastVisit != null) {
                 details = VisitUtils.getVisitGroups(fpLibrary.visitDetailsRepository().getVisits(lastVisit.getVisitId()));
@@ -107,13 +107,13 @@ public class BaseFpScreeningVisitInteractor implements BaseFpVisitContract.Inter
 
         final Runnable runnable = () -> {
             try {
-                evaluateMedicalHistory(memberObject, details);
-                evaluateObstetricHistory(memberObject, details);
-                evaluatePastObstetricHistory(memberObject, details);
-                evaluateGynecologicalHistory(memberObject, details);
-                evaluatePhysicalExamination(memberObject, details);
-                evaluateVaginalExamination(memberObject, details);
-                evaluateMedicalEligibilityCriteria(memberObject, details);
+                evaluateMedicalHistory(fpMemberObject, details);
+                evaluateObstetricHistory(fpMemberObject, details);
+                evaluatePastObstetricHistory(fpMemberObject, details);
+                evaluateGynecologicalHistory(fpMemberObject, details);
+                evaluatePhysicalExamination(fpMemberObject, details);
+                evaluateVaginalExamination(fpMemberObject, details);
+                evaluateMedicalEligibilityCriteria(fpMemberObject, details);
 
 
             } catch (BaseFpVisitAction.ValidationException e) {
@@ -126,54 +126,54 @@ public class BaseFpScreeningVisitInteractor implements BaseFpVisitContract.Inter
         appExecutors.diskIO().execute(runnable);
     }
 
-    protected void evaluateMedicalHistory(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
-        FpVisitActionHelper actionHelper = new FpMethodScreeningMedicalHistoryActionHelper(mContext, memberObject);
+    protected void evaluateMedicalHistory(FpMemberObject fpMemberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
+        FpVisitActionHelper actionHelper = new FpMethodScreeningMedicalHistoryActionHelper(mContext, fpMemberObject);
         String actionName = mContext.getString(R.string.fp_medical_history);
-        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.FP_METHOD_SCREENING_MEDICAL_HISTORY).build();
+        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_METHOD_SCREENING_MEDICAL_HISTORY).build();
         actionList.put(actionName, action);
     }
 
-    protected void evaluateObstetricHistory(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
-        FpVisitActionHelper actionHelper = new FpMethodScreeningObstetricHistoryActionHelper(mContext, memberObject);
+    protected void evaluateObstetricHistory(FpMemberObject fpMemberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
+        FpVisitActionHelper actionHelper = new FpMethodScreeningObstetricHistoryActionHelper(mContext, fpMemberObject);
         String actionName = mContext.getString(R.string.fp_obstetric_history);
-        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.FP_METHOD_SCREENING_OBSTETRIC_HISTORY).build();
+        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_METHOD_SCREENING_OBSTETRIC_HISTORY).build();
         actionList.put(actionName, action);
     }
 
-    protected void evaluatePastObstetricHistory(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
-        FpVisitActionHelper actionHelper = new FpMethodScreeningPastObstetricHistoryActionHelper(mContext, memberObject);
+    protected void evaluatePastObstetricHistory(FpMemberObject fpMemberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
+        FpVisitActionHelper actionHelper = new FpMethodScreeningPastObstetricHistoryActionHelper(mContext, fpMemberObject);
         String actionName = mContext.getString(R.string.fp_past_obstetric_history);
-        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.FP_METHOD_SCREENING_PAST_OBSTETRIC_HISTORY).build();
+        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_METHOD_SCREENING_PAST_OBSTETRIC_HISTORY).build();
         actionList.put(actionName, action);
     }
 
-    protected void evaluateGynecologicalHistory(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
-        FpVisitActionHelper actionHelper = new FpMethodScreeningGynecologicalHistoryActionHelper(mContext, memberObject);
+    protected void evaluateGynecologicalHistory(FpMemberObject fpMemberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
+        FpVisitActionHelper actionHelper = new FpMethodScreeningGynecologicalHistoryActionHelper(mContext, fpMemberObject);
         String actionName = mContext.getString(R.string.fp_gynecological_history);
-        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.FP_METHOD_SCREENING_GYNECOLOGICAL_HISTORY).build();
+        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_METHOD_SCREENING_GYNECOLOGICAL_HISTORY).build();
         actionList.put(actionName, action);
     }
 
-    protected void evaluatePhysicalExamination(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
-        FpVisitActionHelper actionHelper = new FpMethodScreeningPhysicalExaminationActionHelper(mContext, memberObject);
+    protected void evaluatePhysicalExamination(FpMemberObject fpMemberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
+        FpVisitActionHelper actionHelper = new FpMethodScreeningPhysicalExaminationActionHelper(mContext, fpMemberObject);
         String actionName = mContext.getString(R.string.fp_physical_examination);
-        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.FP_METHOD_SCREENING_PHYSICAL_EXAMINATION).build();
+        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_METHOD_SCREENING_PHYSICAL_EXAMINATION).build();
         actionList.put(actionName, action);
     }
 
-    protected void evaluateVaginalExamination(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
-        FpVisitActionHelper actionHelper = new FpMethodScreeningVaginalExaminationActionHelper(mContext, memberObject);
+    protected void evaluateVaginalExamination(FpMemberObject fpMemberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
+        FpVisitActionHelper actionHelper = new FpMethodScreeningVaginalExaminationActionHelper(mContext, fpMemberObject);
         String actionName = mContext.getString(R.string.fp_vaginal_examination);
-        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.FP_METHOD_SCREENING_VAGINAL_EXAMINATION).build();
+        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_METHOD_SCREENING_VAGINAL_EXAMINATION).build();
         actionList.put(actionName, action);
     }
 
-    protected void evaluateMedicalEligibilityCriteria(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
-        FpVisitActionHelper actionHelper = new FpMethodScreeningMedicalEligibilityActionHelper(mContext, memberObject);
+    protected void evaluateMedicalEligibilityCriteria(FpMemberObject fpMemberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
+        FpVisitActionHelper actionHelper = new FpMethodScreeningMedicalEligibilityActionHelper(mContext, fpMemberObject);
 
         String actionName = mContext.getString(R.string.fp_medical_eligibility_criteria);
 
-        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.FP_METHOD_SCREENING_MEDICAL_ELIGIBILITY_CRITERIA).build();
+        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_METHOD_SCREENING_MEDICAL_ELIGIBILITY_CRITERIA).build();
 
         actionList.put(actionName, action);
     }
@@ -369,11 +369,11 @@ public class BaseFpScreeningVisitInteractor implements BaseFpVisitContract.Inter
     }
 
     protected String getEncounterType() {
-        return Constants.EVENT_TYPE.FP_SCREENING;
+        return FamilyPlanningConstants.EVENT_TYPE.FP_SCREENING;
     }
 
     protected String getTableName() {
-        return Constants.TABLES.FP_REGISTER;
+        return FamilyPlanningConstants.TABLES.FP_REGISTER;
     }
 
 }

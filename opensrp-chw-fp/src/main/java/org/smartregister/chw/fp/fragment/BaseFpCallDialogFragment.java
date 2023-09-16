@@ -19,16 +19,16 @@ import android.widget.TextView;
 import org.apache.commons.lang3.StringUtils;
 import org.smartregister.chw.fp.R;
 import org.smartregister.chw.fp.contract.BaseFpCallDialogContract;
-import org.smartregister.chw.fp.domain.MemberObject;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.listener.BaseFpCallWidgetDialogListener;
 
 public class BaseFpCallDialogFragment extends DialogFragment implements BaseFpCallDialogContract.View {
 
     public static final String DIALOG_TAG = "BaseMalariaCallDialogFragment_DIALOG_TAG";
-    private static MemberObject MEMBER_OBJECT;
+    private static FpMemberObject MEMBER_OBJECT;
     private View.OnClickListener listener = null;
 
-    public static BaseFpCallDialogFragment launchDialog(Activity activity, MemberObject MO) {
+    public static BaseFpCallDialogFragment launchDialog(Activity activity, FpMemberObject MO) {
         BaseFpCallDialogFragment dialogFragment = BaseFpCallDialogFragment.newInstance();
         FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
         Fragment prev = activity.getFragmentManager().findFragmentByTag(DIALOG_TAG);

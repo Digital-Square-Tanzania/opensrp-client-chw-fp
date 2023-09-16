@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
-import org.smartregister.chw.fp.domain.MemberObject;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.model.BaseFpVisitAction;
 import org.smartregister.chw.fp.util.JsonFormUtils;
 
@@ -16,13 +16,13 @@ import timber.log.Timber;
 public class FpFollowupVisitMethodContinuationActionHelper extends FpVisitActionHelper {
     protected Context context;
 
-    protected MemberObject memberObject;
+    protected FpMemberObject fpMemberObject;
 
     protected String methodExpired;
 
-    public FpFollowupVisitMethodContinuationActionHelper(Context context, MemberObject memberObject) {
+    public FpFollowupVisitMethodContinuationActionHelper(Context context, FpMemberObject fpMemberObject) {
         this.context = context;
-        this.memberObject = memberObject;
+        this.fpMemberObject = fpMemberObject;
     }
 
     /**

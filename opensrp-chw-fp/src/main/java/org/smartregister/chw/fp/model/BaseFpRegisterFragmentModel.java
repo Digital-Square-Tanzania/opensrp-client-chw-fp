@@ -2,7 +2,7 @@ package org.smartregister.chw.fp.model;
 
 import org.smartregister.chw.fp.util.ConfigHelper;
 import org.smartregister.chw.fp.FpLibrary;
-import org.smartregister.chw.fp.contract.FpRegisterFragmentContract;
+import org.smartregister.chw.fp.contract.BaseFpRegisterFragmentContract;
 import org.smartregister.configurableviews.ConfigurableViewsLibrary;
 import org.smartregister.configurableviews.model.RegisterConfiguration;
 import org.smartregister.configurableviews.model.View;
@@ -11,7 +11,7 @@ import org.smartregister.cursoradapter.SmartRegisterQueryBuilder;
 
 import java.util.Set;
 
-public class BaseFpRegisterFragmentModel implements FpRegisterFragmentContract.Model {
+public class BaseFpRegisterFragmentModel implements BaseFpRegisterFragmentContract.Model {
 
     @Override
     public RegisterConfiguration defaultRegisterConfiguration() {

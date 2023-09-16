@@ -6,9 +6,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.smartregister.chw.fp.contract.FpRegisterFragmentContract;
+import org.smartregister.chw.fp.contract.BaseFpRegisterFragmentContract;
 import org.smartregister.chw.fp.presenter.BaseFpRegisterFragmentPresenter;
-import org.smartregister.chw.fp.util.Constants;
+import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.chw.fp.util.DBConstants;
 import org.smartregister.configurableviews.model.View;
 
@@ -17,10 +17,10 @@ import java.util.TreeSet;
 
 public class BaseFpRegisterFragmentPresenterTest {
     @Mock
-    protected FpRegisterFragmentContract.View view;
+    protected BaseFpRegisterFragmentContract.View view;
 
     @Mock
-    protected FpRegisterFragmentContract.Model model;
+    protected BaseFpRegisterFragmentContract.Model model;
 
     private BaseFpRegisterFragmentPresenter baseFpRegisterFragmentPresenter;
 
@@ -48,12 +48,12 @@ public class BaseFpRegisterFragmentPresenterTest {
 
     @Test
     public void getDefaultSortQuery() {
-        Assert.assertEquals(Constants.TABLES.FP_REGISTER + "." + DBConstants.KEY.LAST_INTERACTED_WITH + " DESC ", baseFpRegisterFragmentPresenter.getDefaultSortQuery());
+        Assert.assertEquals(FamilyPlanningConstants.TABLES.FP_REGISTER + "." + DBConstants.KEY.LAST_INTERACTED_WITH + " DESC ", baseFpRegisterFragmentPresenter.getDefaultSortQuery());
     }
 
     @Test
     public void getMainTable() {
-        Assert.assertEquals(Constants.TABLES.FP_REGISTER, baseFpRegisterFragmentPresenter.getMainTable());
+        Assert.assertEquals(FamilyPlanningConstants.TABLES.FP_REGISTER, baseFpRegisterFragmentPresenter.getMainTable());
     }
 
     @Test
