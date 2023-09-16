@@ -106,11 +106,23 @@
         "v_required": {
           "value": true,
           "err": "Please enter a valid Client Registration Number"
-        },
+        }
+      },
+      {
+        "key": "client_registration_number_prompt",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "client_registration_number_prompt",
+        "type": "toaster_notes",
+        "text": "Is there an existing Client Registration Number for the client? If so, kindly provide the current one; otherwise, enter a new one.",
+        "toaster_type": "info",
+        "toaster_info_text": "",
+        "toaster_info_title": "",
         "relevance": {
-          "step1:client_used_fp_before": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "fp_enrollment_relevance.yml"
+            }
           }
         }
       },
