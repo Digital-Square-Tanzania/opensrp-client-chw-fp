@@ -191,7 +191,7 @@ public class NCUtils {
         Visit visit = new Visit();
         visit.setVisitId(visitID);
         visit.setBaseEntityId(event.getBaseEntityId());
-        visit.setDate(event.getEventDate());
+        visit.setDate(new Date());
         visit.setVisitType(event.getEventType());
         visit.setEventId(event.getEventId());
         visit.setFormSubmissionId(event.getFormSubmissionId());
