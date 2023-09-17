@@ -120,6 +120,7 @@ public class FpUtil {
     public static void saveFormEvent(final String jsonString) throws Exception {
         AllSharedPreferences allSharedPreferences = FpLibrary.getInstance().context().allSharedPreferences();
         Event baseEvent = FpJsonFormUtils.processJsonForm(allSharedPreferences, jsonString);
+        baseEvent.setEventDate(new Date());
         FpUtil.processEvent(allSharedPreferences, baseEvent);
     }
 
