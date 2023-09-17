@@ -2,8 +2,8 @@ package org.smartregister.chw.fp.actionhelper;
 
 import android.content.Context;
 
-import org.smartregister.chw.fp.model.BaseFpVisitAction;
 import org.smartregister.chw.fp.domain.VisitDetail;
+import org.smartregister.chw.fp.model.BaseFpVisitAction;
 
 import java.util.List;
 import java.util.Map;

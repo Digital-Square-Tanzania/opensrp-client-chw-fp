@@ -3,8 +3,8 @@ package org.smartregister.chw.fp.interactor;
 import androidx.annotation.VisibleForTesting;
 
 import org.smartregister.chw.fp.contract.BaseFpRegisterContract;
-import org.smartregister.chw.fp.util.FpUtil;
 import org.smartregister.chw.fp.util.AppExecutors;
+import org.smartregister.chw.fp.util.FpUtil;
 
 public class BaseFpRegisterInteractor implements BaseFpRegisterContract.Interactor {
 

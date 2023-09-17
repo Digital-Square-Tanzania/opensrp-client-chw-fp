@@ -3,10 +3,11 @@ package org.smartregister.chw.fp.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.MenuRes;
-import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.domain.Form;
 
@@ -17,15 +18,15 @@ import org.smartregister.AllConstants;
 import org.smartregister.Context;
 import org.smartregister.chw.fp.R;
 import org.smartregister.chw.fp.contract.BaseFpRegisterContract;
-import org.smartregister.chw.fp.interactor.BaseFpRegisterInteractor;
-import org.smartregister.chw.fp.model.BaseFpRegisterModel;
-import org.smartregister.chw.fp.util.FpUtil;
 import org.smartregister.chw.fp.fragment.BaseFpRegisterFragment;
+import org.smartregister.chw.fp.interactor.BaseFpRegisterInteractor;
 import org.smartregister.chw.fp.listener.FpBottomNavigationListener;
+import org.smartregister.chw.fp.model.BaseFpRegisterModel;
 import org.smartregister.chw.fp.presenter.BaseFpRegisterPresenter;
-import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.chw.fp.util.DBConstants;
+import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.chw.fp.util.FpJsonFormUtils;
+import org.smartregister.chw.fp.util.FpUtil;
 import org.smartregister.helper.BottomNavigationHelper;
 import org.smartregister.listener.BottomNavigationListener;
 import org.smartregister.repository.BaseRepository;

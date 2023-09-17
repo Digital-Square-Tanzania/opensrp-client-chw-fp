@@ -8,8 +8,8 @@ import net.sqlcipher.database.SQLiteDatabase;
 import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.smartregister.chw.fp.domain.Visit;
-import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.chw.fp.util.DBConstants;
+import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.repository.BaseRepository;
 
 import java.text.SimpleDateFormat;

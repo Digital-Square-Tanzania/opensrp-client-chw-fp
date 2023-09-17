@@ -2,10 +2,11 @@ package org.smartregister.chw.fp.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.FrameLayout;
+
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import android.widget.FrameLayout;
 
 import org.json.JSONObject;
 

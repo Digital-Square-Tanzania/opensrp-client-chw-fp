@@ -52,7 +52,7 @@ public class FpMemberObject implements Serializable {
 
     private String fpMethod;
 
-    private String fpStartDate;
+    private String fpNextAppointmentDate;
 
     private String fpRegistrationDate;
 
@@ -244,12 +244,12 @@ public class FpMemberObject implements Serializable {
     }
 
 
-    public String getFpStartDate() {
-        return fpStartDate;
+    public String getFpNextAppointmentDate() {
+        return fpNextAppointmentDate;
     }
 
-    public void setFpStartDate(String fpStartDate) {
-        this.fpStartDate = fpStartDate;
+    public void setFpNextAppointmentDate(String fpNextAppointmentDate) {
+        this.fpNextAppointmentDate = fpNextAppointmentDate;
     }
 
     public String getFpRegistrationDate() {

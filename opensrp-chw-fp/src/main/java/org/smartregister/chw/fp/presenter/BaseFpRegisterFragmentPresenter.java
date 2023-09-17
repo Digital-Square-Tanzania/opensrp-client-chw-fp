@@ -1,9 +1,11 @@
 package org.smartregister.chw.fp.presenter;
 
+import static org.apache.commons.lang3.StringUtils.trim;
+
 import org.apache.commons.lang3.StringUtils;
-import org.smartregister.chw.fp.util.FamilyPlanningConstants;
-import org.smartregister.chw.fp.util.DBConstants;
 import org.smartregister.chw.fp.contract.BaseFpRegisterFragmentContract;
+import org.smartregister.chw.fp.util.DBConstants;
+import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.configurableviews.model.RegisterConfiguration;
 import org.smartregister.configurableviews.model.View;
 import org.smartregister.configurableviews.model.ViewConfiguration;
@@ -11,8 +13,6 @@ import org.smartregister.configurableviews.model.ViewConfiguration;
 import java.lang.ref.WeakReference;
 import java.util.Set;
 import java.util.TreeSet;
-
-import static org.apache.commons.lang3.StringUtils.trim;
 
 public class BaseFpRegisterFragmentPresenter implements BaseFpRegisterFragmentContract.Presenter {
 

@@ -20,9 +20,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import com.vijay.jsonwizard.activities.JsonFormActivity;
+import com.vijay.jsonwizard.constants.JsonFormConstants;
+import com.vijay.jsonwizard.domain.Form;
+
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
+import org.json.JSONObject;
+import org.smartregister.AllConstants;
 import org.smartregister.chw.fp.R;
 import org.smartregister.chw.fp.contract.BaseFpProfileContract;
 import org.smartregister.chw.fp.custom_views.BaseFpFloatingMenu;
@@ -30,6 +36,7 @@ import org.smartregister.chw.fp.dao.FpDao;
 import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.domain.Visit;
 import org.smartregister.chw.fp.interactor.BaseFpProfileInteractor;
+import org.smartregister.chw.fp.model.BaseFpRegisterModel;
 import org.smartregister.chw.fp.presenter.BaseFpProfilePresenter;
 import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.chw.fp.util.FpUtil;
@@ -305,5 +312,36 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
     @Override
     public Context getContext() {
         return this;
+    }
+
+    public Form getFormConfig() {
+        return null;
+    }
+
+    public void startFormActivity(String formName, String entityId, String metaData) {
+        try {
+            String locationId = org.smartregister.Context.getInstance().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
+            JSONObject form = new BaseFpRegisterModel().getFormAsJson(formName, entityId, locationId);
+            startFormActivity(form);
+        } catch (Exception e) {
+            Timber.e(e);
+            displayToast(R.string.error_unable_to_start_form);
+        }
+    }
+
+
+    public void startFormActivity(JSONObject jsonForm) {
+        Intent intent = new Intent(this, getFormActivity());
+        intent.putExtra(FamilyPlanningConstants.JSON_FORM_EXTRA.JSON, jsonForm.toString());
+
+        if (getFormConfig() != null) {
+            intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, getFormConfig());
+        }
+
+        startActivityForResult(intent, FamilyPlanningConstants.REQUEST_CODE_GET_JSON);
+    }
+
+    protected Class getFormActivity() {
+        return JsonFormActivity.class;
     }
 }

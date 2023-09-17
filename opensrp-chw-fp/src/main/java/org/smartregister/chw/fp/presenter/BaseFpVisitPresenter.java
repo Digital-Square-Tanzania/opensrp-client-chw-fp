@@ -2,9 +2,9 @@ package org.smartregister.chw.fp.presenter;
 
 import org.json.JSONObject;
 import org.smartregister.chw.fp.R;
+import org.smartregister.chw.fp.contract.BaseFpVisitContract;
 import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.model.BaseFpVisitAction;
-import org.smartregister.chw.fp.contract.BaseFpVisitContract;
 import org.smartregister.chw.fp.util.JsonFormUtils;
 import org.smartregister.util.FormUtils;
 

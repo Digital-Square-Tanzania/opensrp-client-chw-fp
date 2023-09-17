@@ -1,5 +1,7 @@
 package org.smartregister.chw.fp.dao;
 
+import static org.smartregister.chw.fp.util.FamilyPlanningConstants.DBConstants.FP_NEXT_APPOINTMENT_DATE;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.fp.FpLibrary;
@@ -22,6 +24,14 @@ public class FpDao extends AbstractDao {
     public static Visit getLatestVisit(String baseEntityId) {
         String sql = "select visit_id, visit_type, parent_visit_id, visit_date from visits where base_entity_id = '" +
                 baseEntityId + "' " +
+                "and (" +
+                "visit_type = '" + FamilyPlanningConstants.EVENT_TYPE.FP_COUNSELING + "' OR " +
+                "visit_type = '" + FamilyPlanningConstants.EVENT_TYPE.FP_PROVIDE_METHOD + "' OR " +
+                "visit_type = '" + FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT + "' OR " +
+                "visit_type = '" + FamilyPlanningConstants.EVENT_TYPE.FP_SCREENING + "' OR " +
+                "visit_type = '" + FamilyPlanningConstants.EVENT_TYPE.FP_POINT_OF_SERVICE_DELIVERY + "' OR " +
+                "visit_type = '" + FamilyPlanningConstants.EVENT_TYPE.FP_OTHER_SERVICES + "'" +
+                ") " +
                 "ORDER BY visit_date DESC LIMIT 1";
         List<Visit> visit = AbstractDao.readData(sql, getVisitDataMap());
         if (visit.size() == 0) {
@@ -99,9 +109,8 @@ public class FpDao extends AbstractDao {
             familyPcgName = (familyPcgName.trim() + " " + getCursorValue(cursor, "pcg_last_name", "")).trim();
             fpMemberObject.setPrimaryCareGiverName(familyPcgName);
 
-            fpMemberObject.setFpStartDate(getCursorValue(cursor, "fp_start_date", ""));
+            fpMemberObject.setFpNextAppointmentDate(getCursorValue(cursor, FP_NEXT_APPOINTMENT_DATE, ""));
             fpMemberObject.setFpMethod(getCursorValue(cursor, "fp_method_accepted", ""));
-            fpMemberObject.setFpStartDate(getCursorValue(cursor, "fp_start_date", ""));
 
             return fpMemberObject;
         };

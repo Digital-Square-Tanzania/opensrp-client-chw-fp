@@ -46,11 +46,6 @@ public class FpMemberProfileActivity extends BaseFpProfileActivity {
     }
 
     @Override
-    public boolean getIsClientUsingFpMethod() {
-        return false;
-    }
-
-    @Override
     public boolean isFirstVisit() {
         return true;
     }

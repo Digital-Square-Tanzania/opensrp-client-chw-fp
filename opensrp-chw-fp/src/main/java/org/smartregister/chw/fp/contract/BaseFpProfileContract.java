@@ -22,8 +22,6 @@ public interface BaseFpProfileContract {
 
         Visit getLastVisit();
 
-        boolean getIsClientUsingFpMethod();
-
         boolean isFirstVisit();
 
         void startPointOfServiceDeliveryForm();

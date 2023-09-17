@@ -1,5 +1,7 @@
 package org.smartregister.chw.fp.util;
 
+import static org.smartregister.util.Utils.getAllSharedPreferences;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -13,17 +15,18 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.text.Spanned;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import org.json.JSONObject;
 import org.opensrp.api.constants.Gender;
-import org.smartregister.chw.fp.R;
 import org.smartregister.chw.fp.FpLibrary;
+import org.smartregister.chw.fp.R;
 import org.smartregister.chw.fp.contract.BaseFpCallDialogContract;
 import org.smartregister.chw.fp.dao.FpDao;
 import org.smartregister.clientandeventmodel.Event;
@@ -36,8 +39,6 @@ import org.smartregister.util.PermissionUtils;
 import java.util.Date;
 
 import timber.log.Timber;
-
-import static org.smartregister.util.Utils.getAllSharedPreferences;
 
 public class FpUtil {
 

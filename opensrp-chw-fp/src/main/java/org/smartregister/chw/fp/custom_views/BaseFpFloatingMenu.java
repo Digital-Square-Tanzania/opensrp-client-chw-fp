@@ -2,9 +2,10 @@ package org.smartregister.chw.fp.custom_views;
 
 import android.app.Activity;
 import android.content.Context;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.smartregister.chw.fp.R;
 import org.smartregister.chw.fp.domain.FpMemberObject;

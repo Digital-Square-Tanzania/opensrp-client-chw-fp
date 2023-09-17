@@ -3,6 +3,7 @@ package org.smartregister.chw.fp.contract;
 import com.vijay.jsonwizard.domain.Form;
 
 import org.json.JSONObject;
+import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.view.contract.BaseRegisterContract;
 
 public interface BaseFpRegisterContract {
