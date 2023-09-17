@@ -151,7 +151,10 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
                 else
                     textViewRecordFp.setText(R.string.provide_fp_counseling);
             } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_PROVIDE_METHOD)) {
-                textViewRecordFp.setText(R.string.provide_other_services);
+                if (fpMemberObject.getFpMethod().equalsIgnoreCase("method_not_provided"))
+                    textViewRecordFp.setText(R.string.provide_fp_counseling);
+                else
+                    textViewRecordFp.setText(R.string.provide_other_services);
             }
         } else {
             if (lastVisit == null || lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_OTHER_SERVICES)) {
