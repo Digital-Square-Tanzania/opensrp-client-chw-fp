@@ -11,6 +11,8 @@ import org.smartregister.domain.tag.FormTag;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.util.FormUtils;
 
+import java.util.Date;
+
 import timber.log.Timber;
 
 public class FpJsonFormUtils extends org.smartregister.util.JsonFormUtils {
@@ -95,6 +97,7 @@ public class FpJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         event.setChildLocationId(allSharedPreferences.fetchCurrentLocality());
         event.setTeam(allSharedPreferences.fetchDefaultTeam(providerId));
         event.setTeamId(allSharedPreferences.fetchDefaultTeamId(providerId));
+        event.setEventDate(new Date());
 
         event.setClientApplicationVersion(FpLibrary.getInstance().getApplicationVersion());
         event.setClientDatabaseVersion(FpLibrary.getInstance().getDatabaseVersion());

@@ -305,7 +305,6 @@ public class BaseFpScreeningVisitInteractor implements BaseFpVisitContract.Inter
             Visit visit = NCUtils.eventToVisit(baseEvent, visitID);
             visit.setPreProcessedJson(new Gson().toJson(baseEvent));
             visit.setParentVisitID(getParentVisitEventID(visit, parentEventType));
-            visit.setDate(new Date());
 
             visitRepository().addVisit(visit);
             return visit;
