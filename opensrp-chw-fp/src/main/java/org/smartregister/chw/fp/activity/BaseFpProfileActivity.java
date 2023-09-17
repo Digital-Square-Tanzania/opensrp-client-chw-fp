@@ -149,7 +149,7 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
                 if (clientCategoryAfterScreening != null && (clientCategoryAfterScreening.equalsIgnoreCase(FamilyPlanningConstants.FP_SCREENING_CLIENT_CATEGORIES.CATEGORY_1) || clientCategoryAfterScreening.equalsIgnoreCase(FamilyPlanningConstants.FP_SCREENING_CLIENT_CATEGORIES.CATEGORY_2)))
                     textViewRecordFp.setText(R.string.provide_fp_method);
                 else
-                    textViewRecordFp.setText(R.string.fp_screening);
+                    textViewRecordFp.setText(R.string.provide_fp_counseling);
             } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_PROVIDE_METHOD)) {
                 textViewRecordFp.setText(R.string.provide_other_services);
             }
