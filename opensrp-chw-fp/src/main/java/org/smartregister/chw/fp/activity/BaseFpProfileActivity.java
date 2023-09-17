@@ -151,29 +151,31 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
         }
 
 
-        if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_POINT_OF_SERVICE_DELIVERY)) {
-            textViewRecordFp.setText(R.string.provide_fp_counseling);
-        } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_COUNSELING)) {
-            textViewRecordFp.setText(R.string.fp_screening);
-        } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_SCREENING)) {
-            String clientCategoryAfterScreening = FpDao.getClientCategoryAfterScreening(fpMemberObject.getBaseEntityId());
-            if (clientCategoryAfterScreening != null && (clientCategoryAfterScreening.equalsIgnoreCase(FamilyPlanningConstants.FP_SCREENING_CLIENT_CATEGORIES.CATEGORY_1) || clientCategoryAfterScreening.equalsIgnoreCase(FamilyPlanningConstants.FP_SCREENING_CLIENT_CATEGORIES.CATEGORY_2)))
-                textViewRecordFp.setText(R.string.provide_fp_method);
-            else
+        if (lastVisit != null) {
+            if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_POINT_OF_SERVICE_DELIVERY)) {
                 textViewRecordFp.setText(R.string.provide_fp_counseling);
-        } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_PROVIDE_METHOD)) {
-            if (fpMemberObject.getFpMethod().equalsIgnoreCase("method_not_provided"))
-                textViewRecordFp.setText(R.string.provide_fp_counseling);
-            else
-                textViewRecordFp.setText(R.string.provide_other_services);
-        } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT)) {
-            String followupOutcome = FpDao.getFollowupOutcome(fpMemberObject.getBaseEntityId());
-            if (followupOutcome != null && followupOutcome.equalsIgnoreCase("switch")) {
-                textViewRecordFp.setText(R.string.provide_fp_counseling);
-            } else if (followupOutcome != null && followupOutcome.equalsIgnoreCase("stop")) {
-                closeFp(Utils.getAllSharedPreferences(), fpMemberObject.getBaseEntityId());
-            } else {
-                textViewRecordFp.setText(R.string.provide_fp_method);
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_COUNSELING)) {
+                textViewRecordFp.setText(R.string.fp_screening);
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_SCREENING)) {
+                String clientCategoryAfterScreening = FpDao.getClientCategoryAfterScreening(fpMemberObject.getBaseEntityId());
+                if (clientCategoryAfterScreening != null && (clientCategoryAfterScreening.equalsIgnoreCase(FamilyPlanningConstants.FP_SCREENING_CLIENT_CATEGORIES.CATEGORY_1) || clientCategoryAfterScreening.equalsIgnoreCase(FamilyPlanningConstants.FP_SCREENING_CLIENT_CATEGORIES.CATEGORY_2)))
+                    textViewRecordFp.setText(R.string.provide_fp_method);
+                else
+                    textViewRecordFp.setText(R.string.provide_fp_counseling);
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_PROVIDE_METHOD)) {
+                if (fpMemberObject.getFpMethod().equalsIgnoreCase("method_not_provided"))
+                    textViewRecordFp.setText(R.string.provide_fp_counseling);
+                else
+                    textViewRecordFp.setText(R.string.provide_other_services);
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT)) {
+                String followupOutcome = FpDao.getFollowupOutcome(fpMemberObject.getBaseEntityId());
+                if (followupOutcome != null && followupOutcome.equalsIgnoreCase("switch")) {
+                    textViewRecordFp.setText(R.string.provide_fp_counseling);
+                } else if (followupOutcome != null && followupOutcome.equalsIgnoreCase("stop")) {
+                    closeFp(Utils.getAllSharedPreferences(), fpMemberObject.getBaseEntityId());
+                } else {
+                    textViewRecordFp.setText(R.string.provide_fp_method);
+                }
             }
         }
     }
