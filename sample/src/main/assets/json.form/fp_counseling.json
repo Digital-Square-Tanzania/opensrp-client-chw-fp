@@ -254,6 +254,20 @@
             }
           }
         }
+      },
+      {
+        "key": "selected_fp_method_after_counseling",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "selected_fp_method_after_counseling",
+        "type": "hidden",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "selected_fp_method_after_counseling_calculation.yml"
+            }
+          }
+        }
       }
     ]
   }

@@ -58,7 +58,7 @@
       {
         "key": "speculum_exam_label",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "concept",
         "openmrs_entity_id": "speculum_exam_label",
         "type": "label",
         "text": "Speculum Exam",
@@ -168,7 +168,7 @@
       {
         "key": "digital_exam",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "",
+        "openmrs_entity": "concept",
         "openmrs_entity_id": "digital_exam",
         "type": "label",
         "text": "Digital exam",
