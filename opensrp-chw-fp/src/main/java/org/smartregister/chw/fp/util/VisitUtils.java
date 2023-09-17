@@ -45,7 +45,7 @@ public class VisitUtils {
 
         for (Visit v : visits) {
 
-            if (v.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT)) {
+            if (v.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT) || v.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_SCREENING) || v.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_OTHER_SERVICES)) {
                 try {
                     visitList.add(v);
                 } catch (Exception e) {
@@ -84,8 +84,7 @@ public class VisitUtils {
         for (VisitDetail visitDetail : detailList) {
 
             List<VisitDetail> visitDetailList = visitMap.get(visitDetail.getVisitKey());
-            if (visitDetailList == null)
-                visitDetailList = new ArrayList<>();
+            if (visitDetailList == null) visitDetailList = new ArrayList<>();
 
             visitDetailList.add(visitDetail);
 
@@ -108,10 +107,23 @@ public class VisitUtils {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR_OF_DAY, -0);
 
-        List<Visit> visits = StringUtils.isNotBlank(baseEntityID) ?
-                visitRepository.getAllUnSynced(calendar.getTime().getTime(), baseEntityID) :
-                visitRepository.getAllUnSynced(calendar.getTime().getTime());
-        processVisits(visits, visitRepository, visitDetailsRepository);
+        List<Visit> visitList = new ArrayList<>();
+
+        List<Visit> visits = StringUtils.isNotBlank(baseEntityID) ? visitRepository.getAllUnSynced(calendar.getTime().getTime(), baseEntityID) : visitRepository.getAllUnSynced(calendar.getTime().getTime());
+
+        for (Visit v : visits) {
+
+            if (v.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT) || v.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_SCREENING) || v.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_OTHER_SERVICES)) {
+                try {
+                    visitList.add(v);
+                } catch (Exception e) {
+                    Timber.e(e);
+                }
+            }
+        }
+
+
+        processVisits(visitList, visitRepository, visitDetailsRepository);
     }
 
     public static void processVisits(List<Visit> visits, VisitRepository visitRepository, VisitDetailsRepository visitDetailsRepository) throws Exception {
@@ -162,22 +174,13 @@ public class VisitUtils {
      */
     public static boolean isVisitWithin24Hours(Visit lastVisit) {
         if (lastVisit != null) {
-            return (Days.daysBetween(new DateTime(lastVisit.getCreatedAt()), new DateTime()).getDays() < 1) &&
-                    (Days.daysBetween(new DateTime(lastVisit.getDate()), new DateTime()).getDays() <= 1);
+            return (Days.daysBetween(new DateTime(lastVisit.getCreatedAt()), new DateTime()).getDays() < 1) && (Days.daysBetween(new DateTime(lastVisit.getDate()), new DateTime()).getDays() <= 1);
         }
         return false;
     }
 
     public static void deleteSavedEvent(AllSharedPreferences allSharedPreferences, String baseEntityId, String eventId, String formSubmissionId, String type) {
-        Event event = (Event) new Event()
-                .withBaseEntityId(baseEntityId)
-                .withEventDate(new Date())
-                .withEventType(DELETE_EVENT)
-                .withLocationId(JsonFormUtils.locationId(allSharedPreferences))
-                .withProviderId(allSharedPreferences.fetchRegisteredANM())
-                .withEntityType(type)
-                .withFormSubmissionId(UUID.randomUUID().toString())
-                .withDateCreated(new Date());
+        Event event = (Event) new Event().withBaseEntityId(baseEntityId).withEventDate(new Date()).withEventType(DELETE_EVENT).withLocationId(JsonFormUtils.locationId(allSharedPreferences)).withProviderId(allSharedPreferences.fetchRegisteredANM()).withEntityType(type).withFormSubmissionId(UUID.randomUUID().toString()).withDateCreated(new Date());
 
         event.addDetails(DELETE_EVENT_ID, eventId);
         event.addDetails(DELETE_FORM_SUBMISSION_ID, formSubmissionId);
