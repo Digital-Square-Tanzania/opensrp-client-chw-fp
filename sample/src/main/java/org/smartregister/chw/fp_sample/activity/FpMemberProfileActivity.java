@@ -32,7 +32,30 @@ public class FpMemberProfileActivity extends BaseFpProfileActivity {
 
     @Override
     protected void setupViews() {
-        super.setupViews();
+        initializeFloatingMenu();
+        Visit lastVisit = getLastVisit();
+
+        if (isFirstVisit()) {
+            if (lastVisit == null) {
+                textViewRecordFp.setText(org.smartregister.chw.fp.R.string.record_point_of_service_delivery);
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_POINT_OF_SERVICE_DELIVERY)) {
+                textViewRecordFp.setText(org.smartregister.chw.fp.R.string.provide_fp_counseling);
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_COUNSELING)) {
+                textViewRecordFp.setText(org.smartregister.chw.fp.R.string.fp_screening);
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_SCREENING)) {
+                textViewRecordFp.setText(org.smartregister.chw.fp.R.string.provide_fp_method);
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_PROVIDE_METHOD)) {
+                textViewRecordFp.setText(org.smartregister.chw.fp.R.string.provide_other_services);
+            }
+        } else {
+            if (lastVisit == null || lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_OTHER_SERVICES)) {
+                textViewRecordFp.setText(org.smartregister.chw.fp.R.string.record_fp_followup_visit);
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT)) {
+                textViewRecordFp.setText(org.smartregister.chw.fp.R.string.provide_fp_method);
+            } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_PROVIDE_METHOD)) {
+                textViewRecordFp.setText(org.smartregister.chw.fp.R.string.provide_other_services);
+            }
+        }
     }
 
     @Override

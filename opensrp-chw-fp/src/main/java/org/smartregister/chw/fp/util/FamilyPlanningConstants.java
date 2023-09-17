@@ -156,4 +156,14 @@ public interface FamilyPlanningConstants {
         String FP_IMPLANON_NXT = "Implanon - NXT";
     }
 
+    interface FP_SCREENING_CLIENT_CATEGORIES {
+        String CATEGORY_1 = "category_1";
+
+        String CATEGORY_2 = "category_2";
+
+        String CATEGORY_3 = "category_3";
+
+        String CATEGORY_4 = "category_4";
+    }
+
 }
