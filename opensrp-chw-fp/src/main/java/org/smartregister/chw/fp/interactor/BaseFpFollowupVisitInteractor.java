@@ -121,7 +121,7 @@ public class BaseFpFollowupVisitInteractor implements BaseFpVisitContract.Intera
     protected void evaluateRecordPointOfServicesDelivery(FpMemberObject fpMemberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
         FpVisitActionHelper actionHelper = new FpFollowupVisitRecordPointOfServiceDeliveryActionHelper(mContext, fpMemberObject);
         String actionName = mContext.getString(R.string.fp_point_of_service_delivery);
-        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_POINT_OF_SERVICE_DELIVERY).build();
+        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withProcessingMode(BaseFpVisitAction.ProcessingMode.SEPARATE).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_POINT_OF_SERVICE_DELIVERY).build();
         actionList.put(actionName, action);
     }
 
