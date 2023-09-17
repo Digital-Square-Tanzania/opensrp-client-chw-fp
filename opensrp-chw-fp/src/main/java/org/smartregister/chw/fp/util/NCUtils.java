@@ -324,7 +324,6 @@ public class NCUtils {
         Visit visit = new Visit();
         visit.setVisitId(JsonFormUtils.generateRandomUUIDString());
         visit.setBaseEntityId(event.getBaseEntityId());
-        visit.setDate(event.getEventDate().toDate());
         visit.setVisitType(event.getEventType());
         visit.setEventId(event.getEventId());
         visit.setFormSubmissionId(event.getFormSubmissionId());
@@ -332,6 +331,7 @@ public class NCUtils {
         visit.setProcessed(true);
         visit.setCreatedAt(new Date());
         visit.setUpdatedAt(new Date());
+        visit.setDate(new Date());
         Map<String, String> eventDetails = event.getDetails();
         if (eventDetails != null) visit.setVisitGroup(eventDetails.get(JsonFormUtils.HOME_VISIT_GROUP));
 

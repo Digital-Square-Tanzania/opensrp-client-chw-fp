@@ -11,7 +11,10 @@ import org.smartregister.domain.tag.FormTag;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.util.FormUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import timber.log.Timber;
 
@@ -97,7 +100,25 @@ public class FpJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         event.setChildLocationId(allSharedPreferences.fetchCurrentLocality());
         event.setTeam(allSharedPreferences.fetchDefaultTeam(providerId));
         event.setTeamId(allSharedPreferences.fetchDefaultTeamId(providerId));
-        event.setEventDate(new Date());
+
+        // Create a Date object with the current date and time
+        Date originalDate = new Date();
+
+        // Specify the source time zone (if known)
+        TimeZone sourceTimeZone = TimeZone.getDefault();
+
+        // Specify the target time zone
+        TimeZone targetTimeZone = TimeZone.getTimeZone("GMT");
+
+        // Calculate the time difference between the source and target time zones
+        int timeDifferenceMillis = targetTimeZone.getRawOffset() - sourceTimeZone.getRawOffset();
+
+        // Create a new Date object with the adjusted time zone
+        Date targetDate = new Date(originalDate.getTime() + timeDifferenceMillis);
+
+        event.setEventDate(targetDate);
+
+
 
         event.setClientApplicationVersion(FpLibrary.getInstance().getApplicationVersion());
         event.setClientDatabaseVersion(FpLibrary.getInstance().getDatabaseVersion());
