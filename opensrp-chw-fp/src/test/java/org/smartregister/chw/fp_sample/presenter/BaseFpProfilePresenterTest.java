@@ -45,7 +45,7 @@ public class BaseFpProfilePresenterTest {
     @Test
     public void malariaTestDatePeriodGreaterThanTen() {
         profilePresenter.recordFpButton("OVERDUE");
-        verify(view).setOverDueColor();
+        verify(view).setFollowUpButtonOverdue();
     }
 
     @Test

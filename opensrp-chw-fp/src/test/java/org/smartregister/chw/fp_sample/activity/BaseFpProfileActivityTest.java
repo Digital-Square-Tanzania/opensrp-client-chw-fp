@@ -44,7 +44,7 @@ public class BaseFpProfileActivityTest {
 
     @Test
     public void setOverDueColor() {
-        baseTestProfileActivity.setOverDueColor();
+        baseTestProfileActivity.setFollowUpButtonOverdue();
         Mockito.verify(view, Mockito.never()).setBackgroundColor(Color.RED);
     }
 
