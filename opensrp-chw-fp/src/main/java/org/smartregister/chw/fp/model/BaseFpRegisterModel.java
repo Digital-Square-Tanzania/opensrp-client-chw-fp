@@ -23,6 +23,13 @@ public class BaseFpRegisterModel implements BaseFpRegisterContract.Model {
             } catch (Exception e) {
                 Timber.e(e);
             }
+        } else if (formName.equalsIgnoreCase(FamilyPlanningConstants.FORMS.FP_COUNSELING)) {
+            try {
+                FpMemberObject fpMemberObject = FpDao.getMember(entityId);
+                jsonObject.getJSONObject("global").put("sex", fpMemberObject.getGender());
+            } catch (Exception e) {
+                Timber.e(e);
+            }
         }
 
         FpJsonFormUtils.getRegistrationForm(jsonObject, entityId, currentLocationId);
