@@ -1,5 +1,6 @@
 package org.smartregister.chw.fp.dao;
 
+import static org.smartregister.chw.fp.util.FamilyPlanningConstants.DBConstants.FP_METHOD_PROVIDED;
 import static org.smartregister.chw.fp.util.FamilyPlanningConstants.DBConstants.FP_NEXT_APPOINTMENT_DATE;
 
 import org.json.JSONException;
@@ -110,7 +111,7 @@ public class FpDao extends AbstractDao {
             fpMemberObject.setPrimaryCareGiverName(familyPcgName);
 
             fpMemberObject.setFpNextAppointmentDate(getCursorValue(cursor, FP_NEXT_APPOINTMENT_DATE, ""));
-            fpMemberObject.setFpMethod(getCursorValue(cursor, "fp_method_accepted", ""));
+            fpMemberObject.setFpMethod(getCursorValue(cursor, FP_METHOD_PROVIDED, ""));
 
             return fpMemberObject;
         };

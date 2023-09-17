@@ -133,7 +133,7 @@ public interface FamilyPlanningConstants {
 
         String DETAILS = "details";
 
-        String FP_METHOD_ACCEPTED = "fp_method_accepted";
+        String FP_METHOD_PROVIDED = "provided_fp_method";
 
         String FP_NEXT_APPOINTMENT_DATE = "next_appointment_date";
 

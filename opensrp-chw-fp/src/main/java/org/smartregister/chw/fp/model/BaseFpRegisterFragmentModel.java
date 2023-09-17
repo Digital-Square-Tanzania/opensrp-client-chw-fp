@@ -54,7 +54,7 @@ public class BaseFpRegisterFragmentModel implements BaseFpRegisterFragmentContra
         Set<String> columnList = new HashSet<>();
         columnList.add(tableName + "." + FamilyPlanningConstants.DBConstants.LAST_INTERACTED_WITH);
         columnList.add(tableName + "." + FamilyPlanningConstants.DBConstants.BASE_ENTITY_ID);
-        columnList.add(tableName + "." + FamilyPlanningConstants.DBConstants.FP_METHOD_ACCEPTED);
+        columnList.add(tableName + "." + FamilyPlanningConstants.DBConstants.FP_METHOD_PROVIDED);
         columnList.add(FamilyPlanningConstants.DBConstants.FAMILY_MEMBER + "." + FamilyPlanningConstants.DBConstants.RELATIONAL_ID + " as relationalid");
         columnList.add(FamilyPlanningConstants.DBConstants.FAMILY_MEMBER + "." + FamilyPlanningConstants.DBConstants.RELATIONAL_ID);
         columnList.add(FamilyPlanningConstants.DBConstants.FAMILY_MEMBER + "." + FamilyPlanningConstants.DBConstants.FIRST_NAME);
