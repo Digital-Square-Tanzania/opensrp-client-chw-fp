@@ -1,6 +1,7 @@
 package org.smartregister.chw.fp.util;
 
 
+import static org.smartregister.chw.fp.util.FamilyPlanningConstants.EVENT_TYPE.CLOSE_FP;
 import static org.smartregister.chw.fp.util.FamilyPlanningConstants.EVENT_TYPE.DELETE_EVENT;
 import static org.smartregister.chw.fp.util.FamilyPlanningConstants.JSON_FORM_EXTRA.DELETE_EVENT_ID;
 import static org.smartregister.chw.fp.util.FamilyPlanningConstants.JSON_FORM_EXTRA.DELETE_FORM_SUBMISSION_ID;
@@ -201,5 +202,17 @@ public class VisitUtils {
         Event processedEvent = FpDao.getEventByFormSubmissionId(visit.getFormSubmissionId());
         if (processedEvent == null) return;
         deleteSavedEvent(allSharedPreferences, baseEntityId, processedEvent.getEventId(), processedEvent.getFormSubmissionId(), "event");
+    }
+
+
+
+
+    public static void closeFp(AllSharedPreferences allSharedPreferences, String baseEntityId) {
+        Event event = (Event) new Event().withBaseEntityId(baseEntityId).withEventDate(new Date()).withEventType(CLOSE_FP).withLocationId(JsonFormUtils.locationId(allSharedPreferences)).withProviderId(allSharedPreferences.fetchRegisteredANM()).withEntityType(FamilyPlanningConstants.TABLES.FP_REGISTER).withFormSubmissionId(UUID.randomUUID().toString()).withDateCreated(new Date());
+        try {
+            NCUtils.processEvent(event.getBaseEntityId(), new JSONObject(JsonFormUtils.gson.toJson(event)));
+        } catch (Exception e) {
+            Timber.e(e);
+        }
     }
 }

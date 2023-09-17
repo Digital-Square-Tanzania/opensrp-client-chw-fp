@@ -19,4 +19,9 @@ public class FpFollowupMemberProfileActivity extends FpMemberProfileActivity {
         FpFollowupVisitProvisionOfServicesActivity.startMe(this, fpMemberObject.getBaseEntityId(), false);
     }
 
+    @Override
+    public boolean isFirstVisit() {
+        return false;
+    }
+
 }

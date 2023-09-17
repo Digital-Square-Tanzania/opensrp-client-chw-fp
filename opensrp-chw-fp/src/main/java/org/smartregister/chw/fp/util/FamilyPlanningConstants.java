@@ -34,6 +34,8 @@ public interface FamilyPlanningConstants {
         String FP_COUNSELING = "Provide FP Counseling";
 
         String DELETE_EVENT = "Delete Event";
+
+        String CLOSE_FP = "Close FP";
     }
 
     interface FORMS {

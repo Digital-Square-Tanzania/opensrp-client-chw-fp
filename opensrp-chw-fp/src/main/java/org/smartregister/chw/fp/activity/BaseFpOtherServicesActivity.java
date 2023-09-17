@@ -118,6 +118,7 @@ public class BaseFpOtherServicesActivity extends SecuredActivity implements Base
 
     @Override
     public void initializeActions(LinkedHashMap<String, BaseFpVisitAction> map) {
+        actionList.clear();
         actionList.putAll(map);
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();

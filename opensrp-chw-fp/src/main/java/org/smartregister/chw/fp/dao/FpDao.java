@@ -88,10 +88,21 @@ public class FpDao extends AbstractDao {
         return res.get(0);
     }
 
-    public static String getSelectedFpMethodAfterCounseling(String baseEntityID) {
-        String sql = "SELECT selected_fp_method_after_counseling FROM " + FamilyPlanningConstants.TABLES.FP_REGISTER + " p " + "WHERE p.base_entity_id = '" + baseEntityID + "' AND p.is_closed = 0";
+    public static String getFollowupOutcome(String baseEntityID) {
+        String sql = "SELECT followup_outcome FROM " + FamilyPlanningConstants.TABLES.FP_REGISTER + " p " + "WHERE p.base_entity_id = '" + baseEntityID + "' AND p.is_closed = 0";
 
-        DataMap<String> dataMap = cursor -> getCursorValue(cursor, "selected_fp_method_after_counseling");
+        DataMap<String> dataMap = cursor -> getCursorValue(cursor, "followup_outcome");
+
+        List<String> res = readData(sql, dataMap);
+        if (res == null || res.size() != 1) return null;
+
+        return res.get(0);
+    }
+
+    public static String getSelectedFpMethodAfterCounseling(String baseEntityID) {
+        String sql = "SELECT client_want_to_switch_stop FROM " + FamilyPlanningConstants.TABLES.FP_REGISTER + " p " + "WHERE p.base_entity_id = '" + baseEntityID + "' AND p.is_closed = 0";
+
+        DataMap<String> dataMap = cursor -> getCursorValue(cursor, "client_want_to_switch_stop");
 
         List<String> res = readData(sql, dataMap);
         if (res == null || res.size() != 1) return null;

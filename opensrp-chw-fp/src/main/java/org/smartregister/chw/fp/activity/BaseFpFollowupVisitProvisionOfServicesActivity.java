@@ -27,7 +27,7 @@ import org.smartregister.chw.fp.adapter.BaseFpVisitAdapter;
 import org.smartregister.chw.fp.contract.BaseFpVisitContract;
 import org.smartregister.chw.fp.dao.FpDao;
 import org.smartregister.chw.fp.domain.FpMemberObject;
-import org.smartregister.chw.fp.interactor.BaseFpOtherServicesVisitInteractor;
+import org.smartregister.chw.fp.interactor.BaseFpFollowupVisitInteractor;
 import org.smartregister.chw.fp.model.BaseFpVisitAction;
 import org.smartregister.chw.fp.presenter.BaseFpVisitPresenter;
 import org.smartregister.chw.fp.util.FamilyPlanningConstants;
@@ -113,12 +113,44 @@ public class BaseFpFollowupVisitProvisionOfServicesActivity extends SecuredActiv
     }
 
     protected void registerPresenter() {
-        presenter = new BaseFpVisitPresenter(fpMemberObject, this, new BaseFpOtherServicesVisitInteractor());
+        presenter = new BaseFpVisitPresenter(fpMemberObject, this, new BaseFpFollowupVisitInteractor());
     }
 
     @Override
     public void initializeActions(LinkedHashMap<String, BaseFpVisitAction> map) {
-        actionList.putAll(map);
+        actionList.clear();
+
+        //Rearranging the actions according to a specific arrangement
+        if (map.containsKey(getString(R.string.fp_point_of_service_delivery))) {
+            BaseFpVisitAction fpPointOfDeliveryAction = map.get(getString(R.string.fp_point_of_service_delivery));
+            if (fpPointOfDeliveryAction != null) {
+                actionList.put(getString(R.string.fp_point_of_service_delivery), fpPointOfDeliveryAction);
+            }
+        }
+
+        if (map.containsKey(getString(R.string.fp_method_satisfaction))) {
+            BaseFpVisitAction fpMethodSatisfaction = map.get(getString(R.string.fp_method_satisfaction));
+            if (fpMethodSatisfaction != null) {
+                actionList.put(getString(R.string.fp_method_satisfaction), fpMethodSatisfaction);
+            }
+        }
+
+        if (map.containsKey(getString(R.string.fp_vitals))) {
+            BaseFpVisitAction fpVitals = map.get(getString(R.string.fp_vitals));
+            if (fpVitals != null) {
+                actionList.put(getString(R.string.fp_vitals), fpVitals);
+            }
+        }
+
+        if (map.containsKey(getString(R.string.fp_method_continuation))) {
+            BaseFpVisitAction fpMethodContinuation = map.get(getString(R.string.fp_method_continuation));
+            if (fpMethodContinuation != null) {
+                actionList.put(getString(R.string.fp_method_continuation), fpMethodContinuation);
+            }
+        }
+        //====================End of Necessary evil ====================================
+
+
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
         }
@@ -226,10 +258,7 @@ public class BaseFpFollowupVisitProvisionOfServicesActivity extends SecuredActiv
         boolean valid = actionList.size() > 0;
         for (Map.Entry<String, BaseFpVisitAction> entry : actionList.entrySet()) {
             BaseFpVisitAction action = entry.getValue();
-            if (
-                    (!action.isOptional() && (action.getActionStatus() == BaseFpVisitAction.Status.PENDING && action.isValid()))
-                            || !action.isEnabled()
-            ) {
+            if ((!action.isOptional() && (action.getActionStatus() == BaseFpVisitAction.Status.PENDING && action.isValid())) || !action.isEnabled()) {
                 valid = false;
                 break;
             }
@@ -309,8 +338,7 @@ public class BaseFpFollowupVisitProvisionOfServicesActivity extends SecuredActiv
                 }
             } else {
                 BaseFpVisitAction fpVisitAction = actionList.get(current_action);
-                if (fpVisitAction != null)
-                    fpVisitAction.evaluateStatus();
+                if (fpVisitAction != null) fpVisitAction.evaluateStatus();
             }
 
         } else {
@@ -330,12 +358,11 @@ public class BaseFpFollowupVisitProvisionOfServicesActivity extends SecuredActiv
     }
 
     protected void displayExitDialog(final Runnable onConfirm) {
-        AlertDialog dialog = new AlertDialog.Builder(this, com.vijay.jsonwizard.R.style.AppThemeAlertDialog).setTitle(confirmCloseTitle)
-                .setMessage(confirmCloseMessage).setNegativeButton(com.vijay.jsonwizard.R.string.yes, (dialog1, which) -> {
-                    if (onConfirm != null) {
-                        onConfirm.run();
-                    }
-                }).setPositiveButton(com.vijay.jsonwizard.R.string.no, (dialog2, which) -> Timber.d("No button on dialog in %s", JsonFormActivity.class.getCanonicalName())).create();
+        AlertDialog dialog = new AlertDialog.Builder(this, com.vijay.jsonwizard.R.style.AppThemeAlertDialog).setTitle(confirmCloseTitle).setMessage(confirmCloseMessage).setNegativeButton(com.vijay.jsonwizard.R.string.yes, (dialog1, which) -> {
+            if (onConfirm != null) {
+                onConfirm.run();
+            }
+        }).setPositiveButton(com.vijay.jsonwizard.R.string.no, (dialog2, which) -> Timber.d("No button on dialog in %s", JsonFormActivity.class.getCanonicalName())).create();
 
         dialog.show();
     }

@@ -11,7 +11,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 import org.smartregister.chw.fp.FpLibrary;
 import org.smartregister.chw.fp.R;
-import org.smartregister.chw.fp.actionhelper.FpFollowupVisitMethodContinuationActionHelper;
 import org.smartregister.chw.fp.actionhelper.FpFollowupVisitMethodSatisfactionActionHelper;
 import org.smartregister.chw.fp.actionhelper.FpFollowupVisitRecordPointOfServiceDeliveryActionHelper;
 import org.smartregister.chw.fp.actionhelper.FpFollowupVisitVitalsActionHelper;
@@ -105,9 +104,8 @@ public class BaseFpFollowupVisitInteractor implements BaseFpVisitContract.Intera
         final Runnable runnable = () -> {
             try {
                 evaluateRecordPointOfServicesDelivery(fpMemberObject, details);
-                evaluateSatisfactionOfFpMethod(fpMemberObject, details);
+                evaluateSatisfactionOfFpMethod(fpMemberObject, details, callBack);
                 evaluateVitals(fpMemberObject, details);
-                evaluateFpMethodContinuation(fpMemberObject, details);
             } catch (BaseFpVisitAction.ValidationException e) {
                 Timber.e(e);
             }
@@ -125,8 +123,8 @@ public class BaseFpFollowupVisitInteractor implements BaseFpVisitContract.Intera
         actionList.put(actionName, action);
     }
 
-    protected void evaluateSatisfactionOfFpMethod(FpMemberObject fpMemberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
-        FpVisitActionHelper actionHelper = new FpFollowupVisitMethodSatisfactionActionHelper(mContext, fpMemberObject);
+    protected void evaluateSatisfactionOfFpMethod(FpMemberObject fpMemberObject, Map<String, List<VisitDetail>> details, final BaseFpVisitContract.InteractorCallBack callBack) throws BaseFpVisitAction.ValidationException {
+        FpVisitActionHelper actionHelper = new FpFollowupVisitMethodSatisfactionActionHelper(mContext, fpMemberObject, details, actionList, callBack);
         String actionName = mContext.getString(R.string.fp_method_satisfaction);
         BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_FOLLOWUP_VISIT_METHOD_SATISFACTION).build();
         actionList.put(actionName, action);
@@ -136,13 +134,6 @@ public class BaseFpFollowupVisitInteractor implements BaseFpVisitContract.Intera
         FpVisitActionHelper actionHelper = new FpFollowupVisitVitalsActionHelper(mContext, fpMemberObject);
         String actionName = mContext.getString(R.string.fp_vitals);
         BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_FOLLOWUP_VISIT_VITALS).build();
-        actionList.put(actionName, action);
-    }
-
-    protected void evaluateFpMethodContinuation(FpMemberObject fpMemberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
-        FpVisitActionHelper actionHelper = new FpFollowupVisitMethodContinuationActionHelper(mContext, fpMemberObject);
-        String actionName = mContext.getString(R.string.fp_method_continuation);
-        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_FOLLOWUP_VISIT_METHOD_CONTINUATION).build();
         actionList.put(actionName, action);
     }
 
