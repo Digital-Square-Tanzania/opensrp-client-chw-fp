@@ -23,12 +23,12 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BaseFpVisitAdapter extends RecyclerView.Adapter<BaseFpVisitAdapter.MyViewHolder> {
-    private Map<String, BaseFpVisitAction> pmtctHomeVisitActionList;
+    private Map<String, BaseFpVisitAction> fpVisitActionList;
     private Context context;
     private BaseFpVisitContract.View visitContractView;
 
     public BaseFpVisitAdapter(Context context, BaseFpVisitContract.View view, LinkedHashMap<String, BaseFpVisitAction> myDataset) {
-        pmtctHomeVisitActionList = myDataset;
+        fpVisitActionList = myDataset;
         this.context = context;
         this.visitContractView = view;
     }
@@ -50,7 +50,7 @@ public class BaseFpVisitAdapter extends RecyclerView.Adapter<BaseFpVisitAdapter.
      */
     private BaseFpVisitAction getByPosition(int position) {
         int count = -1;
-        for (Map.Entry<String, BaseFpVisitAction> entry : pmtctHomeVisitActionList.entrySet()) {
+        for (Map.Entry<String, BaseFpVisitAction> entry : fpVisitActionList.entrySet()) {
             if (entry.getValue().isValid())
                 count++;
 
@@ -145,17 +145,17 @@ public class BaseFpVisitAdapter extends RecyclerView.Adapter<BaseFpVisitAdapter.
         return color_res;
     }
 
-    private void bindClickListener(View view, final BaseFpVisitAction pmtctHomeVisitAction) {
-        if (!pmtctHomeVisitAction.isEnabled() || !pmtctHomeVisitAction.isValid()) {
+    private void bindClickListener(View view, final BaseFpVisitAction fpVisitAction) {
+        if (!fpVisitAction.isEnabled() || !fpVisitAction.isValid()) {
             view.setOnClickListener(null);
             return;
         }
 
         view.setOnClickListener(v -> {
-            if (StringUtils.isNotBlank(pmtctHomeVisitAction.getFormName())) {
-                visitContractView.startForm(pmtctHomeVisitAction);
+            if (StringUtils.isNotBlank(fpVisitAction.getFormName())) {
+                visitContractView.startForm(fpVisitAction);
             } else {
-                visitContractView.startFragment(pmtctHomeVisitAction);
+                visitContractView.startFragment(fpVisitAction);
             }
             visitContractView.redrawVisitUI();
         });
@@ -164,7 +164,7 @@ public class BaseFpVisitAdapter extends RecyclerView.Adapter<BaseFpVisitAdapter.
     @Override
     public int getItemCount() {
         int count = 0;
-        for (Map.Entry<String, BaseFpVisitAction> entry : pmtctHomeVisitActionList.entrySet()) {
+        for (Map.Entry<String, BaseFpVisitAction> entry : fpVisitActionList.entrySet()) {
             if (entry.getValue().isValid())
                 count++;
         }
