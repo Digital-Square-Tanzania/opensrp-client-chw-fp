@@ -108,11 +108,13 @@ public class BaseFpScreeningVisitInteractor implements BaseFpVisitContract.Inter
         final Runnable runnable = () -> {
             try {
                 evaluateMedicalHistory(fpMemberObject, details);
-                evaluateObstetricHistory(fpMemberObject, details);
-                evaluatePastObstetricHistory(fpMemberObject, details);
-                evaluateGynecologicalHistory(fpMemberObject, details);
-                evaluatePhysicalExamination(fpMemberObject, details);
-                evaluateVaginalExamination(fpMemberObject, details);
+                if (fpMemberObject.getGender().equalsIgnoreCase("female")) {
+                    evaluateObstetricHistory(fpMemberObject, details);
+                    evaluatePastObstetricHistory(fpMemberObject, details);
+                    evaluateGynecologicalHistory(fpMemberObject, details);
+                    evaluatePhysicalExamination(fpMemberObject, details);
+                    evaluateVaginalExamination(fpMemberObject, details);
+                }
                 evaluateMedicalEligibilityCriteria(fpMemberObject, details);
 
 
