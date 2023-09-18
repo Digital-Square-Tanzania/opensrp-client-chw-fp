@@ -12,8 +12,8 @@ import org.jetbrains.annotations.Nullable;
 import org.smartregister.chw.fp.FpLibrary;
 import org.smartregister.chw.fp.R;
 import org.smartregister.chw.fp.actionhelper.FpCbdFollowupMethodSatisfactionActionHelper;
+import org.smartregister.chw.fp.actionhelper.FpCbdFollowupNextAppointmentDateActionHelper;
 import org.smartregister.chw.fp.actionhelper.FpCbdFollowupProvisionOfHealthEducationActionHelper;
-import org.smartregister.chw.fp.actionhelper.FpFollowupVisitVitalsActionHelper;
 import org.smartregister.chw.fp.actionhelper.FpVisitActionHelper;
 import org.smartregister.chw.fp.contract.BaseFpVisitContract;
 import org.smartregister.chw.fp.dao.FpDao;
@@ -131,9 +131,9 @@ public class BaseFpCbdFollowupVisitInteractor implements BaseFpVisitContract.Int
     }
 
     protected void evaluateNextAppointmentDate(FpMemberObject fpMemberObject, Map<String, List<VisitDetail>> details) throws BaseFpVisitAction.ValidationException {
-        FpVisitActionHelper actionHelper = new FpFollowupVisitVitalsActionHelper(mContext, fpMemberObject);
+        FpVisitActionHelper actionHelper = new FpCbdFollowupNextAppointmentDateActionHelper(mContext, fpMemberObject);
         String actionName = mContext.getString(R.string.fp_next_appointment_date);
-        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_FOLLOWUP_VISIT_VITALS).build();
+        BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_CBD_FOLLOWUP_NEXT_APPOINTMENT_DATE).build();
         actionList.put(actionName, action);
     }
 
