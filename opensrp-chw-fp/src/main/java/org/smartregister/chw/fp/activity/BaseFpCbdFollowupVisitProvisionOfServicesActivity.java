@@ -27,7 +27,7 @@ import org.smartregister.chw.fp.adapter.BaseFpVisitAdapter;
 import org.smartregister.chw.fp.contract.BaseFpVisitContract;
 import org.smartregister.chw.fp.dao.FpDao;
 import org.smartregister.chw.fp.domain.FpMemberObject;
-import org.smartregister.chw.fp.interactor.BaseFpFollowupVisitInteractor;
+import org.smartregister.chw.fp.interactor.BaseFpCbdFollowupVisitInteractor;
 import org.smartregister.chw.fp.model.BaseFpVisitAction;
 import org.smartregister.chw.fp.presenter.BaseFpVisitPresenter;
 import org.smartregister.chw.fp.util.FamilyPlanningConstants;
@@ -39,9 +39,9 @@ import java.util.Map;
 
 import timber.log.Timber;
 
-public class BaseFpFollowupVisitProvisionOfServicesActivity extends SecuredActivity implements BaseFpVisitContract.View, View.OnClickListener {
+public class BaseFpCbdFollowupVisitProvisionOfServicesActivity extends SecuredActivity implements BaseFpVisitContract.View, View.OnClickListener {
 
-    private static final String TAG = BaseFpFollowupVisitProvisionOfServicesActivity.class.getCanonicalName();
+    private static final String TAG = BaseFpCbdFollowupVisitProvisionOfServicesActivity.class.getCanonicalName();
     protected Map<String, BaseFpVisitAction> actionList = new LinkedHashMap<>();
     protected BaseFpVisitContract.Presenter presenter;
     protected FpMemberObject fpMemberObject;
@@ -56,7 +56,7 @@ public class BaseFpFollowupVisitProvisionOfServicesActivity extends SecuredActiv
     protected String confirmCloseMessage;
 
     public static void startMe(Activity activity, String baseEntityID, Boolean isEditMode) {
-        Intent intent = new Intent(activity, BaseFpFollowupVisitProvisionOfServicesActivity.class);
+        Intent intent = new Intent(activity, BaseFpCbdFollowupVisitProvisionOfServicesActivity.class);
         intent.putExtra(FamilyPlanningConstants.ACTIVITY_PAYLOAD.BASE_ENTITY_ID, baseEntityID);
         intent.putExtra(FamilyPlanningConstants.ACTIVITY_PAYLOAD.EDIT_MODE, isEditMode);
         activity.startActivityForResult(intent, FamilyPlanningConstants.REQUEST_CODE_GET_JSON);
@@ -113,7 +113,7 @@ public class BaseFpFollowupVisitProvisionOfServicesActivity extends SecuredActiv
     }
 
     protected void registerPresenter() {
-        presenter = new BaseFpVisitPresenter(fpMemberObject, this, new BaseFpFollowupVisitInteractor());
+        presenter = new BaseFpVisitPresenter(fpMemberObject, this, new BaseFpCbdFollowupVisitInteractor());
     }
 
     @Override
@@ -121,31 +121,31 @@ public class BaseFpFollowupVisitProvisionOfServicesActivity extends SecuredActiv
         actionList.clear();
 
         //Rearranging the actions according to a specific arrangement
-        if (map.containsKey(getString(R.string.fp_point_of_service_delivery))) {
-            BaseFpVisitAction fpPointOfDeliveryAction = map.get(getString(R.string.fp_point_of_service_delivery));
-            if (fpPointOfDeliveryAction != null) {
-                actionList.put(getString(R.string.fp_point_of_service_delivery), fpPointOfDeliveryAction);
+        if (map.containsKey(getString(R.string.fp_health_education))) {
+            BaseFpVisitAction healthEducationAction = map.get(getString(R.string.fp_health_education));
+            if (healthEducationAction != null) {
+                actionList.put(getString(R.string.fp_health_education), healthEducationAction);
             }
         }
 
         if (map.containsKey(getString(R.string.fp_method_satisfaction))) {
-            BaseFpVisitAction fpMethodSatisfaction = map.get(getString(R.string.fp_method_satisfaction));
-            if (fpMethodSatisfaction != null) {
-                actionList.put(getString(R.string.fp_method_satisfaction), fpMethodSatisfaction);
+            BaseFpVisitAction fpMethodSatisfactionAction = map.get(getString(R.string.fp_method_satisfaction));
+            if (fpMethodSatisfactionAction != null) {
+                actionList.put(getString(R.string.fp_method_satisfaction), fpMethodSatisfactionAction);
             }
         }
 
-        if (map.containsKey(getString(R.string.fp_vitals))) {
-            BaseFpVisitAction fpVitals = map.get(getString(R.string.fp_vitals));
-            if (fpVitals != null) {
-                actionList.put(getString(R.string.fp_vitals), fpVitals);
+        if (map.containsKey(getString(R.string.fp_method_refill))) {
+            BaseFpVisitAction fpMethodRefillAction = map.get(getString(R.string.fp_method_refill));
+            if (fpMethodRefillAction != null) {
+                actionList.put(getString(R.string.fp_method_refill), fpMethodRefillAction);
             }
         }
 
-        if (map.containsKey(getString(R.string.fp_method_continuation))) {
-            BaseFpVisitAction fpMethodContinuation = map.get(getString(R.string.fp_method_continuation));
-            if (fpMethodContinuation != null) {
-                actionList.put(getString(R.string.fp_method_continuation), fpMethodContinuation);
+        if (map.containsKey(getString(R.string.fp_next_appointment_date))) {
+            BaseFpVisitAction fpNextAppointmentDateAction = map.get(getString(R.string.fp_next_appointment_date));
+            if (fpNextAppointmentDateAction != null) {
+                actionList.put(getString(R.string.fp_next_appointment_date), fpNextAppointmentDateAction);
             }
         }
         //====================End of Necessary evil ====================================
@@ -354,7 +354,7 @@ public class BaseFpFollowupVisitProvisionOfServicesActivity extends SecuredActiv
 
     @Override
     public void onBackPressed() {
-        displayExitDialog(BaseFpFollowupVisitProvisionOfServicesActivity.this::finish);
+        displayExitDialog(BaseFpCbdFollowupVisitProvisionOfServicesActivity.this::finish);
     }
 
     protected void displayExitDialog(final Runnable onConfirm) {

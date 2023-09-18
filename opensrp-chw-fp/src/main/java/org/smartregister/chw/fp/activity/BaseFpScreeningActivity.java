@@ -179,21 +179,21 @@ public class BaseFpScreeningActivity extends SecuredActivity implements BaseFpVi
     }
 
     @Override
-    public void startForm(BaseFpVisitAction fpVisitAction) {
-        current_action = fpVisitAction.getTitle();
+    public void startForm(BaseFpVisitAction visitAction) {
+        current_action = visitAction.getTitle();
 
-        if (StringUtils.isNotBlank(fpVisitAction.getJsonPayload())) {
+        if (StringUtils.isNotBlank(visitAction.getJsonPayload())) {
             try {
-                JSONObject jsonObject = new JSONObject(fpVisitAction.getJsonPayload());
+                JSONObject jsonObject = new JSONObject(visitAction.getJsonPayload());
                 startFormActivity(jsonObject);
             } catch (Exception e) {
                 Timber.e(e);
                 String locationId = FpLibrary.getInstance().context().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
-                presenter().startForm(fpVisitAction.getFormName(), fpMemberObject.getBaseEntityId(), locationId);
+                presenter().startForm(visitAction.getFormName(), fpMemberObject.getBaseEntityId(), locationId);
             }
         } else {
             String locationId = FpLibrary.getInstance().context().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
-            presenter().startForm(fpVisitAction.getFormName(), fpMemberObject.getBaseEntityId(), locationId);
+            presenter().startForm(visitAction.getFormName(), fpMemberObject.getBaseEntityId(), locationId);
         }
     }
 
@@ -210,11 +210,11 @@ public class BaseFpScreeningActivity extends SecuredActivity implements BaseFpVi
     }
 
     @Override
-    public void startFragment(BaseFpVisitAction pmtctHomeVisitAction) {
-        current_action = pmtctHomeVisitAction.getTitle();
+    public void startFragment(BaseFpVisitAction visitAction) {
+        current_action = visitAction.getTitle();
 
-        if (pmtctHomeVisitAction.getDestinationFragment() != null)
-            pmtctHomeVisitAction.getDestinationFragment().show(getSupportFragmentManager(), current_action);
+        if (visitAction.getDestinationFragment() != null)
+            visitAction.getDestinationFragment().show(getSupportFragmentManager(), current_action);
 
     }
 
@@ -251,7 +251,7 @@ public class BaseFpScreeningActivity extends SecuredActivity implements BaseFpVi
 
 
     @Override
-    public Map<String, BaseFpVisitAction> getPmtctHomeVisitActions() {
+    public Map<String, BaseFpVisitAction> getVisitActions() {
         return actionList;
     }
 

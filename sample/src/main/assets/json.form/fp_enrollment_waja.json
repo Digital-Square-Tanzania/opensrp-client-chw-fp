@@ -82,10 +82,10 @@
         }
       },
       {
-        "key": "client_fp_method_used",
+        "key": "provided_fp_method",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "client_fp_method_used",
+        "openmrs_entity_id": "provided_fp_method",
         "type": "native_radio",
         "label": "Client family planning method used",
         "text_color": "#000000",

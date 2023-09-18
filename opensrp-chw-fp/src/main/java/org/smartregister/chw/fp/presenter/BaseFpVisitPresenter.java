@@ -54,7 +54,7 @@ public class BaseFpVisitPresenter implements BaseFpVisitContract.Presenter, Base
     public void submitVisit() {
         if (view.get() != null) {
             view.get().displayProgressBar(true);
-            interactor.submitVisit(view.get().getEditMode(), fpMemberObject.getBaseEntityId(), view.get().getPmtctHomeVisitActions(), this);
+            interactor.submitVisit(view.get().getEditMode(), fpMemberObject.getBaseEntityId(), view.get().getVisitActions(), this);
         }
     }
 

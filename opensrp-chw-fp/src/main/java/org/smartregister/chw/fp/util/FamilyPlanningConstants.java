@@ -18,6 +18,7 @@ public interface FamilyPlanningConstants {
 
     interface EVENT_TYPE {
         String FP_REGISTRATION = "FP Registration";
+        String FP_CBD_REGISTRATION = "FP CBD Registration";
 
         String UPDATE_FP_REGISTRATION = "Update FP Registration";
 
@@ -62,6 +63,14 @@ public interface FamilyPlanningConstants {
         String FP_COUNSELING = "fp_counseling";
 
         String FP_POINT_OF_SERVICE_DELIVERY = "fp_point_of_service_delivery";
+
+        String FP_CBD_FOLLOWUP_NEXT_APPOINTMENT_DATE = "fp_cbd_followup_next_appointment_date";
+
+        String FP_CBD_FOLLOWUP_HEALTH_EDUCATION = "fp_cbd_followup_health_education";
+
+        String FP_CBD_FOLLOWUP_REFILL_CONDOMS_AND_PILLS = "fp_cbd_followup_refill_condom_and_pills";
+
+        String FP_CBD_FOLLOWUP_METHOD_SATISFACTION = "fp_cbd_followup_method_satisfaction";
 
         String FP_PROVISION_OF_FP_METHOD = "fp_provision_of_method";
 
@@ -139,13 +148,13 @@ public interface FamilyPlanningConstants {
 
         String FP_NEXT_APPOINTMENT_DATE = "next_appointment_date";
 
-        String FP_POP = "POP";
+        String FP_POP = "pop";
 
-        String FP_COC = "COC";
+        String FP_COC = "coc";
 
-        String FP_FEMALE_CONDOM = "Female condom";
+        String FP_ECP = "ecp";
 
-        String FP_MALE_CONDOM = "Male condom";
+        String FP_CONDOM = "condom";
 
         String FP_INJECTABLE = "Injectable";
 

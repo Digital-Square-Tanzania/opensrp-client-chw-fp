@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "Continue with the method",
+  "encounter_type": "Health Education",
   "validate_on_submit": true,
   "entity_id": "",
   "relational_id": "",
@@ -53,15 +53,15 @@
     }
   },
   "step1": {
-    "title": "Continue with the method",
+    "title": "Health Education",
     "fields": [
       {
-        "key": "method_expired",
+        "key": "family_planning_education_provided",
         "openmrs_entity_parent": "",
         "openmrs_entity": "concept",
-        "openmrs_entity_id": "method_expired",
+        "openmrs_entity_id": "family_planning_education_provided",
         "type": "native_radio",
-        "label": "Has the FP method expired?",
+        "label": "Was family planning health education provided?",
         "text_color": "#000000",
         "options": [
           {
@@ -81,58 +81,6 @@
           "value": "true",
           "err": "Required"
         }
-      },
-      {
-        "key": "client_want_continue_fp",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "client_want_continue_fp",
-        "type": "native_radio",
-        "label": "Does the client want to continue with the family planning method?",
-        "text_color": "#000000",
-        "options": [
-          {
-            "key": "yes",
-            "text": "Yes",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "yes"
-          },
-          {
-            "key": "no",
-            "text": "No",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "no"
-          }
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Required"
-        }
-      },
-      {
-        "key": "method_expired_prompt",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "method_expired_prompt",
-        "type": "toaster_notes",
-        "text": "Remove the FP Method",
-        "toaster_type": "warning",
-        "toaster_info_text": "",
-        "toaster_info_title": "",
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "fp_continue_with_the_method_relevance.yml"
-            }
-          }
-        }
-      },
-      {
-        "key": "followup_outcome",
-        "type": "hidden",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "followup_outcome",
-        "openmrs_entity_parent": ""
       }
     ]
   }

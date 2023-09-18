@@ -11,9 +11,7 @@ import org.smartregister.domain.tag.FormTag;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.util.FormUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import timber.log.Timber;
@@ -79,6 +77,8 @@ public class FpJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
         if (FamilyPlanningConstants.EVENT_TYPE.FP_REGISTRATION.equals(encounter_type)) {
             encounter_type = FamilyPlanningConstants.TABLES.FP_REGISTER;
+        } else if (FamilyPlanningConstants.EVENT_TYPE.FP_CBD_REGISTRATION.equals(encounter_type)) {
+            encounter_type = FamilyPlanningConstants.TABLES.FP_REGISTER;
         } else if (FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT.equals(encounter_type)) {
             encounter_type = FamilyPlanningConstants.TABLES.FP_FOLLOW_UP;
         }
@@ -117,7 +117,6 @@ public class FpJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         Date targetDate = new Date(originalDate.getTime() + timeDifferenceMillis);
 
         event.setEventDate(targetDate);
-
 
 
         event.setClientApplicationVersion(FpLibrary.getInstance().getApplicationVersion());

@@ -63,8 +63,11 @@
     <string name="fp_other_services_hts">HTS</string>
     <string name="fp_other_services_cervical_cancer">Cervical Cancer</string>
     <string name="fp_point_of_service_delivery">Record Point Of Service Delivery</string>
+    <string name="fp_health_education">Health Education</string>
     <string name="fp_method_satisfaction">Method Satisfaction</string>
     <string name="fp_vitals">Vitals</string>
+    <string name="fp_next_appointment_date">Next Appointment Date</string>
+    <string name="fp_method_refill">FP Method Refill</string>
     <string name="fp_method_continuation">FP Method Continuation</string>
     <string name="record_point_of_service_delivery">Point of Service Delivery</string>
     <string name="provide_fp_counseling">Provide FP Counseling</string>

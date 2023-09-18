@@ -42,6 +42,23 @@ public class FpDao extends AbstractDao {
         return visit.get(0);
     }
 
+    public static Integer getFpWomenCount(String familyBaseEntityId) {
+        String sql = "SELECT count(fp.base_entity_id) count " +
+                "FROM ec_family_planning fp " +
+                "INNER Join ec_family_member fm on fm.base_entity_id = fp.base_entity_id " +
+                "WHERE fm.relational_id = '" + familyBaseEntityId + "' COLLATE NOCASE " +
+                "AND fp.is_closed = 0 " +
+                "AND fp.ecp = 1 ";
+
+        DataMap<Integer> dataMap = cursor -> getCursorIntValue(cursor, "count");
+
+        List<Integer> res = readData(sql, dataMap);
+        if (res == null || res.size() == 0)
+            return null;
+
+        return res.get(0);
+    }
+
     public static Visit getLatestVisitById(String visitId) {
         String sql = "select visit_id, visit_type, parent_visit_id, visit_date from visits where visit_id = '" +
                 visitId + "' ORDER BY visit_date DESC LIMIT 1";
