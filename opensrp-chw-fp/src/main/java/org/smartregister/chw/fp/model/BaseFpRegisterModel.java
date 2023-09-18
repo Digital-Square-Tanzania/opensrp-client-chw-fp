@@ -23,7 +23,7 @@ public class BaseFpRegisterModel implements BaseFpRegisterContract.Model {
             } catch (Exception e) {
                 Timber.e(e);
             }
-        } else if (formName.equalsIgnoreCase(FamilyPlanningConstants.FORMS.FP_COUNSELING)) {
+        } else if (formName.equalsIgnoreCase(FamilyPlanningConstants.FORMS.FP_COUNSELING) || formName.equalsIgnoreCase(FamilyPlanningConstants.FORMS.FP_ENROLLMENT)) {
             try {
                 FpMemberObject fpMemberObject = FpDao.getMember(entityId);
                 jsonObject.getJSONObject("global").put("sex", fpMemberObject.getGender());

@@ -40,6 +40,8 @@ public interface FamilyPlanningConstants {
     }
 
     interface FORMS {
+        String FP_ENROLLMENT = "fp_enrollment";
+
         String FP_METHOD_SCREENING_MEDICAL_HISTORY = "fp_method_screening_medical_history";
 
         String FP_METHOD_SCREENING_OBSTETRIC_HISTORY = "fp_method_screening_obstetric_history";
