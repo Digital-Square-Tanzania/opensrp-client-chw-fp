@@ -128,9 +128,9 @@ public class FpDao extends AbstractDao {
     }
 
     public static String getSelectedFpMethodAfterCounseling(String baseEntityID) {
-        String sql = "SELECT client_want_to_switch_stop FROM " + FamilyPlanningConstants.TABLES.FP_REGISTER + " p " + "WHERE p.base_entity_id = '" + baseEntityID + "' AND p.is_closed = 0";
+        String sql = "SELECT selected_fp_method_after_counseling FROM " + FamilyPlanningConstants.TABLES.FP_REGISTER + " p " + "WHERE p.base_entity_id = '" + baseEntityID + "' AND p.is_closed = 0";
 
-        DataMap<String> dataMap = cursor -> getCursorValue(cursor, "client_want_to_switch_stop");
+        DataMap<String> dataMap = cursor -> getCursorValue(cursor, "selected_fp_method_after_counseling");
 
         List<String> res = readData(sql, dataMap);
         if (res == null || res.size() != 1) return null;

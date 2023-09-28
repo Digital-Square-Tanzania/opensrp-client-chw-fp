@@ -342,12 +342,6 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
         try {
             String locationId = org.smartregister.Context.getInstance().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
             JSONObject form = new BaseFpRegisterModel().getFormAsJson(formName, entityId, locationId);
-
-            JSONObject global = form.getJSONObject("global");
-            if (global != null) {
-                form.getJSONObject("global").put("fp_method_selected", fpMemberObject.getFpMethod());
-                form.getJSONObject("global").put("sex", fpMemberObject.getGender());
-            }
             startFormActivity(form);
         } catch (Exception e) {
             Timber.e(e);

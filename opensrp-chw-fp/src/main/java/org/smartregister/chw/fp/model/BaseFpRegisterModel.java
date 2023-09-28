@@ -18,7 +18,7 @@ public class BaseFpRegisterModel implements BaseFpRegisterContract.Model {
         if (formName.equalsIgnoreCase(FamilyPlanningConstants.FORMS.FP_PROVISION_OF_FP_METHOD)) {
             try {
                 FpMemberObject fpMemberObject = FpDao.getMember(entityId);
-                jsonObject.getJSONObject("global").put("fp_method_selected", FpDao.getSelectedFpMethodAfterCounseling(entityId));
+                jsonObject.getJSONObject("global").put("fp_method_selected", FpDao.getSelectedFpMethodAfterCounseling(fpMemberObject.getBaseEntityId()));
                 jsonObject.getJSONObject("global").put("sex", fpMemberObject.getGender());
             } catch (Exception e) {
                 Timber.e(e);
