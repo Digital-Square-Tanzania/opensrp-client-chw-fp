@@ -243,17 +243,18 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
     @SuppressLint("DefaultLocale")
     @Override
     public void setProfileViewWithData() {
-        int age = new Period(new DateTime(fpMemberObject.getAge()), new DateTime()).getYears();
-        textViewName.setText(String.format("%s %s %s, %d", fpMemberObject.getFirstName(), fpMemberObject.getMiddleName(), fpMemberObject.getLastName(), age));
+        textViewName.setText(String.format("%s %s %s, %d", fpMemberObject.getFirstName(), fpMemberObject.getMiddleName(), fpMemberObject.getLastName(), fpMemberObject.getAge()));
         textViewGender.setText(FpUtil.getGenderTranslated(this, fpMemberObject.getGender()));
         textViewLocation.setText(fpMemberObject.getAddress());
         textViewUniqueID.setText(fpMemberObject.getUniqueId());
 
         if (StringUtils.isNotBlank(fpMemberObject.getFamilyHead()) && fpMemberObject.getFamilyHead().equals(fpMemberObject.getBaseEntityId())) {
-            findViewById(R.id.family_fp_head).setVisibility(View.VISIBLE);
-        }
-        if (StringUtils.isNotBlank(fpMemberObject.getPrimaryCareGiver()) && fpMemberObject.getPrimaryCareGiver().equals(fpMemberObject.getBaseEntityId())) {
-            findViewById(R.id.primary_fp_caregiver).setVisibility(View.VISIBLE);
+            TextView fpMethod =  findViewById(R.id.fp_method);
+
+            if(!StringUtils.isBlank(fpMemberObject.getFpMethod())) {
+                fpMethod.setVisibility(View.VISIBLE);
+                fpMethod.setText(fpMemberObject.getFpMethod());
+            }
         }
     }
 
