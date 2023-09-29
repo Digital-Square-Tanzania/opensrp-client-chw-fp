@@ -94,7 +94,7 @@ public class BaseFpCbdFollowupVisitInteractor implements BaseFpVisitContract.Int
     public void calculateActions(final BaseFpVisitContract.View view, FpMemberObject fpMemberObject, final BaseFpVisitContract.InteractorCallBack callBack) {
         mContext = view.getContext();
         if (view.getEditMode()) {
-            Visit lastVisit = fpLibrary.visitRepository().getLatestVisit(fpMemberObject.getBaseEntityId(), FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT);
+            Visit lastVisit = fpLibrary.visitRepository().getLatestVisit(fpMemberObject.getBaseEntityId(), FamilyPlanningConstants.EVENT_TYPE.FP_CBD_FOLLOW_UP_VISIT);
 
             if (lastVisit != null) {
                 details = VisitUtils.getVisitGroups(fpLibrary.visitDetailsRepository().getVisits(lastVisit.getVisitId()));
@@ -328,7 +328,7 @@ public class BaseFpCbdFollowupVisitInteractor implements BaseFpVisitContract.Int
     }
 
     protected String getEncounterType() {
-        return FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT;
+        return FamilyPlanningConstants.EVENT_TYPE.FP_CBD_FOLLOW_UP_VISIT;
     }
 
     protected String getTableName() {

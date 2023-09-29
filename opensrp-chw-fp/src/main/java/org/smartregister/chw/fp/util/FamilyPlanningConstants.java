@@ -26,6 +26,8 @@ public interface FamilyPlanningConstants {
 
         String FP_FOLLOW_UP_VISIT = "FP Follow-up Visit";
 
+        String FP_CBD_FOLLOW_UP_VISIT = "FP CBD Follow-up Visit";
+
         String FP_SCREENING = "FP Screening";
 
         String FP_PROVIDE_METHOD = "Provide FP method";
