@@ -110,7 +110,7 @@ public class BaseFpScreeningVisitInteractor implements BaseFpVisitContract.Inter
                 evaluateMedicalHistory(fpMemberObject, details);
                 if (fpMemberObject.getGender().equalsIgnoreCase("female")) {
                     evaluateObstetricHistory(fpMemberObject, details);
-                    evaluatePastObstetricHistory(fpMemberObject, details);
+//                    evaluatePastObstetricHistory(fpMemberObject, details);
                     evaluateGynecologicalHistory(fpMemberObject, details);
                     evaluatePhysicalExamination(fpMemberObject, details);
                     evaluateVaginalExamination(fpMemberObject, details);

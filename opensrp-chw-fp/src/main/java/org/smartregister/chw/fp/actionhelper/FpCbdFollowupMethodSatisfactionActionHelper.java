@@ -37,6 +37,7 @@ public class FpCbdFollowupMethodSatisfactionActionHelper extends FpVisitActionHe
     protected LinkedHashMap<String, BaseFpVisitAction> actionList;
 
     protected String clientSatisfiedWithFpMethod;
+    protected String client_want_to_continue_same_method;
 
     public FpCbdFollowupMethodSatisfactionActionHelper(Context context, FpMemberObject fpMemberObject, Map<String, List<VisitDetail>> details, LinkedHashMap<String, BaseFpVisitAction> actionList, final BaseFpVisitContract.InteractorCallBack callBack) {
         this.context = context;
@@ -61,8 +62,9 @@ public class FpCbdFollowupMethodSatisfactionActionHelper extends FpVisitActionHe
         try {
             JSONObject jsonObject = new JSONObject(jsonPayload);
             clientSatisfiedWithFpMethod = JsonFormUtils.getValue(jsonObject, "client_satisfied_with_fp_method");
+            client_want_to_continue_same_method = JsonFormUtils.getValue(jsonObject, "client_want_to_continue_same_method");
 
-            if (clientSatisfiedWithFpMethod.contains("yes") &&
+            if (client_want_to_continue_same_method != null && client_want_to_continue_same_method.contains("yes") &&
                     (fpMemberObject.getFpMethod().equalsIgnoreCase(FamilyPlanningConstants.DBConstants.FP_COC) ||
                             fpMemberObject.getFpMethod().equalsIgnoreCase(FamilyPlanningConstants.DBConstants.FP_POP) ||
                             fpMemberObject.getFpMethod().equalsIgnoreCase(FamilyPlanningConstants.DBConstants.FP_CONDOM)
