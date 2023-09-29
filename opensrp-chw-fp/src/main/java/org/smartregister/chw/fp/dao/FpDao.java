@@ -116,6 +116,17 @@ public class FpDao extends AbstractDao {
         return res.get(0);
     }
 
+    public static boolean hasClientAgreedToFamilyPlanning(String baseEntityID) {
+        String sql = "SELECT client_agreed_on_fp_choice FROM " + FamilyPlanningConstants.TABLES.FP_REGISTER + " p " + "WHERE p.base_entity_id = '" + baseEntityID + "' AND p.is_closed = 0";
+
+        DataMap<String> dataMap = cursor -> getCursorValue(cursor, "client_agreed_on_fp_choice");
+
+        List<String> res = readData(sql, dataMap);
+        if (res == null || res.size() != 1) return false;
+
+        return res.get(0).equalsIgnoreCase("yes");
+    }
+
     public static String getFollowupOutcome(String baseEntityID) {
         String sql = "SELECT followup_outcome FROM " + FamilyPlanningConstants.TABLES.FP_REGISTER + " p " + "WHERE p.base_entity_id = '" + baseEntityID + "' AND p.is_closed = 0";
 

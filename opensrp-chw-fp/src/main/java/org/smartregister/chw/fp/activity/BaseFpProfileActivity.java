@@ -27,8 +27,6 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.domain.Form;
 
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 import org.json.JSONObject;
 import org.smartregister.AllConstants;
 import org.smartregister.chw.fp.R;
@@ -146,7 +144,10 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
             }
         } else {
             if (lastVisit == null || lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_OTHER_SERVICES)) {
-                textViewRecordFp.setText(R.string.record_fp_followup_visit);
+                if (!StringUtils.isBlank(fpMemberObject.getFpMethod()))
+                    textViewRecordFp.setText(R.string.record_fp_followup_visit);
+                else
+                    textViewRecordFp.setText(R.string.record_point_of_service_delivery);
             }
         }
 
@@ -155,7 +156,10 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
             if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_POINT_OF_SERVICE_DELIVERY)) {
                 textViewRecordFp.setText(R.string.provide_fp_counseling);
             } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_COUNSELING)) {
-                textViewRecordFp.setText(R.string.fp_screening);
+                if (FpDao.hasClientAgreedToFamilyPlanning(fpMemberObject.getBaseEntityId()))
+                    textViewRecordFp.setText(R.string.fp_screening);
+                else
+                    textViewRecordFp.setText(R.string.provide_other_services);
             } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_SCREENING)) {
                 String clientCategoryAfterScreening = FpDao.getClientCategoryAfterScreening(fpMemberObject.getBaseEntityId());
                 if (clientCategoryAfterScreening != null && (clientCategoryAfterScreening.equalsIgnoreCase(FamilyPlanningConstants.FP_SCREENING_CLIENT_CATEGORIES.CATEGORY_1) || clientCategoryAfterScreening.equalsIgnoreCase(FamilyPlanningConstants.FP_SCREENING_CLIENT_CATEGORIES.CATEGORY_2)))
@@ -188,28 +192,23 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
         } else if (id == R.id.rlLastVisit) {
             this.openMedicalHistory();
         } else if (id == R.id.textview_record_fp) {
-            if (isFirstVisit()) {
-                if (((TextView) view).getText().equals(this.getString(R.string.record_point_of_service_delivery))) {
-                    startPointOfServiceDeliveryForm();
-                } else if (((TextView) view).getText().equals(this.getString(R.string.provide_fp_counseling))) {
-                    startFpCounselingForm();
-                } else if (((TextView) view).getText().equals(this.getString(R.string.fp_screening))) {
-                    startFpScreeningForm();
-                } else if (((TextView) view).getText().equals(this.getString(R.string.provide_fp_method))) {
-                    startProvideFpMethod();
-                } else if (((TextView) view).getText().equals(this.getString(R.string.provide_other_services))) {
-                    startProvideOtherServices();
-                }
-            } else {
-                if (((TextView) view).getText().equals(this.getString(R.string.record_fp_followup_visit))) {
-                    startFpFollowupVisit();
-                } else if (((TextView) view).getText().equals(this.getString(R.string.provide_fp_method))) {
-                    startProvideFpMethod();
-                } else if (((TextView) view).getText().equals(this.getString(R.string.provide_other_services))) {
-                    startProvideOtherServices();
-                }
+            if (((TextView) view).getText().equals(this.getString(R.string.record_point_of_service_delivery))) {
+                startPointOfServiceDeliveryForm();
+            } else if (((TextView) view).getText().equals(this.getString(R.string.record_fp_followup_visit))) {
+                startFpFollowupVisit();
+            } else if (((TextView) view).getText().equals(this.getString(R.string.provide_fp_counseling))) {
+                startFpCounselingForm();
+            } else if (((TextView) view).getText().equals(this.getString(R.string.fp_screening))) {
+                startFpScreeningForm();
+            } else if (((TextView) view).getText().equals(this.getString(R.string.provide_fp_method))) {
+                startProvideFpMethod();
+            } else if (((TextView) view).getText().equals(this.getString(R.string.provide_other_services))) {
+                startProvideOtherServices();
+            } else if (((TextView) view).getText().equals(this.getString(R.string.provide_fp_method))) {
+                startProvideFpMethod();
+            } else if (((TextView) view).getText().equals(this.getString(R.string.provide_other_services))) {
+                startProvideOtherServices();
             }
-//            this.recordFp(fpMemberObject);
         }
     }
 
@@ -249,9 +248,9 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
         textViewUniqueID.setText(fpMemberObject.getUniqueId());
 
         if (StringUtils.isNotBlank(fpMemberObject.getFamilyHead()) && fpMemberObject.getFamilyHead().equals(fpMemberObject.getBaseEntityId())) {
-            TextView fpMethod =  findViewById(R.id.fp_method);
+            TextView fpMethod = findViewById(R.id.fp_method);
 
-            if(!StringUtils.isBlank(fpMemberObject.getFpMethod())) {
+            if (!StringUtils.isBlank(fpMemberObject.getFpMethod()) && !fpMemberObject.getFpMethod().equalsIgnoreCase("method_not_provided")) {
                 fpMethod.setVisibility(View.VISIBLE);
                 fpMethod.setText(fpMemberObject.getFpMethod());
             }
