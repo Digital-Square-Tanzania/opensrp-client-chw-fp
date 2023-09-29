@@ -107,12 +107,13 @@ public class FpCbdFollowupMethodSatisfactionActionHelper extends FpVisitActionHe
             JSONObject jsonObject = new JSONObject(jsonPayload);
 
             String clientWantsToSwitchOrStop = JsonFormUtils.getValue(jsonObject, "client_want_to_switch_stop");
-
+            String clientWantToSwitchStopContinue = JsonFormUtils.getValue(jsonObject, "client_want_to_switch_stop_continue");
+            String outcome = clientWantToSwitchStopContinue != null ? clientWantToSwitchStopContinue : clientWantsToSwitchOrStop;
             JSONArray fields = jsonObject.getJSONObject(STEP1).getJSONArray(FIELDS);
             JSONObject followupOutcome = org.smartregister.util.JsonFormUtils.getFieldJSONObject(fields, "followup_outcome");
             if (!StringUtils.isBlank(clientWantsToSwitchOrStop)) {
                 if (followupOutcome != null) {
-                    followupOutcome.put(VALUE, clientWantsToSwitchOrStop);
+                    followupOutcome.put(VALUE, outcome);
                 }
             } else {
                 if (followupOutcome != null) {
@@ -123,6 +124,7 @@ public class FpCbdFollowupMethodSatisfactionActionHelper extends FpVisitActionHe
         } catch (Exception e) {
             Timber.e(e);
         }
+
 
         return super.postProcess(jsonPayload);
     }
