@@ -23,7 +23,7 @@ public class FpFollowupVisitMethodContinuationActionHelper extends FpVisitAction
 
     protected FpMemberObject fpMemberObject;
 
-    protected String methodExpired;
+    protected String clientWantsToContinueWithFpMethod;
 
     public FpFollowupVisitMethodContinuationActionHelper(Context context, FpMemberObject fpMemberObject) {
         this.context = context;
@@ -44,7 +44,7 @@ public class FpFollowupVisitMethodContinuationActionHelper extends FpVisitAction
     public void onPayloadReceived(String jsonPayload) {
         try {
             JSONObject jsonObject = new JSONObject(jsonPayload);
-            methodExpired = JsonFormUtils.getValue(jsonObject, "method_expired");
+            clientWantsToContinueWithFpMethod = JsonFormUtils.getValue(jsonObject, "client_wants_continue_with_fp_method");
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -57,7 +57,7 @@ public class FpFollowupVisitMethodContinuationActionHelper extends FpVisitAction
 
     @Override
     public BaseFpVisitAction.Status evaluateStatusOnPayload() {
-        if (StringUtils.isNotBlank(methodExpired)) {
+        if (StringUtils.isNotBlank(clientWantsToContinueWithFpMethod)) {
             return BaseFpVisitAction.Status.COMPLETED;
         } else {
             return BaseFpVisitAction.Status.PENDING;
