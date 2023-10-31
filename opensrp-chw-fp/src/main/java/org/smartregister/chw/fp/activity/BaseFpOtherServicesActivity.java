@@ -278,9 +278,9 @@ public class BaseFpOtherServicesActivity extends SecuredActivity implements Base
 
     @Override
     public void onDialogOptionUpdated(String jsonString) {
-        BaseFpVisitAction pmtctHomeVisitAction = actionList.get(current_action);
-        if (pmtctHomeVisitAction != null) {
-            pmtctHomeVisitAction.setJsonPayload(jsonString);
+        BaseFpVisitAction baseFpVisitAction = actionList.get(current_action);
+        if (baseFpVisitAction != null) {
+            baseFpVisitAction.setJsonPayload(jsonString);
         }
 
         if (mAdapter != null) {

@@ -279,9 +279,9 @@ public class BaseFpScreeningActivity extends SecuredActivity implements BaseFpVi
 
     @Override
     public void onDialogOptionUpdated(String jsonString) {
-        BaseFpVisitAction pmtctHomeVisitAction = actionList.get(current_action);
-        if (pmtctHomeVisitAction != null) {
-            pmtctHomeVisitAction.setJsonPayload(jsonString);
+        BaseFpVisitAction baseFpVisitAction = actionList.get(current_action);
+        if (baseFpVisitAction != null) {
+            baseFpVisitAction.setJsonPayload(jsonString);
         }
 
         if (mAdapter != null) {
@@ -311,9 +311,9 @@ public class BaseFpScreeningActivity extends SecuredActivity implements BaseFpVi
                 }
             } else {
 
-                BaseFpVisitAction pmtctHomeVisitAction = actionList.get(current_action);
-                if (pmtctHomeVisitAction != null)
-                    pmtctHomeVisitAction.evaluateStatus();
+                BaseFpVisitAction baseFpVisitAction = actionList.get(current_action);
+                if (baseFpVisitAction != null)
+                    baseFpVisitAction.evaluateStatus();
             }
 
         } else {
