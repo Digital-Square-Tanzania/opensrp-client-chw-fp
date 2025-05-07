@@ -37,6 +37,7 @@ import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.sync.helper.ECSyncHelper;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -65,6 +66,25 @@ public class BaseFpScreeningVisitInteractor implements BaseFpVisitContract.Inter
 
     public BaseFpScreeningVisitInteractor() {
         this(new AppExecutors(), FpLibrary.getInstance(), FpLibrary.getInstance().getEcSyncHelper());
+    }
+
+    // Helper method to compare day, month, and year components
+    private static boolean isSameDay(Date date1, Date date2) {
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+
+        cal1.setTime(date1);
+        cal2.setTime(date2);
+
+        int year1 = cal1.get(Calendar.YEAR);
+        int month1 = cal1.get(Calendar.MONTH);
+        int day1 = cal1.get(Calendar.DAY_OF_MONTH);
+
+        int year2 = cal2.get(Calendar.YEAR);
+        int month2 = cal2.get(Calendar.MONTH);
+        int day2 = cal2.get(Calendar.DAY_OF_MONTH);
+
+        return (year1 == year2) && (month1 == month2) && (day1 == day2);
     }
 
     @Override
@@ -97,23 +117,46 @@ public class BaseFpScreeningVisitInteractor implements BaseFpVisitContract.Inter
     @Override
     public void calculateActions(final BaseFpVisitContract.View view, FpMemberObject fpMemberObject, final BaseFpVisitContract.InteractorCallBack callBack) {
         mContext = view.getContext();
+        Date lastVisitDate;
+        Visit lastVisit = fpLibrary.visitRepository().getLatestVisit(fpMemberObject.getBaseEntityId(), FamilyPlanningConstants.EVENT_TYPE.FP_SCREENING);
         if (view.getEditMode()) {
-            Visit lastVisit = fpLibrary.visitRepository().getLatestVisit(fpMemberObject.getBaseEntityId(), FamilyPlanningConstants.EVENT_TYPE.FP_SCREENING);
-
             if (lastVisit != null) {
+                lastVisitDate = lastVisit.getDate();
                 details = VisitUtils.getVisitGroups(fpLibrary.visitDetailsRepository().getVisits(lastVisit.getVisitId()));
+            } else {
+                lastVisitDate = null;
             }
+        } else {
+            if (lastVisit != null)
+                lastVisitDate = lastVisit.getDate();
+            else
+                lastVisitDate = null;
         }
 
         final Runnable runnable = () -> {
             try {
-                evaluateMedicalHistory(fpMemberObject, details);
+
+                Date currentDate = new Date();
+                // Compare the day, month, and year components
+
+                if (view.getEditMode()) {
+                    evaluateMedicalHistory(fpMemberObject, details);
+                } else if (lastVisitDate == null || !isSameDay(lastVisitDate, currentDate)) {
+                    evaluateMedicalHistory(fpMemberObject, details);
+                }
+
                 if (fpMemberObject.getGender().equalsIgnoreCase("female")) {
-                    evaluateObstetricHistory(fpMemberObject, details);
-//                    evaluatePastObstetricHistory(fpMemberObject, details);
-                    evaluateGynecologicalHistory(fpMemberObject, details);
-                    evaluatePhysicalExamination(fpMemberObject, details);
-                    evaluateVaginalExamination(fpMemberObject, details);
+                    if (view.getEditMode()) {
+                        evaluateObstetricHistory(fpMemberObject, details);
+                        evaluateGynecologicalHistory(fpMemberObject, details);
+                        evaluatePhysicalExamination(fpMemberObject, details);
+                        evaluateVaginalExamination(fpMemberObject, details);
+                    } else if (lastVisitDate == null || !isSameDay(lastVisitDate, currentDate)) {
+                        evaluateObstetricHistory(fpMemberObject, details);
+                        evaluateGynecologicalHistory(fpMemberObject, details);
+                        evaluatePhysicalExamination(fpMemberObject, details);
+                        evaluateVaginalExamination(fpMemberObject, details);
+                    }
                 }
                 evaluateMedicalEligibilityCriteria(fpMemberObject, details);
 
@@ -331,7 +374,6 @@ public class BaseFpScreeningVisitInteractor implements BaseFpVisitContract.Inter
             FpLibrary.getInstance().visitDetailsRepository().deleteVisitDetails(v.getVisitId());
         }
     }
-
 
     protected void saveVisitDetails(Visit visit, String payloadType, String payloadDetails) {
         if (visit.getVisitDetails() == null) return;
