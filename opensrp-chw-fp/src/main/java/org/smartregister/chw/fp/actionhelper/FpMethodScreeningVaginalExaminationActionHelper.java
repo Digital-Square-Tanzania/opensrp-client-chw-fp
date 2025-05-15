@@ -18,7 +18,7 @@ public class FpMethodScreeningVaginalExaminationActionHelper extends FpVisitActi
 
     protected FpMemberObject fpMemberObject;
 
-    protected String discharge;
+    protected String wasVaginalExaminationPerfomed;
 
     public FpMethodScreeningVaginalExaminationActionHelper(Context context, FpMemberObject fpMemberObject) {
         this.context = context;
@@ -39,7 +39,7 @@ public class FpMethodScreeningVaginalExaminationActionHelper extends FpVisitActi
     public void onPayloadReceived(String jsonPayload) {
         try {
             JSONObject jsonObject = new JSONObject(jsonPayload);
-            discharge = JsonFormUtils.getValue(jsonObject, "discharge");
+            wasVaginalExaminationPerfomed = JsonFormUtils.getValue(jsonObject, "was_vaginal_examination_performed");
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -52,7 +52,7 @@ public class FpMethodScreeningVaginalExaminationActionHelper extends FpVisitActi
 
     @Override
     public BaseFpVisitAction.Status evaluateStatusOnPayload() {
-        if (StringUtils.isNotBlank(discharge)) {
+        if (StringUtils.isNotBlank(wasVaginalExaminationPerfomed)) {
             return BaseFpVisitAction.Status.COMPLETED;
         } else {
             return BaseFpVisitAction.Status.PENDING;
