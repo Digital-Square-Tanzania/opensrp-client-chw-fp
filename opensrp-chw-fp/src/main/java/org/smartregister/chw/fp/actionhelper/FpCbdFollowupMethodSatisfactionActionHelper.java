@@ -39,6 +39,8 @@ public class FpCbdFollowupMethodSatisfactionActionHelper extends FpVisitActionHe
     protected String clientSatisfiedWithFpMethod;
     protected String client_want_to_continue_same_method;
 
+    private String jsonPayload;
+
     public FpCbdFollowupMethodSatisfactionActionHelper(Context context, FpMemberObject fpMemberObject, Map<String, List<VisitDetail>> details, LinkedHashMap<String, BaseFpVisitAction> actionList, final BaseFpVisitContract.InteractorCallBack callBack) {
         this.context = context;
         this.fpMemberObject = fpMemberObject;
@@ -47,13 +49,20 @@ public class FpCbdFollowupMethodSatisfactionActionHelper extends FpVisitActionHe
         this.callBack = callBack;
     }
 
-    /**
-     * set preprocessed status to be inert
-     *
-     * @return null
-     */
+    @Override
+    public void onJsonFormLoaded(String jsonPayload, Context context, Map<String, List<VisitDetail>> map) {
+        this.jsonPayload = jsonPayload;
+    }
+
     @Override
     public String getPreProcessed() {
+        try {
+            JSONObject jsonObject = new JSONObject(jsonPayload);
+            jsonObject.getJSONObject("global").put("fp_method", fpMemberObject.getFpMethod());
+            return jsonObject.toString();
+        } catch (Exception e) {
+            Timber.e(e);
+        }
         return null;
     }
 
@@ -64,7 +73,7 @@ public class FpCbdFollowupMethodSatisfactionActionHelper extends FpVisitActionHe
             clientSatisfiedWithFpMethod = JsonFormUtils.getValue(jsonObject, "client_satisfied_with_fp_method");
             client_want_to_continue_same_method = JsonFormUtils.getValue(jsonObject, "client_want_to_continue_same_method");
 
-            if (client_want_to_continue_same_method != null && client_want_to_continue_same_method.contains("yes") &&
+            if (client_want_to_continue_same_method.contains("yes") &&
                     (fpMemberObject.getFpMethod().equalsIgnoreCase(FamilyPlanningConstants.DBConstants.FP_COC) ||
                             fpMemberObject.getFpMethod().equalsIgnoreCase(FamilyPlanningConstants.DBConstants.FP_POP) ||
                             fpMemberObject.getFpMethod().equalsIgnoreCase(FamilyPlanningConstants.DBConstants.FP_CONDOM)
