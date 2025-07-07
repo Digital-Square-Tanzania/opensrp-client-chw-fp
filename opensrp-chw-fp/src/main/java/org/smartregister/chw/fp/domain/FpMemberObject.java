@@ -57,6 +57,9 @@ public class FpMemberObject implements Serializable {
     private String fpRegistrationDate;
 
 
+    private String fpRegistrationNumber;
+
+
     public FpMemberObject() {
     }
 
@@ -258,5 +261,13 @@ public class FpMemberObject implements Serializable {
 
     public void setFpRegistrationDate(String fpRegistrationDate) {
         this.fpRegistrationDate = fpRegistrationDate;
+    }
+
+    public String getFpRegistrationNumber() {
+        return fpRegistrationNumber;
+    }
+
+    public void setFpRegistrationNumber(String fpRegistrationNumber) {
+        this.fpRegistrationNumber = fpRegistrationNumber;
     }
 }

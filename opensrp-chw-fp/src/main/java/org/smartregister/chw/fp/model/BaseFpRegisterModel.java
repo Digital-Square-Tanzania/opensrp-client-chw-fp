@@ -20,6 +20,7 @@ public class BaseFpRegisterModel implements BaseFpRegisterContract.Model {
                 FpMemberObject fpMemberObject = FpDao.getMember(entityId);
                 jsonObject.getJSONObject("global").put("fp_method_selected", FpDao.getSelectedFpMethodAfterCounseling(fpMemberObject.getBaseEntityId()));
                 jsonObject.getJSONObject("global").put("sex", fpMemberObject.getGender());
+                jsonObject.getJSONObject("global").put("isFirstVisit", FpDao.getLatestVisit(fpMemberObject.getBaseEntityId(), FamilyPlanningConstants.EVENT_TYPE.FP_OTHER_SERVICES) == null);
             } catch (Exception e) {
                 Timber.e(e);
             }

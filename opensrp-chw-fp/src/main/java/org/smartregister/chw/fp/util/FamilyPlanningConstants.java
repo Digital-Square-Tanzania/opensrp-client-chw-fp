@@ -36,6 +36,10 @@ public interface FamilyPlanningConstants {
 
         String FP_COUNSELING = "Provide FP Counseling";
 
+        String FP_ECP_PROVISION = "FP ECP Provision";
+
+        String FP_ECP_SCREENING = "FP ECP Screening";
+
         String DELETE_EVENT = "Delete Event";
 
         String CLOSE_FP = "Close FP";
@@ -149,6 +153,8 @@ public interface FamilyPlanningConstants {
         String DETAILS = "details";
 
         String FP_METHOD_PROVIDED = "provided_fp_method";
+
+        String FP_REGISTRATION_NUMBER = "fp_registration_number";
 
         String FP_NEXT_APPOINTMENT_DATE = "next_appointment_date";
 

@@ -74,7 +74,7 @@ public class FpFollowupVisitMethodSatisfactionActionHelper extends FpVisitAction
             JSONObject jsonObject = new JSONObject(jsonPayload);
             clientSatisfiedWithFpMethod = JsonFormUtils.getValue(jsonObject, "client_satisfied_with_fp_method");
 
-            if (clientSatisfiedWithFpMethod.contains("yes")) {
+            if (clientSatisfiedWithFpMethod.contains("yes") && !fpMemberObject.getFpMethod().equalsIgnoreCase("vasectomy") && !fpMemberObject.getFpMethod().equalsIgnoreCase("btl")) {
                 FpVisitActionHelper actionHelper = new FpFollowupVisitMethodContinuationActionHelper(context, fpMemberObject);
                 String actionName = context.getString(R.string.fp_method_continuation);
                 BaseFpVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(FamilyPlanningConstants.FORMS.FP_FOLLOWUP_VISIT_METHOD_CONTINUATION).build();

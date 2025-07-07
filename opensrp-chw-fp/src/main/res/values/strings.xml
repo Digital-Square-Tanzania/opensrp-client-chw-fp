@@ -111,5 +111,6 @@
     <string name="fp_started">started</string>
     <string name="fp_on">on</string>
     <string name="fp_followup_visit">FOLLOWUP\nVISIT</string>
+    <string name="view_registration_details">View registration details</string>
 
 </resources>

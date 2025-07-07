@@ -2,7 +2,9 @@ package org.smartregister.chw.fp.dao;
 
 import static org.smartregister.chw.fp.util.FamilyPlanningConstants.DBConstants.FP_METHOD_PROVIDED;
 import static org.smartregister.chw.fp.util.FamilyPlanningConstants.DBConstants.FP_NEXT_APPOINTMENT_DATE;
+import static org.smartregister.chw.fp.util.FamilyPlanningConstants.DBConstants.FP_REGISTRATION_NUMBER;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.fp.FpLibrary;
@@ -116,6 +118,17 @@ public class FpDao extends AbstractDao {
         return res.get(0);
     }
 
+    public static boolean isHivPositive(String baseEntityID) {
+        String sql = "SELECT ctc_number FROM " + FamilyPlanningConstants.TABLES.FP_REGISTER + " p " + "WHERE p.base_entity_id = '" + baseEntityID + "' AND p.is_closed = 0";
+
+        DataMap<String> dataMap = cursor -> getCursorValue(cursor, "ctc_number");
+
+        List<String> res = readData(sql, dataMap);
+        if (res == null || res.size() != 1) return false;
+
+        return StringUtils.isNotBlank(res.get(0));
+    }
+
     public static boolean hasClientAgreedToFamilyPlanning(String baseEntityID) {
         String sql = "SELECT client_agreed_on_fp_choice FROM " + FamilyPlanningConstants.TABLES.FP_REGISTER + " p " + "WHERE p.base_entity_id = '" + baseEntityID + "' AND p.is_closed = 0";
 
@@ -184,6 +197,7 @@ public class FpDao extends AbstractDao {
 
             fpMemberObject.setFpNextAppointmentDate(getCursorValue(cursor, FP_NEXT_APPOINTMENT_DATE, ""));
             fpMemberObject.setFpMethod(getCursorValue(cursor, FP_METHOD_PROVIDED, ""));
+            fpMemberObject.setFpRegistrationNumber(getCursorValue(cursor, FP_REGISTRATION_NUMBER, ""));
 
             return fpMemberObject;
         };

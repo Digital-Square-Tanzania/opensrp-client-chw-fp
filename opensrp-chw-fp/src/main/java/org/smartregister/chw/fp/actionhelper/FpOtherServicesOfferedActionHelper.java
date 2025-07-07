@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.smartregister.chw.fp.R;
 import org.smartregister.chw.fp.contract.BaseFpVisitContract;
+import org.smartregister.chw.fp.dao.FpDao;
 import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.domain.VisitDetail;
 import org.smartregister.chw.fp.model.BaseFpVisitAction;
@@ -61,12 +62,20 @@ public class FpOtherServicesOfferedActionHelper extends FpVisitActionHelper {
     public String getPreProcessed() {
         try {
             JSONObject jsonObject = new JSONObject(jsonPayload);
+            JSONArray fields = jsonObject.getJSONObject(STEP1).getJSONArray(FIELDS);
+            JSONObject otherServicesOffered = org.smartregister.util.JsonFormUtils.getFieldJSONObject(fields, "other_services_offered");
             if (fpMemberObject.getGender().equalsIgnoreCase("male")) {
-                JSONArray fields = jsonObject.getJSONObject(STEP1).getJSONArray(FIELDS);
-                JSONObject otherServicesOffered = org.smartregister.util.JsonFormUtils.getFieldJSONObject(fields, "other_services_offered");
                 if (otherServicesOffered != null) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         otherServicesOffered.getJSONArray(OPTIONS).remove(1);
+                    }
+                }
+            }
+
+            if (FpDao.isHivPositive(fpMemberObject.getBaseEntityId())){
+                if (otherServicesOffered != null) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        otherServicesOffered.getJSONArray(OPTIONS).remove(0);
                     }
                 }
             }

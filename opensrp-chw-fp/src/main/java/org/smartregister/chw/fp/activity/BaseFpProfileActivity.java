@@ -70,6 +70,7 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
     protected RelativeLayout visitDone;
     protected LinearLayout recordVisits;
     protected TextView textViewVisitDoneEdit;
+    protected RelativeLayout rlRegistrationDetails;
     protected BaseFpFloatingMenu baseFpFloatingMenu;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
     private ProgressBar progressBar;
@@ -117,10 +118,12 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
         textViewRecordFp = findViewById(R.id.textview_record_fp);
         textViewUndo = findViewById(R.id.textview_undo);
         imageView = findViewById(R.id.imageview_profile);
+        rlRegistrationDetails = findViewById(R.id.rlRegistrationDetails);
         textViewVisitDoneEdit.setOnClickListener(this);
         rlLastVisit.setOnClickListener(this);
         textViewRecordFp.setOnClickListener(this);
         textViewUndo.setOnClickListener(this);
+        rlRegistrationDetails.setOnClickListener(this);
 
         imageRenderHelper = new ImageRenderHelper(this);
         fpMemberObject = getMemberObject(baseEntityId);
@@ -143,7 +146,7 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
                 textViewRecordFp.setText(R.string.record_point_of_service_delivery);
             }
         } else {
-            if (lastVisit == null || lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_OTHER_SERVICES)) {
+            if (lastVisit == null || lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_OTHER_SERVICES) || (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_PROVIDE_METHOD) && !fpMemberObject.getFpMethod().equalsIgnoreCase("method_not_provided") && FpDao.isHivPositive(fpMemberObject.getBaseEntityId()) && fpMemberObject.getGender().equalsIgnoreCase("male"))) {
                 if (!StringUtils.isBlank(fpMemberObject.getFpMethod()))
                     textViewRecordFp.setText(R.string.record_fp_followup_visit);
                 else
@@ -169,7 +172,7 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
             } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_PROVIDE_METHOD)) {
                 if (fpMemberObject.getFpMethod().equalsIgnoreCase("method_not_provided"))
                     textViewRecordFp.setText(R.string.provide_fp_counseling);
-                else
+                else if ((!FpDao.isHivPositive(fpMemberObject.getBaseEntityId()) && fpMemberObject.getGender().equalsIgnoreCase("male")) || fpMemberObject.getGender().equalsIgnoreCase("female"))
                     textViewRecordFp.setText(R.string.provide_other_services);
             } else if (lastVisit.getVisitType().equalsIgnoreCase(FamilyPlanningConstants.EVENT_TYPE.FP_FOLLOW_UP_VISIT)) {
                 String followupOutcome = FpDao.getFollowupOutcome(fpMemberObject.getBaseEntityId());
@@ -189,6 +192,8 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
         int id = view.getId();
         if (id == R.id.title_layout) {
             onBackPressed();
+        } else if (id == R.id.rlRegistrationDetails) {
+            viewRegistrationDetails();
         } else if (id == R.id.rlLastVisit) {
             this.openMedicalHistory();
         } else if (id == R.id.textview_record_fp) {
@@ -210,6 +215,9 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
                 startProvideOtherServices();
             }
         }
+    }
+
+    public void viewRegistrationDetails() {
     }
 
     @Override
@@ -247,14 +255,18 @@ public abstract class BaseFpProfileActivity extends BaseProfileActivity implemen
         textViewLocation.setText(fpMemberObject.getAddress());
         textViewUniqueID.setText(fpMemberObject.getUniqueId());
 
-        if (StringUtils.isNotBlank(fpMemberObject.getFamilyHead()) && fpMemberObject.getFamilyHead().equals(fpMemberObject.getBaseEntityId())) {
-            TextView fpMethod = findViewById(R.id.fp_method);
-
-            if (!StringUtils.isBlank(fpMemberObject.getFpMethod()) && !fpMemberObject.getFpMethod().equalsIgnoreCase("method_not_provided")) {
-                fpMethod.setVisibility(View.VISIBLE);
-                fpMethod.setText(fpMemberObject.getFpMethod());
-            }
+        TextView fpMethod = findViewById(R.id.fp_method);
+        if (!StringUtils.isBlank(fpMemberObject.getFpMethod()) && !fpMemberObject.getFpMethod().equalsIgnoreCase("method_not_provided")) {
+            fpMethod.setVisibility(View.VISIBLE);
+            fpMethod.setText(fpMemberObject.getFpMethod());
         }
+
+        TextView fpRegistrationNumber = findViewById(R.id.primary_fp_caregiver);
+        if (!StringUtils.isBlank(fpMemberObject.getFpRegistrationNumber())) {
+            fpRegistrationNumber.setVisibility(View.VISIBLE);
+            fpRegistrationNumber.setText(fpMemberObject.getFpRegistrationNumber());
+        }
+
     }
 
     @Override
