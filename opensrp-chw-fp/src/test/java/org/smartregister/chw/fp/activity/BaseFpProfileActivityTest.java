@@ -3,19 +3,25 @@ package org.smartregister.chw.fp.activity;
 import static org.mockito.Mockito.validateMockitoUsage;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.view.View;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.powermock.reflect.Whitebox;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 import org.smartregister.chw.fp.R;
 import org.smartregister.chw.fp.contract.BaseFpProfileContract;
 
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = Build.VERSION_CODES.P)
 public class BaseFpProfileActivityTest {
     @Mock
     public BaseFpProfileActivity baseTestProfileActivity;

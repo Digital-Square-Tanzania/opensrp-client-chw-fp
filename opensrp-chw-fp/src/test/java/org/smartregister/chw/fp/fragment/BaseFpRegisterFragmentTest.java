@@ -28,7 +28,8 @@ public class BaseFpRegisterFragmentTest {
         Whitebox.invokeMethod(baseTestRegisterFragment, "openProfile", client);
         PowerMockito.mockStatic(BaseFpProfileActivity.class);
         BaseFpProfileActivity.startProfileActivity(null, null);
-        PowerMockito.verifyStatic(times(1));
+        PowerMockito.verifyStatic(BaseFpProfileActivity.class, times(1));
+        BaseFpProfileActivity.startProfileActivity(null, null);
 
     }
 }

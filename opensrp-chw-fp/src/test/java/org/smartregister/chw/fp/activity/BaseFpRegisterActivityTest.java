@@ -1,13 +1,19 @@
 package org.smartregister.chw.fp.activity;
 
 import android.content.Intent;
+import android.os.Build;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.powermock.reflect.Whitebox;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = Build.VERSION_CODES.P)
 public class BaseFpRegisterActivityTest {
     @Mock
     public Intent data;
