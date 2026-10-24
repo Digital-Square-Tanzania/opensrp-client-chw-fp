@@ -3,7 +3,7 @@ package org.smartregister.chw.fp.repository;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import net.sqlcipher.database.SQLiteDatabase;
+import net.zetetic.database.sqlcipher.SQLiteDatabase;
 
 import org.smartregister.chw.fp.domain.VisitDetail;
 import org.smartregister.repository.BaseRepository;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.smartregister.chw.fp">
+    package="org.smartregister.chw.fp_sample">
 
     <application
         android:name="org.smartregister.chw.fp.application.SampleApplication"
@@ -14,7 +14,8 @@
         tools:replace="android:theme">
         <activity
             android:name="org.smartregister.chw.fp.activity.EntryActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,24 +24,31 @@
         </activity>
         <activity
             android:name="org.smartregister.chw.fp.activity.SampleJsonFormActivity"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="org.smartregister.chw.fp.activity.FpMemberProfileActivity"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="org.smartregister.chw.fp.activity.FpFollowupMemberProfileActivity"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="org.smartregister.chw.fp.activity.FpScreeningActivity"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="org.smartregister.chw.fp.activity.FpFollowupVisitProvisionOfServicesActivity"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="org.smartregister.chw.fp.activity.FpOtherServicesActivity"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.vijay.jsonwizard.activities.JsonWizardFormActivity"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

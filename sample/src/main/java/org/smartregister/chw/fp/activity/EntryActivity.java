@@ -10,7 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import org.smartregister.chw.fp.contract.BaseFpVisitContract;
 import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.util.DBConstants;
-import org.smartregister.chw.fp.R;
+import org.smartregister.chw.fp_sample.R;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.view.activity.SecuredActivity;
 

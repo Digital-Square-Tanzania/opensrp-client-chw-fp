@@ -5,7 +5,7 @@ import com.evernote.android.job.JobManager;
 import org.smartregister.Context;
 import org.smartregister.CoreLibrary;
 import org.smartregister.chw.fp.repository.SampleRepository;
-import org.smartregister.chw.fp.BuildConfig;
+import org.smartregister.chw.fp_sample.BuildConfig;
 import org.smartregister.chw.fp.FpLibrary;
 import org.smartregister.chw.fp.util.DBConstants;
 import org.smartregister.chw.fp.job.SampleJobCreator;

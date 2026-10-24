@@ -19,7 +19,7 @@ plugins {
 description = 'OpenSRP CHW FP library'
 
 jacoco {
-    toolVersion = "0.8.0"
+    toolVersion = "0.8.8"
 }
 
 android {
@@ -56,6 +56,7 @@ android {
 
     lintOptions {
         abortOnError false
+        checkReleaseBuilds false
     }
 
     // avoid errors with message 'Duplicate files copied in APK ...'
@@ -68,6 +69,7 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/kotlin-stdlib-jdk7.kotlin_module'
     }
 
     testOptions {
@@ -133,14 +135,24 @@ publishing {
                     dependencyNode.appendNode('groupId', dep.group)
                     dependencyNode.appendNode('artifactId', dep.name)
                     dependencyNode.appendNode('version', dep.version)
+                    dep.artifacts.each { artifact ->
+                        if (artifact.type) {
+                            dependencyNode.appendNode('type', artifact.type)
+                        }
+                        if (artifact.classifier) {
+                            dependencyNode.appendNode('classifier', artifact.classifier)
+                        }
+                    }
                     dependencyNode.appendNode('scope', scope)
+                    def excludeRules = (dep.properties.excludeRules + configurations.implementation.excludeRules)
+                            .unique { rule -> [rule.group, rule.module] }
                     if (!dep.transitive) {
                         final exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
                         exclusionNode.appendNode('groupId', '*')
                         exclusionNode.appendNode('artifactId', '*')
-                    } else if (!dep.properties.excludeRules.empty) {
+                    } else if (!excludeRules.empty) {
                         final exclusionsNode = dependencyNode.appendNode('exclusions')
-                        dep.properties.excludeRules.each { ExcludeRule rule ->
+                        excludeRules.each { ExcludeRule rule ->
                             def exclusion = exclusionsNode.appendNode('exclusion')
                             exclusion.appendNode('groupId', rule.group ?: '*')
                             exclusion.appendNode('artifactId', rule.module ?: '*')
@@ -159,6 +171,7 @@ publishing {
 allprojects {
     repositories {
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+        mavenCentral()
         mavenLocal()
         maven {
             name = "NativeFormGitHubPackages"
@@ -168,18 +181,29 @@ allprojects {
                 password = githubProperties['gpr.key'] ?: System.getenv("GITHUB_TOKEN")
             }
         }
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/Digital-Square-Tanzania/CircleProgressbar.git")
+            credentials {
+                username = githubProperties['gpr.usr'] ?: System.getenv("GITHUB_ACTOR")
+                password = githubProperties['gpr.key'] ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
 }
 dependencies {
-    implementation('org.smartregister:opensrp-client-core:1.11.3-SNAPSHOT@aar') {
+    implementation 'org.jacoco:org.jacoco.agent:0.7.9:runtime'
+
+    implementation('org.smartregister:opensrp-client-core:1.18.0-MOH-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'com.github.bmelnychuk', module: 'atv'
         exclude group: 'com.google.guava', module: 'guava'
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'org.apache.httpcomponents', module: 'httpmime'
     }
+    implementation 'net.zetetic:sqlcipher-android:4.5.4'
 
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.7.20"))
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.22"))
 
     implementation group: 'id.zelory', name: 'compressor', version: '3.0.1'
 
@@ -215,7 +239,7 @@ dependencies {
     implementation 'id.zelory:compressor:3.0.1'
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:3.12.4'
+    testImplementation 'org.mockito:mockito-inline:3.12.4'
     testImplementation 'org.robolectric:robolectric:4.3.1'
     testImplementation project(path: ':opensrp-chw-fp')
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
@@ -226,6 +250,7 @@ dependencies {
 
     configurations.all {
         resolutionStrategy.force 'com.android.support:support-annotations:23.1.0'
+        resolutionStrategy.force 'net.zetetic:sqlcipher-android:4.5.4'
     }
     // PowerMock
     def powerMockVersion = '2.0.9'

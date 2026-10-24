@@ -51,6 +51,13 @@ subprojects {
         mavenLocal()
     }
 
+    configurations.all {
+        resolutionStrategy.force 'net.zetetic:sqlcipher-android:4.5.4'
+        resolutionStrategy.force 'org.apache.commons:commons-lang3:3.12.0'
+        exclude group: 'net.sqlcipher', module: 'android-database-sqlcipher'
+        exclude group: 'net.zetetic', module: 'android-database-sqlcipher'
+    }
+
     // Improve build server performance by allowing disabling of pre-dexing
     // (see http://tools.android.com/tech-docs/new-build-system/tips#TOC-Improving-Build-Server-performance.)
     project.plugins.whenPluginAdded { plugin ->
