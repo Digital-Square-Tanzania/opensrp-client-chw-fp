@@ -135,14 +135,24 @@ publishing {
                     dependencyNode.appendNode('groupId', dep.group)
                     dependencyNode.appendNode('artifactId', dep.name)
                     dependencyNode.appendNode('version', dep.version)
+                    dep.artifacts.each { artifact ->
+                        if (artifact.type) {
+                            dependencyNode.appendNode('type', artifact.type)
+                        }
+                        if (artifact.classifier) {
+                            dependencyNode.appendNode('classifier', artifact.classifier)
+                        }
+                    }
                     dependencyNode.appendNode('scope', scope)
+                    def excludeRules = (dep.properties.excludeRules + configurations.implementation.excludeRules)
+                            .unique { rule -> [rule.group, rule.module] }
                     if (!dep.transitive) {
                         final exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
                         exclusionNode.appendNode('groupId', '*')
                         exclusionNode.appendNode('artifactId', '*')
-                    } else if (!dep.properties.excludeRules.empty) {
+                    } else if (!excludeRules.empty) {
                         final exclusionsNode = dependencyNode.appendNode('exclusions')
-                        dep.properties.excludeRules.each { ExcludeRule rule ->
+                        excludeRules.each { ExcludeRule rule ->
                             def exclusion = exclusionsNode.appendNode('exclusion')
                             exclusion.appendNode('groupId', rule.group ?: '*')
                             exclusion.appendNode('artifactId', rule.module ?: '*')
@@ -182,6 +192,8 @@ allprojects {
     }
 }
 dependencies {
+    implementation 'org.jacoco:org.jacoco.agent:0.7.9:runtime'
+
     implementation('org.smartregister:opensrp-client-core:1.18.0-MOH-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'com.github.bmelnychuk', module: 'atv'

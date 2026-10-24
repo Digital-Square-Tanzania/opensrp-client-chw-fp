@@ -11,3 +11,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   register schemas, preserving the legacy non-emergency flag where present.
 - Retain the published 2.0 SQLCipher and client-core compatibility changes.
 - Use the thread-safe native-form 3.2.0 NACP release in the library and sample.
+- Preserve AAR dependency types, the JaCoCo runtime classifier and existing
+  SQLCipher exclusions in published Maven metadata.
