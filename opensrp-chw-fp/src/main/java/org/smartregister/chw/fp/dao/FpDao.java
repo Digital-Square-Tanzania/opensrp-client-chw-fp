@@ -4,15 +4,19 @@ import static org.smartregister.chw.fp.util.FamilyPlanningConstants.DBConstants.
 import static org.smartregister.chw.fp.util.FamilyPlanningConstants.DBConstants.FP_NEXT_APPOINTMENT_DATE;
 import static org.smartregister.chw.fp.util.FamilyPlanningConstants.DBConstants.FP_REGISTRATION_NUMBER;
 
+import android.database.Cursor;
+
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.chw.fp.FpLibrary;
 import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.domain.Visit;
+import org.smartregister.chw.fp.util.DBConstants;
 import org.smartregister.chw.fp.util.FamilyPlanningConstants;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.dao.AbstractDao;
+import org.smartregister.util.DatabaseMigrationUtils;
 
 import java.util.List;
 
@@ -45,20 +49,32 @@ public class FpDao extends AbstractDao {
     }
 
     public static Integer getFpWomenCount(String familyBaseEntityId) {
-        String sql = "SELECT count(fp.base_entity_id) count " +
-                "FROM ec_family_planning fp " +
-                "INNER Join ec_family_member fm on fm.base_entity_id = fp.base_entity_id " +
-                "WHERE fm.relational_id = '" + familyBaseEntityId + "' COLLATE NOCASE " +
-                "AND fp.is_closed = 0 " +
-                "AND fp.ecp = 1 ";
+        try {
+            String sql = "SELECT count(fp." + DBConstants.KEY.BASE_ENTITY_ID + ") count "
+                    + "FROM " + FamilyPlanningConstants.TABLES.FP_REGISTER + " fp "
+                    + "INNER JOIN " + FamilyPlanningConstants.DBConstants.FAMILY_MEMBER + " fm ON fm."
+                    + DBConstants.KEY.BASE_ENTITY_ID + " = fp." + DBConstants.KEY.BASE_ENTITY_ID + " "
+                    + "WHERE fm." + DBConstants.KEY.RELATIONAL_ID + " = ? COLLATE NOCASE "
+                    + "AND fp." + DBConstants.KEY.IS_CLOSED + " = 0 ";
 
-        DataMap<Integer> dataMap = cursor -> getCursorIntValue(cursor, "count");
+            // Legacy registers use ecp=1 for non-emergency methods. Modern registers
+            // omit this flag and keep emergency contraception in a separate register.
+            if (DatabaseMigrationUtils.isColumnExists(
+                    getRepository().getReadableDatabase(),
+                    FamilyPlanningConstants.TABLES.FP_REGISTER,
+                    DBConstants.KEY.NON_EMERGENCY_FP)) {
+                sql += "AND fp." + DBConstants.KEY.NON_EMERGENCY_FP + " = 1";
+            }
 
-        List<Integer> res = readData(sql, dataMap);
-        if (res == null || res.size() == 0)
+            try (Cursor cursor = getRepository().getReadableDatabase()
+                    .rawQuery(sql, new String[] {familyBaseEntityId})) {
+                return cursor != null && cursor.moveToFirst()
+                        ? getCursorIntValue(cursor, "count") : null;
+            }
+        } catch (Exception e) {
+            Timber.e(e);
             return null;
-
-        return res.get(0);
+        }
     }
 
     public static Visit getLatestVisitById(String visitId) {
