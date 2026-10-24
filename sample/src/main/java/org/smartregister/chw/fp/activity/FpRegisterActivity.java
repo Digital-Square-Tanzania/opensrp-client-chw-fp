@@ -10,7 +10,7 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.domain.Form;
 
 import org.json.JSONObject;
-import org.smartregister.chw.fp.R;
+import org.smartregister.chw.fp_sample.R;
 import org.smartregister.chw.fp.fragment.FpRegisterFragment;
 import org.smartregister.chw.fp.utils.JsonFormUtils;
 import org.smartregister.view.fragment.BaseRegisterFragment;

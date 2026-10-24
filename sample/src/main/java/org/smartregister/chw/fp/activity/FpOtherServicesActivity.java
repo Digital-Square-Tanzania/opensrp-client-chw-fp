@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import org.smartregister.chw.fp.domain.FpMemberObject;
 import org.smartregister.chw.fp.presenter.BaseFpVisitPresenter;
 import org.smartregister.chw.fp.util.FamilyPlanningConstants;
-import org.smartregister.chw.fp.R;
+import org.smartregister.chw.fp_sample.R;
 import org.smartregister.chw.fp.interactor.FpOtherServicesVisitInteractor;
 
 import timber.log.Timber;
