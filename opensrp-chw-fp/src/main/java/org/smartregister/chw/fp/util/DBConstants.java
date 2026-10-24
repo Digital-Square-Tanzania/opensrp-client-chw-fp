@@ -18,6 +18,7 @@ public class DBConstants {
         public static final String RELATIONALID = "relationalid";
         public static final String DETAILS = "details";
         public static final String IS_CLOSED = "is_closed";
+        public static final String NON_EMERGENCY_FP = "ecp";
         public static final String IS_ANC_CLOSED = "is_anc_closed";
         public static final String IS_PNC_CLOSED = "is_pnc_closed";
         public static final String RELATIONAL_ID = "relational_id";
